@@ -1,0 +1,34 @@
+{
+  "query": {
+    "phrases": [
+      "Applicable Margin",
+      "Applicable Rate",
+      "Applicable Percentage"
+    ],
+    "forms": "8-K,10-Q,10-K",
+    "startdt": "2021-06-01",
+    "enddt": "2026-09-04"
+  },
+  "run_date": "2026-09-04",
+  "requests_made": 752,
+  "months_covered": 64,
+  "raw_hits_including_duplicates": 64111,
+  "unique_files": 51607,
+  "hits_per_phrase": {
+    "Applicable Margin": 32386,
+    "Applicable Rate": 20176,
+    "Applicable Percentage": 11549
+  },
+  "unique_files_found_only_by_phrase": {
+    "Applicable Margin": 25099,
+    "Applicable Rate": 10908,
+    "Applicable Percentage": 4964
+  },
+  "rejected_by_reason": {
+    "not_ex10": 35072,
+    "excluded_sector": 9528,
+    "no_item_101": 3967,
+    "amendment_title": 1610
+  },
+  "candidates_after_metadata_filters": 12144
+}
