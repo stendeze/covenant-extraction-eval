@@ -1,0 +1,18 @@
+[project]
+name = "covenant-eval"
+version = "0.1.0"
+description = "Structured extraction of financial covenants from SEC-filed credit agreements, with per-field accuracy against a hand-labeled set."
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+]
+
+[project.scripts]
+covenant-eval = "covenant_eval.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/covenant_eval"]
