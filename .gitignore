@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local editor and assistant configuration
+.claude/
+CLAUDE.md
+.vscode/
+.idea/
+.DS_Store
+
+# Raw filings — large and re-downloadable from EDGAR.
+# Accession numbers are recorded in corpus.md, so the set is reproducible.
+data/raw/
+data/search/hits.jsonl
