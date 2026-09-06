@@ -190,37 +190,6 @@ report the rate as measured rather than as repaired.
   without amendment — the "document **or fact**" wording written for Plains
   turned out to be load-bearing for a case it was not written against.
 
----
-
-## A reasoning error worth recording
-
-After labeling Advance Auto, one reader reported that `libor` and `null` were
-becoming correlated across the corpus and that a model might therefore learn
-"LIBOR-era document → decline" rather than reading.
-
-**The premise was false.** Paya is LIBOR with `applicable_margin_bps` = 325 —
-a flat sponsor-deal margin, no grid, nothing deferred, verified field by field
-two documents earlier. Across the three LIBOR agreements labeled, the field is
-an integer once and `null` twice. There is no correlation to worry about.
-
-The error was generalizing from the two most recent documents — both
-investment-grade revolvers with ratings grids — backward over a document
-already checked. It is the same shape as an earlier mistake in this project,
-where the document screen's pass rate looked reasonable while the filter was
-wrong, because the passes were inspected and the rejects were not.
-
-Recorded because the failure mode is cheap at document three and expensive at
-document twelve, and because it argues for a specific habit: when reporting a
-pattern across the corpus, check it against every labeled document rather than
-the ones currently in mind. Two of the corrections in this file came from
-re-reading the full set rather than from new evidence.
-
-The concern did survive in a better form. A model cannot learn this corpus's
-correlations — it is not trained on the set — unless few-shot examples are
-drawn from the fifteen, which would be leakage. The genuine issue was
-interpretive: `null` alone does not reveal whether a system read the deferral
-clause or merely declined. That is now answered by requiring a citation on
-deferral nulls, which uses machinery the harness already has.
 
 ### Plains GP Holdings / All American Pipeline, L.P. — 2021-08-20 — `0001104659-21-109833`
 
@@ -273,3 +242,35 @@ deferral nulls, which uses machinery the harness already has.
   — the covenant only bites when the revolver is drawn — rather than a stated
   beneficiary restriction, and the free-text note should say that rather than
   imply the latter. Not exhaustively verified against §10.01.
+
+---
+
+## A reasoning error worth recording
+
+After labeling Advance Auto, one reader reported that `libor` and `null` were
+becoming correlated across the corpus and that a model might therefore learn
+"LIBOR-era document → decline" rather than reading.
+
+**The premise was false.** Paya is LIBOR with `applicable_margin_bps` = 325 —
+a flat sponsor-deal margin, no grid, nothing deferred, verified field by field
+two documents earlier. Across the three LIBOR agreements labeled, the field is
+an integer once and `null` twice. There is no correlation to worry about.
+
+The error was generalizing from the two most recent documents — both
+investment-grade revolvers with ratings grids — backward over a document
+already checked. It is the same shape as an earlier mistake in this project,
+where the document screen's pass rate looked reasonable while the filter was
+wrong, because the passes were inspected and the rejects were not.
+
+Recorded because the failure mode is cheap at document three and expensive at
+document twelve, and because it argues for a specific habit: when reporting a
+pattern across the corpus, check it against every labeled document rather than
+the ones currently in mind. Two of the corrections in this file came from
+re-reading the full set rather than from new evidence.
+
+The concern did survive in a better form. A model cannot learn this corpus's
+correlations — it is not trained on the set — unless few-shot examples are
+drawn from the fifteen, which would be leakage. The genuine issue was
+interpretive: `null` alone does not reveal whether a system read the deferral
+clause or merely declined. That is now answered by requiring a citation on
+deferral nulls, which uses machinery the harness already has.
