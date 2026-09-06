@@ -314,6 +314,28 @@ Adjudication rules:
   Scored as null-vs-non-null first, then on the integer where both are
   non-null — the same pattern `springing_trigger` already uses, so this adds
   no new scoring machinery.
+
+  **A deferral `null` must carry a citation, and the quote is the deferral
+  language itself.** The value alone cannot distinguish a system that read the
+  deferral clause from one that simply declined; the citation can. A system
+  that declines for the right reason can point at the sentence that made it
+  decline — "Initially, the Applicable Rate shall be determined based upon the
+  Debt Rating specified in the certificate delivered pursuant to Section
+  4.01(a)(vii)" — and one that declines out of vagueness cannot. This makes
+  `null` a falsifiable answer using the citation check that already exists.
+
+  Note this is a *deferral* null, not an *absence* null. `springing_trigger`
+  is `null` when no trigger exists, and absence has no sentence to quote, so
+  no citation is required there. The distinction is whether the agreement says
+  something the labeler is relying on.
+
+  **Where this usually fires:** ratings-based grids, because the rating that
+  sets the level is external by construction. But that is an observation about
+  where to look, not the rule. The rule is deferral. A ratings grid that states
+  its opening category yields an integer; a leverage grid that defers its
+  opening level to a closing certificate yields `null`. Encoding "ratings grid
+  → null" as the test would hardcode an empirical correlation into the
+  labeling rule and mislabel the first document that breaks it.
 - Record the margin for **benchmark loans**, not Base Rate loans. The Base
   Rate margin is mechanically the benchmark margin minus 100bps in nearly
   every agreement, so labeling it separately doubles the work for close to

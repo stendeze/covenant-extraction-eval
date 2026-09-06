@@ -14,6 +14,10 @@ This is deliberate, and it measures the failure mode that matters most for LLM e
 
 Most extraction benchmarks score only whether the right value was found. This one also scores whether the system knows when there is no value to find. The guard is written into [schema.md](schema.md): `null` applies only where the agreement defers, never where the answer is merely buried or tedious to assemble — otherwise the field becomes an escape hatch and stops measuring anything.
 
+A `null` returned for a deferral must cite the deferral language itself. The value alone cannot distinguish a system that read the clause from one that declined out of vagueness; the citation can, and it does so through the citation check the harness already performs. Declining is only correct when the system can point at the sentence that made it decline.
+
+**On few-shot examples:** any drawn for prompting come from documents outside the fifteen, and that is stated with the results. Examples taken from the held-out set would leak the answers the set exists to measure.
+
 ## Out of scope
 
 **Baskets and mandatory prepayment triggers are deliberately excluded.** Both are real credit work — a covenant package without them is not a complete picture of a borrower's flexibility. Both are also miserable to label consistently: a basket is a network of cross-referenced defined terms, and two careful people reading the same restricted payments basket will disagree on what the right answer is. Ambiguous ground truth poisons a field-level accuracy metric, and that metric is this project's deliverable. Excluding them costs coverage and buys a number that means something.

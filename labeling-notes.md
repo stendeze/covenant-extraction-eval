@@ -167,6 +167,61 @@ report the rate as measured rather than as repaired.
 
 ## Per-document observations
 
+### Advance Auto Parts, Inc. — 2021-11-09 — `0001158449-21-000208`
+
+- **Benchmark is LIBOR.** `Eurodollar Rate` names it directly — "the London
+  Interbank Offered Rate as administered by ICE Benchmark Administration ...
+  ("LIBOR") as published on the applicable Bloomberg screen page ... 11:00
+  a.m., London time". All 14 SOFR mentions are Benchmark Replacement
+  machinery, including "if the then-current Benchmark is LIBOR, the Benchmark
+  Replacement will replace such Benchmark."
+- **`has_margin_grid` is true** — five Categories on S&P/Moody's Index Debt
+  Ratings, 0.795% to 1.300% on Eurodollar loans, facility fee in the same
+  table.
+- **`applicable_margin_bps` is null, reached by a different limb than Plains.**
+  Plains defers to a named closing certificate — a *document* outside the four
+  corners. Advance Auto defers to nothing at all: the rate is "based upon the
+  Ratings by S&P and Moody's ... applicable on such day", a *fact* outside the
+  four corners, with no opening category stated anywhere. Searched
+  specifically for an "Initially, the Applicable Rate shall be" clause; there
+  is none.
+
+  This is the first independent test of the deferral rule, and the rule held
+  without amendment — the "document **or fact**" wording written for Plains
+  turned out to be load-bearing for a case it was not written against.
+
+---
+
+## A reasoning error worth recording
+
+After labeling Advance Auto, one reader reported that `libor` and `null` were
+becoming correlated across the corpus and that a model might therefore learn
+"LIBOR-era document → decline" rather than reading.
+
+**The premise was false.** Paya is LIBOR with `applicable_margin_bps` = 325 —
+a flat sponsor-deal margin, no grid, nothing deferred, verified field by field
+two documents earlier. Across the three LIBOR agreements labeled, the field is
+an integer once and `null` twice. There is no correlation to worry about.
+
+The error was generalizing from the two most recent documents — both
+investment-grade revolvers with ratings grids — backward over a document
+already checked. It is the same shape as an earlier mistake in this project,
+where the document screen's pass rate looked reasonable while the filter was
+wrong, because the passes were inspected and the rejects were not.
+
+Recorded because the failure mode is cheap at document three and expensive at
+document twelve, and because it argues for a specific habit: when reporting a
+pattern across the corpus, check it against every labeled document rather than
+the ones currently in mind. Two of the corrections in this file came from
+re-reading the full set rather than from new evidence.
+
+The concern did survive in a better form. A model cannot learn this corpus's
+correlations — it is not trained on the set — unless few-shot examples are
+drawn from the fifteen, which would be leakage. The genuine issue was
+interpretive: `null` alone does not reveal whether a system read the deferral
+clause or merely declined. That is now answered by requiring a citation on
+deferral nulls, which uses machinery the harness already has.
+
 ### Plains GP Holdings / All American Pipeline, L.P. — 2021-08-20 — `0001104659-21-109833`
 
 - **Benchmark is LIBOR**, in two hops rather than Paya's three: `Applicable
