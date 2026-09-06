@@ -54,7 +54,7 @@ amendments.
 |-----------|-------|-----|
 | Filing date | 2021-06-01 to present | Straddles the LIBOR→SOFR transition deliberately, see below |
 | Aggregate commitments | $150M – $5B | Below is bilateral/middle-market with idiosyncratic drafting; above is mega-cap with bespoke structures |
-| Syndication | Syndicated only — an Administrative Agent and ≥3 lenders on the commitment schedule | Bilateral agreements have no pricing grid and often no agent, which degenerates two fields |
+| Syndication | Syndicated only — an Administrative Agent and ≥3 lenders on the commitment schedule | Bilateral agreements have no margin grid and often no agent, which degenerates two fields |
 | Borrower | US corporate, English language | — |
 | Borrower sector | Excludes banks, insurers, and REITs | See limitation below |
 
@@ -76,7 +76,7 @@ is set to avoid it:
 
 - **`interest_rate_benchmark`** — the date range starts pre-transition so that
   roughly 3 of 15 agreements are LIBOR. Without them the field is degenerate.
-- **`has_pricing_grid`** — stratify to get both. Institutional TLBs are
+- **`has_margin_grid`** — stratify to get both. Institutional TLBs are
   typically flat-priced; revolvers and pro rata TLAs typically have a grid, so
   structural variety supplies this for free.
 
@@ -131,7 +131,7 @@ field.
 | 4 | `maturity_date` | facility | {value: date \| string, basis: enum} |
 | 5 | `interest_rate_benchmark` | facility | enum |
 | 6 | `applicable_margin_bps` | facility | integer |
-| 7 | `has_pricing_grid` | facility | boolean |
+| 7 | `has_margin_grid` | facility | boolean |
 | 8 | `covenant_type` | covenant | enum |
 | 9 | `initial_threshold` | covenant | number |
 | 10 | `step_down_schedule` | covenant | array of {effective_from, threshold} |
@@ -224,6 +224,16 @@ for `relative`, the normalized string matches. Adjudication rules:
 
 - Where the agreement gives a hard date, `basis` is `stated` even if it also
   describes the date as an anniversary.
+- **The "earliest of" construction is ordinary and does not change the
+  answer.** Nearly every agreement defines maturity as the earliest of (i) a
+  stated calendar date, (ii) the date the commitments are terminated in whole,
+  and (iii) the date the loans are declared due and payable on acceleration.
+  Limbs (ii) and (iii) are termination and acceleration mechanics, not
+  alternative maturities — they describe what happens when the deal ends
+  early, which is true of every facility ever written. Record the stated
+  calendar date from limb (i). This is distinct from the springing-maturity
+  case below, which turns on an instrument outside the document rather than on
+  the parties' own termination rights.
 - **Springing maturity provisos are excluded from this field.** A clause like
   "or, if earlier, the date 91 days prior to the stated maturity of the Senior
   Notes" makes the actual maturity contingent on an instrument outside this
@@ -278,16 +288,20 @@ II.
 - Where the agreement expresses the margin as a percentage (2.25%), convert to
   bps (225).
 
-### 7. `has_pricing_grid`
+### 7. `has_margin_grid`
 
 **Type:** boolean.
+
+> Renamed from `has_pricing_grid` after labeling document one. The old name
+> asked a broader question than the rule answered — see
+> [Margin grids vs. fee grids](#margin-grids-vs-fee-grids) below.
 
 **Where it lives:** same definition as `applicable_margin_bps`; sometimes a
 standalone "Pricing Grid" schedule.
 
 **Correct when:** the boolean matches. Adjudication rules:
 
-- `true` when the applicable margin varies with a measured condition — a
+- `true` when **the applicable margin** varies with a measured condition — a
   leverage ratio, a total net leverage ratio, a ratings grid, or a utilization
   grid.
 - `false` when the margin is flat for the life of the facility.
@@ -297,6 +311,30 @@ standalone "Pricing Grid" schedule.
   table.
 - MFN / most-favored-nation provisions and pricing that changes only on
   default are not grids. `false`.
+
+#### Margin grids vs. fee grids
+
+**A grid on the commitment fee is not a margin grid.** `false` is correct for
+an agreement whose interest margin is flat even when its undrawn commitment
+fee steps with leverage.
+
+This is not hypothetical. The first agreement labeled — Paya Holdings,
+June 2021 — prices both tranches at a flat 3.25% over the Eurocurrency Rate
+with no levels at all, and carries a full three-level grid on the
+`Applicable Commitment Fee`, keyed to the same First Lien Net Leverage Ratio
+that would key a margin grid (0.500% above 3.75x, 0.375% between 3.25x and
+3.75x, 0.250% below), complete with "Pricing Level" labels and a
+compliance-certificate reset. Asked "does this agreement have a pricing
+grid?", two careful readers answer differently. Asked "does the margin vary?",
+they do not.
+
+Hence the rename: the field name now asks the question the rule answers.
+
+If commitment-fee grids turn out to be common across the corpus, a separate
+`has_commitment_fee_grid` field is a candidate for v2. It is deliberately not
+added now — adding a field mid-labeling would mean relabeling everything
+already done, for a term that is not among the ones this schema claims to
+extract.
 
 ---
 
@@ -618,7 +656,7 @@ An abbreviated record for a two-tranche agreement with one springing covenant:
       "maturity_date": { "value": "2029-06-14", "basis": "stated" },
       "interest_rate_benchmark": "term_sofr",
       "applicable_margin_bps": 200,
-      "has_pricing_grid": true
+      "has_margin_grid": true
     },
     {
       "facility_name": "Initial Term Loans",
@@ -627,7 +665,7 @@ An abbreviated record for a two-tranche agreement with one springing covenant:
       "maturity_date": { "value": "2031-06-14", "basis": "stated" },
       "interest_rate_benchmark": "term_sofr",
       "applicable_margin_bps": 325,
-      "has_pricing_grid": false
+      "has_margin_grid": false
     }
   ],
   "financial_covenants": [
