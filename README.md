@@ -6,6 +6,14 @@ Structured extraction of financial covenants and key terms from SEC-filed credit
 
 Twelve fields per agreement: facility name and type, aggregate commitment, maturity, interest rate benchmark and margin, whether a margin grid exists, and — per financial covenant — type, initial threshold, step-down schedule, testing frequency, and springing trigger. Every extracted field carries a source citation. See [schema.md](schema.md) for types, where each field lives in an agreement, and the rule that decides whether an extracted value is correct.
 
+## Fields that test hallucination directly
+
+Two fields are legitimately `null` on some agreements — `applicable_margin_bps` and `springing_trigger` — and both are scored on null-vs-non-null before anything else.
+
+This is deliberate, and it measures the failure mode that matters most for LLM extraction. Some credit agreements expressly defer a term to a document outside themselves: a ratings-based pricing grid whose opening level is set by a closing certificate not included in the exhibit states that the answer exists and declines to give it. The correct extraction is "the agreement does not state this." A model that confidently returns a plausible number is wrong, and wrong in the specific way that makes document AI dangerous in credit work — not by failing to find something, but by producing something that reads correctly and isn't.
+
+Most extraction benchmarks score only whether the right value was found. This one also scores whether the system knows when there is no value to find. The guard is written into [schema.md](schema.md): `null` applies only where the agreement defers, never where the answer is merely buried or tedious to assemble — otherwise the field becomes an escape hatch and stops measuring anything.
+
 ## Out of scope
 
 **Baskets and mandatory prepayment triggers are deliberately excluded.** Both are real credit work — a covenant package without them is not a complete picture of a borrower's flexibility. Both are also miserable to label consistently: a basket is a network of cross-referenced defined terms, and two careful people reading the same restricted payments basket will disagree on what the right answer is. Ambiguous ground truth poisons a field-level accuracy metric, and that metric is this project's deliverable. Excluding them costs coverage and buys a number that means something.

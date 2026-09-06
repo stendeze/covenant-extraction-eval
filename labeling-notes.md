@@ -83,6 +83,45 @@ A `has_commitment_fee_grid` field is a v2 candidate if fee grids prove common.
 Deliberately not added mid-labeling: it would invalidate work already done for
 a term the schema does not claim to extract.
 
+### `applicable_margin_bps` — nullable when the agreement defers
+
+**Trigger:** document two, Plains GP Holdings.
+
+The opening-margin rule assumed a leverage grid keyed to compliance
+certificates, where "no opening level stated" means the agreement is silent and
+the conservative reading is the most expensive level. Plains is not silent. Its
+ratings grid says *"Initially, the Applicable Rate shall be determined based
+upon the Debt Rating specified in the certificate delivered pursuant to Section
+4.01(a)(vii)"* — a certificate not in the exhibit. The agreement knows the
+answer exists and declines to state it.
+
+Applying the silence fallback would have recorded 175bps, the Level 5 rate for
+a `BB+ / Ba1 or lower` borrower, for an investment-grade MLP actually pricing
+three or four levels tighter. Resolving it from external ratings data would
+have measured whether the model memorized Plains' August 2021 credit rating.
+
+The field is now nullable, scored null-vs-non-null first, with an explicit
+guard that `null` applies only where the agreement defers — not where the
+answer is buried, cross-referenced or tedious. Without that limit the field
+becomes an escape hatch for anything hard.
+
+This is an improvement to the eval rather than a concession. Hallucination
+under uncertainty is the central failure mode of LLM extraction, and there is
+now a field class that tests it directly: a model that declines is right, one
+that produces a confident 175 is wrong.
+
+### `interest_rate_benchmark` — added `cdor`
+
+**Trigger:** document two, Plains GP Holdings.
+
+Plains' `Eurocurrency Rate` definition has two limbs — Dollar borrowings price
+off LIBOR, Canadian Dollar borrowings off CDOR. The existing "primary
+benchmark" rule already resolves this document to `libor`, so no label changed.
+`cdor` was added anyway, on the same reasoning that kept
+`debt_service_coverage`: a purely additive enum value cannot alter an existing
+label, and the alternative is forcing `other` on the first CAD-primary
+agreement to appear mid-labeling.
+
 ### `maturity_date` — the "earliest of" construction
 
 **Trigger:** document one, Paya Holdings.
@@ -127,6 +166,28 @@ report the rate as measured rather than as repaired.
 ---
 
 ## Per-document observations
+
+### Plains GP Holdings / All American Pipeline, L.P. — 2021-08-20 — `0001104659-21-109833`
+
+- **Benchmark is LIBOR**, in two hops rather than Paya's three: `Applicable
+  Rate` attaches to Eurocurrency Rate Loans, and `Eurocurrency Rate` names the
+  rate outright — "the London Interbank Offered Rate ("LIBOR"), as published on
+  the applicable Reuters Screen page ... 11:00 a.m., London time". No
+  intermediate `Screen Rate` definition. All 14 SOFR mentions are Benchmark
+  Replacement machinery, one of which states it plainly: "if the then-current
+  Benchmark is LIBOR, the Benchmark Replacement will replace such Benchmark."
+- **`has_margin_grid` is true** — five levels keyed to S&P/Moody's Debt Rating,
+  1.000% to 1.750% on Eurocurrency loans, with the commitment fee in the same
+  table.
+- **A useful contrast with Paya on exactly that field.** Paya has a grid table
+  that is *not* a margin grid; Plains has one that is. A labeler who learned
+  "grid table means margin grid" from this document would get Paya wrong, and
+  vice versa. The two documents together are why the field was renamed rather
+  than merely re-described.
+- **`applicable_margin_bps` is null** — see the schema change above.
+- **Multicurrency**: CAD borrowings price off CDOR, USD off LIBOR. Resolved to
+  `libor` by the primary-benchmark rule; `cdor` added to the enum against a
+  future CAD-primary agreement.
 
 ### Paya Holdings III, LLC — 2021-06-25 — `0001213900-21-034493`
 

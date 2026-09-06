@@ -244,7 +244,7 @@ for `relative`, the normalized string matches. Adjudication rules:
 
 ### 5. `interest_rate_benchmark`
 
-**Type:** enum — `term_sofr`, `daily_simple_sofr`, `libor`, `euribor`,
+**Type:** enum — `term_sofr`, `daily_simple_sofr`, `libor`, `euribor`, `cdor`,
 `base_rate`, `prime`, `other`.
 
 **Where it lives:** the Article I definitions of "Term SOFR", "Adjusted Term
@@ -264,23 +264,56 @@ II.
 - `adjusted` variants (Adjusted Term SOFR, i.e. Term SOFR plus a credit spread
   adjustment) map to the unadjusted enum value. The CSA is not part of this
   field.
+- **Multicurrency facilities still get one value.** A "Eurocurrency Rate" whose
+  definition prices Dollar borrowings off LIBOR and Canadian Dollar borrowings
+  off CDOR is `libor` — the alternative-currency limb is not the primary
+  benchmark. `cdor` exists for the agreement whose primary borrowings are in
+  Canadian Dollars. Like `debt_service_coverage`, it may never fire; an unused
+  enum value costs nothing, and the alternative is forcing `other` on the one
+  agreement that needs it mid-labeling.
 
 ### 6. `applicable_margin_bps`
 
-**Type:** integer — basis points over the benchmark.
+**Type:** integer or `null` — basis points over the benchmark.
 
 **Where it lives:** the Article I definition of "Applicable Margin" or
 "Applicable Rate", which very often contains the pricing grid table inline.
 
-**Correct when:** the integer matches exactly. Adjudication rules:
+**Correct when:** the integer matches exactly, or `null` matches `null`.
+Adjudication rules:
 
 - Record the **opening margin**: the rate in effect from the Closing Date
   until the first compliance certificate is delivered. Most agreements state
   this explicitly ("Level III shall apply from the Closing Date until...").
-- Where no opening level is specified, record the highest (most expensive)
-  level in the grid, and flag the label. This is the conservative reading and
-  it is applied consistently, which matters more than which convention is
-  chosen.
+- Where the agreement is **silent** on the opening level, record the highest
+  (most expensive) level in the grid, and flag the label. This is the
+  conservative reading and it is applied consistently, which matters more than
+  which convention is chosen.
+- **Where the agreement expressly defers determination to a document or fact
+  outside its four corners, the value is `null`.** The distinction from the
+  rule above is between an agreement that is *silent* and one that is
+  *explicit that the answer is elsewhere*. A ratings grid that says "Initially,
+  the Applicable Rate shall be determined based upon the Debt Rating specified
+  in the certificate delivered pursuant to Section 4.01(a)(vii)" is the second
+  case: the opening level exists, the agreement knows it exists, and the
+  agreement declines to state it.
+
+  Applying the silence fallback there would record the most expensive level for
+  an investment-grade borrower — a number that is wrong, and wrong in a way
+  that penalizes a model for correctly declining to invent one. Resolving it
+  from external ratings data would measure whether the model memorized credit
+  ratings rather than whether it can extract from a document.
+
+  **Guard against overuse.** `null` applies only where the agreement defers,
+  not where the answer is merely buried, cross-referenced within the document,
+  or tedious to assemble. An answer that requires reading three definitions in
+  this agreement is an integer, not a `null`. Without this limit the field
+  becomes an escape hatch for anything hard, which would make it worthless as
+  a measurement.
+
+  Scored as null-vs-non-null first, then on the integer where both are
+  non-null — the same pattern `springing_trigger` already uses, so this adds
+  no new scoring machinery.
 - Record the margin for **benchmark loans**, not Base Rate loans. The Base
   Rate margin is mechanically the benchmark margin minus 100bps in nearly
   every agreement, so labeling it separately doubles the work for close to

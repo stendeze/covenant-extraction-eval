@@ -133,6 +133,36 @@ right call.
 
 ---
 
+## Two drafting traditions, and what that predicts
+
+The frame spans both sponsor-backed LBO credits and investment-grade corporate
+revolvers, and these are different drafting traditions rather than variations
+on one. The first two documents labeled sit on opposite sides of it: Paya
+Holdings is a Credit Suisse-led sponsor deal with a flat margin, a
+leverage-linked commitment fee grid and a springing covenant; Plains GP is an
+investment-grade MLP revolver with a five-level grid keyed to S&P and Moody's
+debt ratings and an opening level deferred to a closing certificate.
+
+Ratings grids, deferred opening levels, and public-debt-rating mechanics are IG
+conventions that will not appear in the sponsor deals at all. Leverage-based
+step-downs, cov-lite structures and springing triggers are sponsor conventions
+that will not appear in the IG deals.
+
+**The consequence is that the schema should be expected to keep moving for
+more documents than a homogeneous corpus would require** — each tradition
+introduces constructions the other never uses, and the adjudication rules have
+to cover both. Both of the first two documents forced a schema change.
+
+This is a cost worth paying, because a corpus drawn from only one tradition
+would produce a number that generalizes to only one tradition. But it needs
+watching: **if the schema is still moving at document six, that is a signal,
+not noise.** It would mean the rules are being written to fit documents rather
+than to state a policy, and the intra-annotator agreement check becomes hard
+to interpret — a labeler who relabels under a rule that has since changed is
+not measuring their own consistency.
+
+---
+
 ## Benchmark balance finding
 
 The frame reaches back to 2021-06 specifically so that
