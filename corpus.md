@@ -197,15 +197,164 @@ stratification was for.
 
 ---
 
+## This is an enriched test set, not a representative sample
+
+State this plainly wherever results are reported, because the two framings
+give different numbers and blurring them would be the most misleading thing in
+the project.
+
+The fifteen were selected to exercise each field's value space, not to mirror
+the population of syndicated credit agreements. Springing covenants are 2 of
+75 in the qualified pool and 3 of 15 here. Explicitly lettered tranches are 4
+of 75 and 4 of 15. That is roughly 5x enrichment on both, and it is
+deliberate: a representative sample of fifteen would contain zero or one
+springing covenant, and `springing_trigger` would report an accuracy figure
+computed over a single instance.
+
+**The consequence for reporting.** Per-field F1 is the result. A single
+headline accuracy number across all fields either should not be reported, or
+must be explicitly caveated as computed over a set constructed to exercise
+each field rather than to reflect how often each construction occurs in
+practice. Weighting a mean by a distribution the corpus does not have would
+produce a figure that describes nothing.
+
+This is a stronger position than a representative sample would give, not a
+weaker one — per-field measurement is what says whether the system can extract
+step-down schedules, and a representative sample would not contain enough of
+them to say anything. It just has to be stated rather than implied.
+
+---
+
+## How the selection signals were derived
+
+Every signal used to select these documents — detected tranches, covenant
+mentions, grid hints, springing hints, benchmark counts, dollar amounts — comes
+from **keyword and regex counting** in `src/covenant_eval/screen.py`. No
+language model read any document during screening or selection.
+
+This matters for a reason that is easy to miss. Had the signals come from an
+LLM pass, the corpus would be conditioned on model output about the exact
+fields the eval is about to score — preferentially selecting documents the
+model already reads well, and inflating the result by construction. Recording
+the method is what lets a reader rule that out.
+
+The regexes are lossy in the other direction, which is fine for selection and
+is documented under [Covenant detection false
+negatives](#covenant-detection-false-negatives) below. Final field values come
+from reading the documents, never from these signals.
+
+---
+
 ## Selected agreements
 
-| # | Borrower | Accession number | Filed | Exhibit | Structure | Benchmark | Aggregate commitments |
-|---|----------|------------------|-------|---------|-----------|-----------|-----------------------|
-| | | | | | | | |
+Fifteen documents. Three were labeled or benchmark-confirmed during schema
+development; twelve were selected from the qualified pool afterward.
 
-*To be populated from the pull. One row per document; the accession number and
-exhibit together identify the exact file, so a clean checkout can re-fetch the
-corpus byte-for-byte.*
+| # | Borrower | Accession number | Filed | Structure | Selected for |
+|---|---|---|---|---|---|
+| 1 | Paya Holdings III | `0001213900-21-034493` | 2021-06-25 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |
+| 2 | Plains GP Holdings | `0001104659-21-109833` | 2021-08-20 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
+| 3 | Advance Auto Parts | `0001158449-21-000208` | 2021-11-09 | revolver only | LIBOR; ratings grid; deferral null (external fact) |
+| 4 | Kontoor Brands | — | 2021-11-19 | revolver + TLA + TLB | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
+| 5 | Amentum Holdings | — | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
+| 6 | Extreme Networks | — | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
+| 7 | Lamb Weston Holdings | — | 2024-05-08 | revolver + TLA | Lettered TLA with no grid |
+| 8 | Avaya Holdings | — | 2023-09-08 | revolver + term | Springing covenant; 3 covenants; post-restructuring credit |
+| 9 | MP Materials | — | 2025-08-25 | revolver + term | Springing covenant |
+| 10 | Peloton Interactive | — | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
+| 11 | ANI Pharmaceuticals | — | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
+| 12 | G-III Apparel | — | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
+| 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
+| 14 | Lithia Motors | — | 2022-06-08 | revolver only | Grid; leverage + fixed charge |
+| 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
+
+Accession numbers for 4–15 are to be filled from `data/screen/shortlist.jsonl`
+when the set is frozen.
+
+**Resulting distribution:** 4 revolver-only, 7 revolver + unlettered term, 4
+revolver + explicitly lettered tranches. Benchmark: 3 LIBOR, 12 SOFR-era.
+
+The seven unlettered term loans are a feature rather than a shortfall. Each
+one exercises the `facility_type` rule that classifies by amortization rather
+than by name — a 1%/yr institutional tranche is a TLB whatever the agreement
+calls it — which is among the more fragile adjudications in the schema and
+would go untested by a corpus of neatly labeled Term A and Term B facilities.
+
+### Amendment to the stratification target
+
+The frame called for roughly 5 revolver-only / 5 revolver+TLA / 5
+revolver+TLB. **That is not reachable from this pool and the target is
+amended.** Explicitly lettered tranches are 4 of 75 qualified candidates;
+taking all four still gives 4, and manufacturing more would mean relabeling
+unlettered tranches as lettered, which is the classification the schema
+deliberately makes by amortization instead. Recorded rather than quietly
+missed.
+
+---
+
+## The cov-lite gap, and how it was found
+
+The first draft of this slate had **no covenant-free agreement in it**, which
+would have made a schema rule unfireable: `financial_covenants` is explicitly
+allowed to be an empty list, and a model inventing a covenant where none
+exists is supposed to be penalized. With every document carrying at least one
+covenant, that penalty never applies and the most important hallucination mode
+in the covenant fields goes unmeasured.
+
+**The cause was the qualification filter, not the corpus.** Selection ran over
+78 candidates filtered on size band, US syndication style, **and covenant
+presence**. Genuinely covenant-free agreements were excluded by construction
+before selection began — 21 of the 112 documents that passed the document
+screen have no covenant detected, and none of them were ever visible to the
+selection step.
+
+Reading those 21 produced a second finding, below. Two are genuinely
+covenant-free: **Roper Technologies** (2022, revolver + term, $3.5B) and **PPG
+Industries** (2023, term only, $1B) — in both, every "shall maintain" and
+"shall not permit" in the document is administrative, about register-keeping
+and notice addresses, not a financial maintenance test. Roper is selected,
+because a revolver-plus-term structure exercises more facility fields than a
+single term loan.
+
+### Covenant detection false negatives
+
+The covenant regexes match `Leverage Ratio`, `Interest Coverage Ratio`,
+`Fixed Charge Coverage` and `First Lien Leverage`. Reading the 21
+"covenant-free" documents shows they miss at least three constructions:
+
+- **Debt-to-capitalization**, the standard investment-grade and utility
+  covenant. Eversource Energy has one; it is not in the `covenant_type` enum
+  at all.
+- **Consolidated net worth**, which Phillips 66 appears to carry. Also not in
+  the enum.
+- **Interest coverage written as a ratio of components** — Analog Devices
+  tests "Consolidated EBITDA to Consolidated Interest Expense Ratio", which is
+  an interest coverage covenant that the `Interest Coverage Ratio` pattern
+  never sees.
+
+So some of the 21 are false empties, and the count of genuinely covenant-free
+agreements in the pool is smaller than 21. This does not affect the selected
+fifteen — Roper was verified by reading — but it does mean the funnel's
+covenant-presence numbers understate covenant prevalence, and it flags two
+enum values (`debt_to_capitalization`, `net_worth`) that would be needed if an
+investment-grade document with those covenants ever enters the corpus.
+
+---
+
+## Sector filter gap
+
+Four documents reached the qualified pool that the frame intends to exclude.
+The sector rule excludes SIC 6798 (REITs) and 6000–6499 (financials), but:
+
+- **Spirit Realty Capital** files as 6512, **Sunstone Hotel Investors** as
+  7011, **Millrose Properties** as 6500 — all REITs, none caught.
+- **PhenixFIN** is a BDC filing with a blank SIC, which no numeric rule
+  catches.
+
+All four were excluded by hand during selection. The filter itself is not
+amended retroactively — that would change the frozen frame after seeing the
+data — but the gap is recorded here, and anyone rerunning the pull should
+widen the sector rule and treat a blank SIC as requiring manual review.
 
 ---
 
