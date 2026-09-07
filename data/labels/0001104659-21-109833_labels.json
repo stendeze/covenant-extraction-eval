@@ -1,0 +1,126 @@
+{
+  "source": {
+    "accession_number": "0001104659-21-109833",
+    "exhibit": "EX-10.1",
+    "document_file": "tm2125730d3_ex10-1.htm",
+    "agreement_title": "Credit Agreement (Senior Unsecured Revolving Credit Facility)",
+    "agreement_date": "2021-08-20",
+    "filing_date": "2021-08-26",
+    "borrowers": "Plains All American Pipeline, L.P.; Plains Midstream Canada ULC; Designated Borrowers",
+    "administrative_agent": "Bank of America, N.A.",
+    "lender_count_on_schedule_2_01": 22,
+    "facility_structure": "revolver-only",
+    "corpus_frame_check": "In scope: full credit agreement (Article I definitions + s.2.01 present; replaces the 2011 Existing Credit Agreement, not an amendment to it); syndicated (22 lenders, agent); USD 1.35B within 150M-5B; US corporate midstream MLP (not bank/insurer/REIT); dated 2021-08-20, pre-SOFR (LIBOR band)."
+  },
+
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Credit Facility",
+        "citation": {
+          "section": "Cover page",
+          "quote": "Revolving Credit Facility"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01 (Committed Loans)",
+          "quote": "each requesting Borrower may borrow under this Section 2.01, prepay under Section 2.05, and reborrow under this Section 2.01"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 1350000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Aggregate Commitments\")",
+          "quote": "The initial Aggregate Commitments as of the Closing Date are $1,350,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\")",
+          "quote": "the later of (a) such date that is five years from the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.01 (definition of \"Eurocurrency Rate\"), clause (a)(i)",
+          "quote": "in the case of Eurocurrency Rate Loan denominated in Dollars, the rate per annum equal to the London Interbank Offered Rate"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), paragraph following the pricing table",
+          "quote": "Initially, the Applicable Rate shall be determined based upon the Debt Rating specified in the certificate delivered pursuant to Section 4.01(a)(vii)"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "from time to time, the following percentages per annum, based upon the Debt Rating as set forth below"
+        }
+      }
+    }
+  ],
+
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "total_leverage_gross",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Leverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated Funded Indebtedness as of such date to (b) Consolidated EBITDA for the trailing four quarter period ending on such date"
+        }
+      },
+      "initial_threshold": {
+        "value": 5.00,
+        "citation": {
+          "section": "7.08 (Consolidated Leverage Ratio), table row (ii) \"Other than during an Acquisition Period\"",
+          "quote": "5.00:1.0"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.08 (Consolidated Leverage Ratio), table",
+          "quote": "Other than during an Acquisition Period"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.08 (Consolidated Leverage Ratio), lead-in",
+          "quote": "Permit the Consolidated Leverage Ratio as of the end of any fiscal quarter of the Company to be greater than the ratio set forth below opposite such period"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+
+  "notes": {
+    "facility_name": "The body never names the tranche: the defined terms are \"Commitment\", \"Committed Loans\", and \"Aggregate Commitments\". The only label is the cover page, printed as two centered lines: \"Senior Unsecured\" / \"Revolving Credit Facility\" (separate <P> elements in the HTML). Value recorded under the cover-page rule in schema.md, which takes the cover-page label excluding ranking and security descriptors.",
+    "sublimits_not_booked": "L/C Sublimit $400,000,000; Swing Line Sublimit $150,000,000; Canadian Dollar Sublimit $1,000,000,000 (lesser of that and Aggregate Commitments). Each is defined as \"part of, and not in addition to, the Aggregate Commitments\". Canadian Bankers' Acceptances are a borrowing form under the same Commitment, not a tranche. No records created.",
+    "accordion_not_booked": "s.2.16 permits increases up to $2,100,000,000 aggregate (min $50M each). Option, not commitment.",
+    "schedule_2_01_reconciliation": "20 lenders x $64,000,000 + 2 lenders x $35,000,000 = $1,350,000,000. Schedule and defined term agree; no discrepancy.",
+    "maturity": "No hard date anywhere in the document; Closing Date is defined as the date s.4.01 conditions are satisfied, not as a calendar date, hence basis=relative. Recorded in the structured form {tenor_years, anchor} required by schema.md. The \"later of\" limb (b) is the s.2.14 one-year extension mechanic (Company may request once per calendar year; each Lender extends at its discretion), i.e. an extension option analogous to ordinary termination limbs, not a springing maturity. No springing-maturity proviso present.",
+    "benchmark": "Multicurrency definition: Dollar loans off LIBOR (Reuters screen), Canadian Dollar loans off CDOR. Recorded the primary limb per schema rule (libor). \"Benchmark\" is defined as \"initially, LIBOR\". Term SOFR / Daily Simple SOFR appear only in the Benchmark Replacement fallback definitions and s.3.03(c) (conditional, not operative).",
+    "applicable_margin": "Ratings grid, five Pricing Levels, Eurocurrency Rate Loans / Letters of Credit / Canadian BA margin column: L1 (A-/A3 or higher) 1.000%, L2 (BBB+/Baa1) 1.125%, L3 (BBB/Baa2) 1.250%, L4 (BBB-/Baa3) 1.500%, L5 (BB+/Ba1 or lower) 1.750%. Base Rate / Canadian Prime margin column runs 0.000%-0.750%. Commitment fee column runs 0.100%-0.300%. Opening level is expressly deferred to the Debt Rating certified in the closing certificate under s.4.01(a)(vii)(C) (\"the current Debt Ratings\"); no rating is stated anywhere in the document. Deferral null with the deferral sentence cited, per schema rule. The Level 5 fallback in the Debt Rating definition applies only if the Company has no Debt Rating at all and is not an opening-level statement.",
+    "has_margin_grid": "Margin varies with Debt Rating across five levels -> true. The commitment fee also steps on the same grid, which is noted but does not drive the field.",
+    "covenant_type": "Classified by definition, not label. Consolidated Funded Indebtedness = long-term indebtedness + revolving/term borrowings + Capital Leases, excluding L/C indebtedness, Cash and Carry Purchase financing, and margin deposits; it does not subtract cash or cash equivalents, so no netting -> total_leverage_gross (not total_net_leverage). Facility is senior unsecured, so first-lien/secured variants do not apply. s.7.08 additionally excludes Hybrid Securities up to 15% of Consolidated Total Capitalization from Consolidated Funded Indebtedness for covenant purposes.",
+    "initial_threshold": "s.7.08 table has two rows: (i) During an Acquisition Period 5.50:1.0; (ii) Other than during an Acquisition Period 5.00:1.0. Row (i) is an acquisition holiday (Acquisition Period: from funding of a Specified Acquisition of >= $150M, ending at the earliest of the third following fiscal quarter end, a Specified Equity Offering, or the Company's election). Recorded the non-holiday level 5.00 per schema rule; holiday level 5.50 noted here.",
+    "step_down_schedule": "Confirmed flat. The table is keyed to Acquisition Period status, not to fiscal periods; there is no time-based change to the 5.00x level for the life of the agreement.",
+    "covenant_ebitda_addbacks": "Consolidated EBITDA may include Material Project EBITDA Adjustments (projects >= $50M, capped at 15% of actual Consolidated EBITDA, JV-project portion capped at 7.5%). Definitional, does not affect any scored field.",
+    "springing_trigger": "Covenant is tested unconditionally as of the end of every fiscal quarter; no utilization or availability proviso, no Covenant Trigger Event / Testing Period defined term. Absence null, no citation required.",
+    "other_covenants_checked": "No interest coverage, fixed charge coverage, net worth, liquidity, or capex covenant. Article VII contains only s.7.08 as a financial ratio covenant. Covenant list is complete at one entry.",
+    "filing_date": "2021-08-26, from the EDGAR index for accession 0001104659-21-109833. Distinct from the agreement date of 2021-08-20, which is what the exhibit itself states."
+  }
+}

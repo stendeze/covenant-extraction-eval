@@ -252,9 +252,9 @@ development; twelve were selected from the qualified pool afterward.
 
 | # | Borrower | Accession number | Filed | Structure | Selected for |
 |---|---|---|---|---|---|
-| 1 | Paya Holdings III | `0001213900-21-034493` | 2021-06-25 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |
-| 2 | Plains GP Holdings | `0001104659-21-109833` | 2021-08-20 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
-| 3 | Advance Auto Parts | `0001158449-21-000208` | 2021-11-09 | revolver only | LIBOR; ratings grid; deferral null (external fact) |
+| 1 | Paya Holdings III | `0001213900-21-034493` | 2021-06-28 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |
+| 2 | Plains GP Holdings | `0001104659-21-109833` | 2021-08-26 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
+| 3 | Advance Auto Parts | `0001158449-21-000208` | 2021-11-15 | revolver only | LIBOR; ratings grid; deferral null (external fact) |
 | 4 | Kontoor Brands | — | 2021-11-19 | revolver + TLA + TLB | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
 | 5 | Amentum Holdings | — | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
 | 6 | Extreme Networks | — | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
@@ -270,6 +270,13 @@ development; twelve were selected from the qualified pool afterward.
 
 Accession numbers for 4–15 are to be filled from `data/screen/shortlist.jsonl`
 when the set is frozen.
+
+**The "Filed" column is the EDGAR filing date, not the agreement date.** The
+two differ by days to weeks and the exhibit itself states only the agreement
+date, so the filing date comes from the EDGAR index. Rows 1–3 originally
+carried agreement dates here — 2021-06-25, 2021-08-20 and 2021-11-09 — and
+were corrected against `data/search/candidates.jsonl`. Label files record both
+dates separately.
 
 **Resulting distribution:** 4 revolver-only, 7 revolver + unlettered term, 4
 revolver + explicitly lettered tranches. Benchmark: 3 LIBOR, 12 SOFR-era.
