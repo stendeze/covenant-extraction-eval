@@ -10,6 +10,7 @@ from pathlib import Path
 from .edgar import MissingUserAgent
 from .screen import run_screen
 from .search import run_census
+from .validate import run_validate
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -26,6 +27,12 @@ def main(argv: list[str] | None = None) -> int:
     screen.add_argument("--limit", type=int, default=400)
     screen.add_argument("--seed", type=int, default=20260904)
 
+    validate = sub.add_parser(
+        "validate", help="check label files against the current schema, reporting only"
+    )
+    validate.add_argument("paths", type=Path, nargs="*", default=[Path("data/labels")])
+    validate.add_argument("--raw", type=Path, default=Path("data/raw"))
+
     args = parser.parse_args(argv)
 
     try:
@@ -36,6 +43,16 @@ def main(argv: list[str] | None = None) -> int:
                 args.candidates, args.out, limit=args.limit,
                 seed=args.seed, raw_dir=args.raw,
             )
+        elif args.command == "validate":
+            paths = args.paths or [Path("data/labels")]
+            result = run_validate(paths, args.raw)
+            print(
+                f"\n{result['clean']} clean, {result['with_deviations']} with deviations, "
+                f"{result['total_deviations']} deviations ({result['total_errors']} errors)"
+            )
+            # Non-zero on errors so the audit can gate a commit. Warnings do
+            # not fail: several of them are judgment calls the labeler owns.
+            return 1 if result["total_errors"] else 0
         print(json.dumps(result, indent=2))
     except MissingUserAgent as exc:
         print(f"error: {exc}", file=sys.stderr)
