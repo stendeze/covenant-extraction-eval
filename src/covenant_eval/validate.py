@@ -15,10 +15,16 @@ deliberate call, where the labeler read the document and disagrees. Auto-fixing
 would silently convert the second into the first, and a label file edited to
 satisfy a checker is no longer evidence of what a human found in the document.
 
-The enum sets below are transcribed from schema.md, which remains the source of
-truth. When a value set changes there, it changes here, and the mismatch this
-file then reports across already-labeled documents is the re-application work
-that the schema change implies.
+The value sets are read out of schema.md at runtime rather than transcribed
+here, so the two cannot drift. Four of them — the scored enums — are written in
+a uniform shape and are parsed. The remaining four are structural sets defined
+inside prose sentences, in three different shapes; parsing English would break
+on rewording that changes nothing, so those stay transcribed and are guarded by
+asserting their defining sentence still appears verbatim in schema.md. Either
+way, nothing is silently assumed: a schema.md this module cannot read raises
+rather than falling back to a stale copy, because a parser that quietly returns
+a short enum turns every unrecognized value into a false labeling error across
+every file in the corpus.
 """
 
 from __future__ import annotations
@@ -30,6 +36,8 @@ from pathlib import Path
 from typing import Any
 
 from .screen import to_text
+
+SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schema.md"
 
 # schema.md "Field summary" — the scored fields, by level. A field absent from
 # a label file is a hole in the gold record, not a null.
@@ -50,35 +58,120 @@ SCORED_COVENANT_FIELDS = (
     "springing_trigger",
 )
 
-# Enum value sets, transcribed from the field sections of schema.md.
-ENUMS: dict[str, frozenset[str]] = {
-    "facility_type": frozenset(
-        {"revolver", "term_loan_a", "term_loan_b", "delayed_draw_term_loan", "bridge", "other"}
+# The scored enums, parsed from schema.md. Each is written as a "### N.
+# `field_name`" heading followed by a "**Type:** enum — " line whose backticked
+# values wrap across up to four lines and close with a period.
+PARSED_ENUMS = ("facility_type", "interest_rate_benchmark", "covenant_type", "testing_frequency")
+
+# The structural sets, defined inside prose rather than in the uniform enum
+# shape. These are transcribed, and each is paired with the sentence in
+# schema.md that defines it. The sentence is asserted to still be present, so a
+# reword or a changed value fails the run and forces a human to re-check the
+# set rather than trusting the copy below. They are closed sets describing
+# record structure — unlike covenant_type, they do not grow when a new document
+# turns up a construction nobody had seen.
+GUARDED_SETS: dict[str, tuple[frozenset[str], str]] = {
+    "maturity_basis": (
+        frozenset({"stated", "relative"}),
+        "**Type:** object — `{value, basis}` where `basis` is `stated` or `relative`.",
     ),
-    "interest_rate_benchmark": frozenset(
-        {"term_sofr", "daily_simple_sofr", "libor", "euribor", "cdor", "base_rate", "prime", "other"}
+    "condition_type": (
+        frozenset({"revolver_utilization", "minimum_availability", "other"}),
+        "**Type:** object or `null`. When non-null: `{condition_type: enum, threshold: number, "
+        "threshold_unit: enum, quote: string}` where `condition_type` is `revolver_utilization`, "
+        "`minimum_availability`, or `other`, and `threshold_unit` is `percent` or `currency`.",
     ),
-    "covenant_type": frozenset(
-        {
-            "total_net_leverage",
-            "first_lien_net_leverage",
-            "secured_net_leverage",
-            "total_leverage_gross",
-            "interest_coverage",
-            "fixed_charge_coverage",
-            "debt_service_coverage",
-            "minimum_liquidity",
-            "capex_limit",
-            "other",
-        }
+    "threshold_unit": (
+        frozenset({"percent", "currency"}),
+        "where `condition_type` is `revolver_utilization`, `minimum_availability`, or `other`, "
+        "and `threshold_unit` is `percent` or `currency`.",
     ),
-    "testing_frequency": frozenset({"quarterly", "monthly", "semiannual", "annual", "event_driven"}),
+    "null_kind": (
+        frozenset({"deferral", "absence"}),
+        "Label files carry `null_kind` alongside any null value, taking `\"deferral\"` or "
+        "`\"absence\"`.",
+    ),
 }
 
-MATURITY_BASIS = frozenset({"stated", "relative"})
-CONDITION_TYPE = frozenset({"revolver_utilization", "minimum_availability", "other"})
-THRESHOLD_UNIT = frozenset({"percent", "currency"})
-NULL_KINDS = frozenset({"deferral", "absence"})
+ENUM_TYPE_LINE = re.compile(r"\*\*Type:\*\*\s+enum\s+—\s+(.+?)\.\s*\n", re.S)
+BACKTICKED = re.compile(r"`([a-z_0-9]+)`")
+SECTION_BREAK = re.compile(r"\n### |\n---")
+
+
+class SchemaParseError(Exception):
+    """schema.md could not be read in the shape this module expects.
+
+    Raised rather than falling back, because a partial value set is
+    indistinguishable in the output from a corpus full of bad enum values.
+    """
+
+
+@dataclass(frozen=True)
+class SchemaSets:
+    enums: dict[str, frozenset[str]]
+    maturity_basis: frozenset[str]
+    condition_type: frozenset[str]
+    threshold_unit: frozenset[str]
+    null_kinds: frozenset[str]
+
+
+def _normalize_prose(text: str) -> str:
+    return re.sub(r"\s+", " ", text)
+
+
+def parse_enum(schema_text: str, field: str) -> frozenset[str]:
+    """Read one `**Type:** enum — ...` value set out of its field section."""
+    heading = re.search(rf"^### \d+\. `{re.escape(field)}`$", schema_text, re.M)
+    if heading is None:
+        raise SchemaParseError(
+            f"schema.md: no '### N. `{field}`' heading found; the field section may have been "
+            f"renamed or removed"
+        )
+    body_start = heading.end()
+    break_match = SECTION_BREAK.search(schema_text, body_start)
+    body = schema_text[body_start : break_match.start() if break_match else len(schema_text)]
+
+    type_line = ENUM_TYPE_LINE.search(body)
+    if type_line is None:
+        raise SchemaParseError(
+            f"schema.md: the `{field}` section has no '**Type:** enum — ...' line ending in a "
+            f"period; the enum may have been reformatted"
+        )
+    values = frozenset(BACKTICKED.findall(type_line.group(1)))
+    if not values:
+        raise SchemaParseError(
+            f"schema.md: the `{field}` enum line parsed to an empty value set: "
+            f"{_normalize_prose(type_line.group(1))!r}"
+        )
+    return values
+
+
+def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
+    """Parse the scored enums; assert the guarded sets are still defined as transcribed."""
+    try:
+        schema_text = schema_path.read_text()
+    except OSError as exc:
+        raise SchemaParseError(f"cannot read {schema_path}: {exc}") from exc
+
+    enums = {field: parse_enum(schema_text, field) for field in PARSED_ENUMS}
+
+    flat = _normalize_prose(schema_text)
+    for name, (_, sentence) in GUARDED_SETS.items():
+        if _normalize_prose(sentence) not in flat:
+            raise SchemaParseError(
+                f"schema.md: the sentence defining `{name}` is no longer present as transcribed. "
+                f"This module keeps that set as a copy because it is defined in prose, so the "
+                f"copy must be re-checked by hand against schema.md and updated here.\n"
+                f"  expected: {_normalize_prose(sentence)}"
+            )
+
+    return SchemaSets(
+        enums=enums,
+        maturity_basis=GUARDED_SETS["maturity_basis"][0],
+        condition_type=GUARDED_SETS["condition_type"][0],
+        threshold_unit=GUARDED_SETS["threshold_unit"][0],
+        null_kinds=GUARDED_SETS["null_kind"][0],
+    )
 
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 CURRENCY_CODE = re.compile(r"^[A-Z]{3}$")
@@ -183,7 +276,9 @@ def _check_citation(
     report.add(f"{path}.quote", "quote_not_verbatim", f"not found in the source document: {quote[:90]!r}")
 
 
-def _check_null_kind(report: Report, path: str, entry: dict[str, Any], value: Any) -> None:
+def _check_null_kind(
+    report: Report, path: str, entry: dict[str, Any], value: Any, sets: SchemaSets
+) -> None:
     """schema.md, `null_kind` — a gold annotation, not a schema field.
 
     It decides whether a citation is demanded, so a null without it leaves the
@@ -196,11 +291,11 @@ def _check_null_kind(report: Report, path: str, entry: dict[str, Any], value: An
         if null_kind is None:
             report.add(path, "null_missing_null_kind", "null value carries no null_kind")
             return
-        if null_kind not in NULL_KINDS:
+        if null_kind not in sets.null_kinds:
             report.add(
                 f"{path}.null_kind",
                 "bad_null_kind",
-                f"{null_kind!r} is not one of {sorted(NULL_KINDS)}",
+                f"{null_kind!r} is not one of {sorted(sets.null_kinds)}",
             )
             return
         if null_kind == "deferral" and not citation:
@@ -220,14 +315,14 @@ def _check_null_kind(report: Report, path: str, entry: dict[str, Any], value: An
         report.add(path, "null_kind_on_non_null", f"value is not null but null_kind is {null_kind!r}")
 
 
-def _check_maturity(report: Report, path: str, value: Any) -> None:
+def _check_maturity(report: Report, path: str, value: Any, sets: SchemaSets) -> None:
     if not isinstance(value, dict):
         report.add(path, "malformed_field", "expected {value, basis}")
         return
     basis = value.get("basis")
     inner = value.get("value")
-    if basis not in MATURITY_BASIS:
-        report.add(f"{path}.basis", "enum_not_in_schema", f"{basis!r} is not one of {sorted(MATURITY_BASIS)}")
+    if basis not in sets.maturity_basis:
+        report.add(f"{path}.basis", "enum_not_in_schema", f"{basis!r} is not one of {sorted(sets.maturity_basis)}")
         return
 
     if basis == "stated":
@@ -268,23 +363,23 @@ def _check_commitment(report: Report, path: str, value: Any) -> None:
         report.add(f"{path}.currency", "malformed_field", f"expected an ISO 4217 code, found {currency!r}")
 
 
-def _check_springing(report: Report, path: str, value: Any) -> None:
+def _check_springing(report: Report, path: str, value: Any, sets: SchemaSets) -> None:
     if not isinstance(value, dict):
         report.add(path, "malformed_field", "expected an object or null")
         return
     condition = value.get("condition_type")
     unit = value.get("threshold_unit")
-    if condition not in CONDITION_TYPE:
+    if condition not in sets.condition_type:
         report.add(
             f"{path}.condition_type",
             "enum_not_in_schema",
-            f"{condition!r} is not one of {sorted(CONDITION_TYPE)}",
+            f"{condition!r} is not one of {sorted(sets.condition_type)}",
         )
-    if unit not in THRESHOLD_UNIT:
+    if unit not in sets.threshold_unit:
         report.add(
             f"{path}.threshold_unit",
             "enum_not_in_schema",
-            f"{unit!r} is not one of {sorted(THRESHOLD_UNIT)}",
+            f"{unit!r} is not one of {sorted(sets.threshold_unit)}",
         )
     if not isinstance(value.get("threshold"), (int, float)) or isinstance(value.get("threshold"), bool):
         report.add(f"{path}.threshold", "malformed_field", f"expected a number, found {value.get('threshold')!r}")
@@ -317,7 +412,7 @@ def _check_step_downs(report: Report, path: str, value: Any) -> None:
 
 
 def _check_field(
-    report: Report, path: str, name: str, entry: Any, document: str | None
+    report: Report, path: str, name: str, entry: Any, document: str | None, sets: SchemaSets
 ) -> None:
     if not isinstance(entry, dict) or "value" not in entry:
         report.add(path, "malformed_field", "expected {value, citation}")
@@ -325,7 +420,7 @@ def _check_field(
 
     value = entry["value"]
     citation = entry.get("citation")
-    _check_null_kind(report, path, entry, value)
+    _check_null_kind(report, path, entry, value, sets)
 
     if value is None:
         return
@@ -339,8 +434,8 @@ def _check_field(
     else:
         _check_citation(report, f"{path}.citation", citation, document)
 
-    if name in ENUMS:
-        if value not in ENUMS[name]:
+    if name in sets.enums:
+        if value not in sets.enums[name]:
             report.add(path, "enum_not_in_schema", f"{value!r} is not in the {name} enum")
         elif name == "covenant_type" and value == "other":
             report.add(
@@ -350,11 +445,11 @@ def _check_field(
                 severity="warn",
             )
     elif name == "maturity_date":
-        _check_maturity(report, path, value)
+        _check_maturity(report, path, value, sets)
     elif name == "aggregate_commitment":
         _check_commitment(report, path, value)
     elif name == "springing_trigger":
-        _check_springing(report, path, value)
+        _check_springing(report, path, value, sets)
     elif name == "step_down_schedule":
         _check_step_downs(report, path, value)
     elif name == "has_margin_grid" and not isinstance(value, bool):
@@ -371,7 +466,7 @@ def _check_field(
         report.add(path, "malformed_field", f"expected a string, found {value!r}")
 
 
-def validate_label(label_path: Path, raw_dir: Path) -> Report:
+def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
     report = Report(label_path)
     try:
         label = json.loads(label_path.read_text())
@@ -407,7 +502,7 @@ def validate_label(label_path: Path, raw_dir: Path) -> Report:
             if name not in facility:
                 report.add(path, "missing_field", "scored field absent from the record")
                 continue
-            _check_field(report, path, name, facility[name], document)
+            _check_field(report, path, name, facility[name], document, sets)
 
     # An empty covenant list is a real answer for a cov-lite agreement, so its
     # absence is a hole and its emptiness is not.
@@ -421,12 +516,14 @@ def validate_label(label_path: Path, raw_dir: Path) -> Report:
             if name not in covenant:
                 report.add(path, "missing_field", "scored field absent from the record")
                 continue
-            _check_field(report, path, name, covenant[name], document)
+            _check_field(report, path, name, covenant[name], document, sets)
 
     return report
 
 
-def run_validate(paths: list[Path], raw_dir: Path) -> dict[str, Any]:
+def run_validate(paths: list[Path], raw_dir: Path, schema_path: Path = SCHEMA_PATH) -> dict[str, Any]:
+    sets = load_schema_sets(schema_path)
+
     label_files: list[Path] = []
     for path in paths:
         if path.is_dir():
@@ -436,7 +533,7 @@ def run_validate(paths: list[Path], raw_dir: Path) -> dict[str, Any]:
 
     summary: dict[str, Any] = {"files": [], "clean": 0, "with_deviations": 0}
     for label_path in label_files:
-        report = validate_label(label_path, raw_dir)
+        report = validate_label(label_path, raw_dir, sets)
         if report.deviations:
             summary["with_deviations"] += 1
         else:

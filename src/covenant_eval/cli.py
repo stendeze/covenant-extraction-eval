@@ -10,7 +10,7 @@ from pathlib import Path
 from .edgar import MissingUserAgent
 from .screen import run_screen
 from .search import run_census
-from .validate import run_validate
+from .validate import SCHEMA_PATH, SchemaParseError, run_validate
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -32,6 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     validate.add_argument("paths", type=Path, nargs="*", default=[Path("data/labels")])
     validate.add_argument("--raw", type=Path, default=Path("data/raw"))
+    validate.add_argument("--schema", type=Path, default=SCHEMA_PATH)
 
     args = parser.parse_args(argv)
 
@@ -45,7 +46,7 @@ def main(argv: list[str] | None = None) -> int:
             )
         elif args.command == "validate":
             paths = args.paths or [Path("data/labels")]
-            result = run_validate(paths, args.raw)
+            result = run_validate(paths, args.raw, args.schema)
             print(
                 f"\n{result['clean']} clean, {result['with_deviations']} with deviations, "
                 f"{result['total_deviations']} deviations ({result['total_errors']} errors)"
@@ -54,7 +55,10 @@ def main(argv: list[str] | None = None) -> int:
             # not fail: several of them are judgment calls the labeler owns.
             return 1 if result["total_errors"] else 0
         print(json.dumps(result, indent=2))
-    except MissingUserAgent as exc:
+    except (MissingUserAgent, SchemaParseError) as exc:
+        # Exit 2 is "cannot run", distinct from exit 1, "ran and found
+        # deviations". A schema.md that will not parse must not degrade into a
+        # clean-looking report computed from a partial value set.
         print(f"error: {exc}", file=sys.stderr)
         return 2
     return 0
