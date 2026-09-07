@@ -122,6 +122,73 @@ benchmark" rule already resolves this document to `libor`, so no label changed.
 label, and the alternative is forcing `other` on the first CAD-primary
 agreement to appear mid-labeling.
 
+### `maturity_date` — `relative` values are structured, not verbatim strings
+
+**Trigger:** document two, Plains GP Holdings — the first `relative` maturity.
+
+Plains states no calendar maturity anywhere: the definition is "the later of
+(a) such date that is five years from the Closing Date...". As a verbatim
+string that value would be scored under the text normalization rules, where
+"five years from the Closing Date", "the fifth anniversary of the Closing
+Date" and "such date that is five years from the Closing Date" are three
+different answers to one question. All three are substantively correct and two
+would score as misses.
+
+That is a false-negative mechanism built into the field — it would measure
+phrasing rather than extraction. `relative` values are now
+`{tenor_years, anchor}`, which is machine-comparable and removes the
+normalization guesswork entirely.
+
+### `maturity_date` — the limb rule generalized
+
+**Trigger:** document two, Plains GP Holdings.
+
+The rule written after Paya covered "earliest of (i) a date (ii) termination
+(iii) acceleration". Plains is "**later** of (a) five years (b) any extended
+date under §2.14" — the mirror construction, with an extension option rather
+than early termination, and not covered by the rule as written.
+
+Generalized to: **record the limb that states a date or a period; limbs
+referencing termination, acceleration, or an extension option are mechanics.**
+This covers both constructions without either being a special case and does
+not depend on limb order. An earlier draft said "the primary limb", which is
+not mechanical enough for a second labeler to apply.
+
+### `facility_name` — the cover-page rule
+
+**Trigger:** document two, Plains GP Holdings.
+
+Plains never names its tranche in the operative text. "Revolving Credit
+Facility" appears **exactly once in 84,000 words**, as the tail of the
+cover-page label "Senior Unsecured Revolving Credit Facility", sitting between
+the arrangers and the table of contents. The body defines only "Commitment",
+"Committed Loans" and "Aggregate Commitments".
+
+Rule: for a single-facility agreement whose body uses only
+"Commitment"/"Loans", take the cover-page label excluding ranking and security
+descriptors, which describe capital-structure priority rather than the tranche.
+
+Recorded with a maintenance warning in schema.md: this field has now generated
+its own sub-rule on the second document, and it is already the weakest-signal
+field, reported separately, first in the cut order. If it needs a third rule,
+it gets cut instead. A field that keeps needing exceptions is not well defined.
+
+### `null_kind` — added to gold, deliberately excluded from the schema
+
+**Trigger:** document two, Plains GP Holdings.
+
+The label file needs to record whether a null is a deferral or an absence,
+because that decides whether a citation is required. But `null_kind` is not an
+extraction field and is not scored, for the same reason covenant direction was
+excluded: it is fully determined by field identity. A null on
+`applicable_margin_bps` is essentially always a deferral; one on
+`springing_trigger` is essentially always an absence. A model producing it
+would be right by construction, and scoring it would inflate the number with a
+field that cannot be got wrong.
+
+Kept as a gold annotation that configures the scorer. Machine-checkability
+without the inflation.
+
 ### `maturity_date` — the "earliest of" construction
 
 **Trigger:** document one, Paya Holdings.
@@ -252,6 +319,30 @@ deferral nulls, which uses machinery the harness already has.
 - **Multicurrency**: CAD borrowings price off CDOR, USD off LIBOR. Resolved to
   `libor` by the primary-benchmark rule; `cdor` added to the enum against a
   future CAD-primary agreement.
+- **`$1,350,000,000` aggregate commitments**, confirmed two ways: the defined
+  term, and Schedule 2.01 reconciling as 20 lenders × $64M + 2 × $35M.
+- **The exclusion rules did substantial work here.** Three sublimits — L/C
+  $400M, Swing Line $150M, Canadian Dollar $1B — are each "part of, and not in
+  addition to, the Aggregate Commitments", and Canadian Bankers' Acceptances
+  are a borrowing form under the same Commitment rather than a tranche. The
+  §2.16 accordion permits increases to $2.1B. Booking any of them would have
+  overstated the facility.
+- **That $2.1B accordion is what the screen reported as the document's
+  "largest dollar amount."** It is the exact noise the size-band signal was
+  flagged as carrying — an option, not a commitment — and it confirms the
+  decision to make that a signal rather than a filter.
+- **`total_leverage_gross`, classified by definition rather than label.** The
+  covenant is called "Consolidated Leverage Ratio", but `Consolidated Funded
+  Indebtedness` contains no netting language at all — no "less", "minus", "net
+  of", or cash-equivalents subtraction — so it is gross, not net. The facility
+  is senior unsecured, so no lien-based variant applies.
+- **Acquisition holiday handled correctly.** §7.08's table has two rows: 5.50x
+  during an Acquisition Period, 5.00x otherwise. Recorded 5.00 per the
+  non-holiday rule; the holiday level is a conditional override, not the
+  covenant level.
+- **`step_down_schedule` is `[]` and confirmed flat**, not merely absent. The
+  table is keyed to Acquisition Period status, not to fiscal periods, so there
+  is no time-based change to the 5.00x level for the life of the agreement.
 
 ### Advance Auto Parts, Inc. — 2021-11-09 — `0001158449-21-000208`
 

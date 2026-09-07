@@ -158,10 +158,32 @@ strip leading articles, strip punctuation, collapse whitespace. So "the
 Revolving Credit Facility" and "Revolving Credit Facility" match; "Revolving
 Facility" and "Revolving Credit Facility" do not.
 
+**Where the body never names the tranche.** A single-facility agreement often
+defines only "Commitment", "Committed Loans" and "Aggregate Commitments", and
+names the facility nowhere except the cover page. Plains GP is the extreme
+case: "Revolving Credit Facility" appears exactly once in 84,000 words, as the
+tail of the cover-page label "Senior Unsecured Revolving Credit Facility",
+between the arrangers and the table of contents.
+
+Rule: **for a single-facility agreement whose body uses only
+"Commitment"/"Loans", take the cover-page label excluding ranking and security
+descriptors** — "Senior", "Junior", "Secured", "Unsecured", "First Lien",
+"Second Lien". Those describe priority in the capital structure, not the
+tranche. So "Senior Unsecured Revolving Credit Facility" is recorded as
+"Revolving Credit Facility". The citation still quotes the full cover-page
+label, which appears verbatim; the value is derived from it.
+
 This is the weakest-signal field in the schema and it is reported separately
 from the headline number. It exists because it is what a human reviewer keys
 off, and because a model that cannot name the tranche it just extracted is
 telling you something. `facility_type` carries the semantic weight.
+
+> **Maintenance warning.** This field has now generated its own adjudication
+> sub-rule on the second document labeled. It is already designated
+> weakest-signal, reported separately, and first in the cut order. **If it
+> requires a third rule, cut it rather than writing one.** A field that keeps
+> needing exceptions is telling you it is not well defined, and no result
+> here justifies the maintenance.
 
 ### 2. `facility_type`
 
@@ -212,28 +234,55 @@ size.
 
 ### 4. `maturity_date`
 
-**Type:** object — `{value, basis}` where `basis` is `stated` (value is an
-ISO-8601 date) or `relative` (value is the verbatim formulation, e.g. "the
-fifth anniversary of the Closing Date").
+**Type:** object — `{value, basis}` where `basis` is `stated` or `relative`.
+
+- `stated`: `value` is an ISO-8601 date — `"2028-06-25"`.
+- `relative`: `value` is a **structured object**, `{tenor_years, anchor}` —
+  `{"tenor_years": 5, "anchor": "Closing Date"}`. Use `tenor_months` instead
+  where the agreement expresses a period in months.
 
 **Where it lives:** the Article I definitions — "Maturity Date", "Revolving
 Maturity Date", "Term Loan Maturity Date".
 
 **Correct when:** `basis` matches and, for `stated`, the date matches exactly;
-for `relative`, the normalized string matches. Adjudication rules:
+for `relative`, `tenor_years` (or `tenor_months`) and the normalized `anchor`
+both match.
+
+> **Why `relative` is structured rather than a verbatim string.** As a free
+> string it would be scored under the normalization rules for text —
+> lowercase, strip articles and punctuation, collapse whitespace — and "five
+> years from the Closing Date", "the fifth anniversary of the Closing Date"
+> and "such date that is five years from the Closing Date" would be three
+> different answers to the same question. All three are substantively correct
+> and two of them would score as misses. That is a false-negative mechanism
+> built into the field, measuring phrasing rather than extraction. The
+> structured form is machine-comparable and removes the guesswork.
+
+Adjudication rules:
 
 - Where the agreement gives a hard date, `basis` is `stated` even if it also
   describes the date as an anniversary.
-- **The "earliest of" construction is ordinary and does not change the
-  answer.** Nearly every agreement defines maturity as the earliest of (i) a
-  stated calendar date, (ii) the date the commitments are terminated in whole,
-  and (iii) the date the loans are declared due and payable on acceleration.
-  Limbs (ii) and (iii) are termination and acceleration mechanics, not
-  alternative maturities — they describe what happens when the deal ends
-  early, which is true of every facility ever written. Record the stated
-  calendar date from limb (i). This is distinct from the springing-maturity
-  case below, which turns on an instrument outside the document rather than on
-  the parties' own termination rights.
+- **Record the limb that states a date or a period.** Maturity is nearly
+  always defined as the earliest or latest of several limbs. Limbs referencing
+  **termination, acceleration, or an extension option** are mechanics, not
+  alternative maturities — they describe when the deal may end early or be
+  prolonged, which is true of every facility ever written.
+
+  This covers both common constructions without either being a special case,
+  and it does not depend on limb order:
+
+  - "the **earliest** of (i) June 25, 2028, (ii) termination in whole of the
+    Commitments, (iii) the date the Loans are declared due and payable" →
+    `{"value": "2028-06-25", "basis": "stated"}`. Limbs (ii) and (iii) are
+    mechanics.
+  - "the **later** of (a) such date that is five years from the Closing Date
+    and (b) if extended pursuant to Section 2.14, such extended Maturity Date"
+    → `{"value": {"tenor_years": 5, "anchor": "Closing Date"}, "basis":
+    "relative"}`. Limb (b) is an extension option, i.e. a mechanic.
+
+  Distinct from the springing-maturity case below, which turns on an
+  instrument outside the document rather than on the parties' own termination
+  or extension rights.
 - **Springing maturity provisos are excluded from this field.** A clause like
   "or, if earlier, the date 91 days prior to the stated maturity of the Senior
   Notes" makes the actual maturity contingent on an instrument outside this
@@ -556,6 +605,24 @@ Citation accuracy is scored and reported **separately** from field accuracy.
 The two questions — did it get the number right, and can it show you where the
 number came from — are different, and a system that is right for the wrong
 reason should not be able to hide inside a single aggregate.
+
+### `null_kind` — a gold annotation, not a schema field
+
+Label files carry `null_kind` alongside any null value, taking `"deferral"` or
+`"absence"`. It determines whether a citation is required: a deferral null
+must quote the language that defers, an absence null has nothing to quote.
+
+**It is deliberately not part of the extraction schema and is not scored.**
+The model is never asked for it. The reason is the one that already excluded
+covenant direction: `null_kind` is fully determined by field identity. On
+`applicable_margin_bps` a null is essentially always a deferral; on
+`springing_trigger` it is essentially always an absence. A model producing it
+would be right by construction, and scoring it would inflate the headline
+number with a field that cannot be got wrong.
+
+The scorer reads `null_kind` from the gold record to decide whether to demand
+a citation for that null. That preserves the machine-checkability without
+asking the model for an answer it cannot fail.
 
 ---
 
