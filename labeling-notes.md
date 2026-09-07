@@ -189,6 +189,41 @@ field that cannot be got wrong.
 Kept as a gold annotation that configures the scorer. Machine-checkability
 without the inflation.
 
+### `covenant_type` — coverage covenants classified by denominator
+
+**Trigger:** Advance Auto Parts, `0001158449-21-000208`.
+
+Advance Auto carries two ratios that the enum did not cleanly decide, and both
+are lease-adjusted. §6.09 tests a "Consolidated Coverage Ratio" — a neutral
+label carrying no classification — defined as Consolidated EBITDAR over
+Consolidated Interest Expense **plus Consolidated Rent Expense**. It is not
+`interest_coverage`, because the denominator is not interest alone. Whether it
+is `fixed_charge_coverage` depended on a term the schema never defined: what
+counts as a fixed charge.
+
+Rule: classify coverage covenants by the denominator. Interest alone is
+`interest_coverage`; interest plus one or more recurring fixed obligations is
+`fixed_charge_coverage`. The numerator does not decide it — EBITDA, EBITDAR
+and Consolidated Net Income all appear over the same denominators — and the
+lease-adjusted form is named explicitly, because EBITDAR over interest plus
+rent is the standard shape in retail credits and should not be re-argued at
+every document that carries it.
+
+The narrower reading, requiring scheduled principal in the denominator, was
+rejected on the grounds that decided `debt_service_coverage` and
+`debt_to_capitalization`: fixed charge denominators vary widely, and demanding
+a particular component would push a large share of genuine fixed charge
+covenants into `other`. An enum whose catch-all absorbs a common construction
+is not classifying anything.
+
+The §6.08 leverage covenant in the same document needed no new rule. It is
+also lease-adjusted — Consolidated Adjusted Funded Debt adds operating lease
+liabilities, over EBITDAR — but the denominator-first rule added under Roper
+already decides it: an earnings denominator and a 3.75 threshold make it a
+leverage ratio, and Total Debt nets no cash, so `total_leverage_gross`. Both
+hesitations the labeler recorded resolve to the values already chosen; no
+label changed.
+
 ### `maturity_date` — the "earliest of" construction
 
 **Trigger:** document one, Paya Holdings.

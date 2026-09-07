@@ -481,6 +481,24 @@ its inputs ("Consolidated EBITDA", "Consolidated Total Debt").
   covenants are maximums, coverage covenants and liquidity minimums are
   minimums. Adding a direction field would be a field that is right by
   construction and would inflate the accuracy number.
+- **Coverage covenants are classified by what is in the denominator.**
+  Interest alone → `interest_coverage`. Interest plus one or more recurring
+  fixed obligations — rent, scheduled principal, taxes, preferred dividends —
+  → `fixed_charge_coverage`. The numerator does not decide it; EBITDA, EBITDAR
+  and Consolidated Net Income all appear over the same denominators.
+
+  **Lease-adjusted constructions are `fixed_charge_coverage`.** EBITDAR over
+  interest plus rent is the standard rent-adjusted form and is common in
+  retail and restaurant credits, where capitalized rent is the largest fixed
+  obligation on the page. It is named here so the shape does not have to be
+  re-argued at each document that carries it.
+
+  The narrower reading — that `fixed_charge_coverage` requires scheduled
+  principal in the denominator — is rejected deliberately. Fixed charge
+  denominators vary widely in practice, and requiring any particular
+  component would push a large share of real fixed charge covenants into
+  `other`, turning that value into the dumping ground the enum exists to
+  prevent.
 - Where a covenant runs for the benefit of revolving lenders only (the
   standard cov-lite structure), it is still recorded — it is a financial
   covenant in this agreement. The beneficiary is noted in free text.
