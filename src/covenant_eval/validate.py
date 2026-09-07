@@ -423,6 +423,14 @@ def _check_field(
     _check_null_kind(report, path, entry, value, sets)
 
     if value is None:
+        # A deferral null's citation is the whole reason the null is
+        # falsifiable — schema.md requires it to quote the deferring sentence
+        # precisely so the existing citation check can tell a system that read
+        # the clause from one that declined out of vagueness. Checking only
+        # that the citation exists would leave the project's most important
+        # field class as the one place a quote is never verified.
+        if citation:
+            _check_citation(report, f"{path}.citation", citation, document)
         return
 
     # schema.md: every scored field carries a citation. An empty step-down
