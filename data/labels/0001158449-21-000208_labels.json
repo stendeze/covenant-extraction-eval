@@ -1,0 +1,164 @@
+{
+  "source": {
+    "accession_number": "0001158449-21-000208",
+    "exhibit": "EX-10.1",
+    "filing_date": "2021-11-15",
+    "agreement_date": "2021-11-09",
+    "borrower": "Advance Auto Parts, Inc.",
+    "administrative_agent": "Bank of America, N.A.",
+    "form_type": "8-K",
+    "notes": "Schedule 2.01 (Commitments) is not attached to the filed exhibit; aggregate commitment is taken from the defined term, which governs in any case. Twelve lenders sign the agreement (syndicated). No term loan tranche exists; the sole facility is the revolving credit facility."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Loans",
+        "citation": {
+          "section": "2.01 (Commitments)",
+          "quote": "each Lender agrees to make Revolving Loans to the Borrower from time to time during the Availability Period applicable to such Lender in dollars"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01 (Commitments)",
+          "quote": "the Borrower may borrow Revolving Loans and may prepay and reborrow Revolving Loans"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 1200000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Commitment\")",
+          "quote": "The initial aggregate amount of the Lenders’ Commitments is $1,200,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": { "tenor_years": 5, "anchor": "Effective Date" },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\")",
+          "quote": "means the fifth anniversary of the Effective Date, as such date may be extended from time to time pursuant to Section 2.22"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.01 (definition of \"Eurodollar Rate\")",
+          "quote": "for any Interest Period with respect to a Eurodollar Loan, the rate per annum equal to the London Interbank Offered Rate"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "based upon the Ratings by S&P and Moody’s, respectively, applicable on such day"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "the applicable rate per annum set forth below under the caption “ABR Spread”, “Eurodollar Spread” or “Facility Fee Rate”, as the case may be, based upon the Ratings by S&P and Moody’s"
+        }
+      },
+      "notes": [
+        "facility_name: the agreement never assigns a defined name to the facility (no \"Revolving Credit Facility\" term). \"Revolving Loans\" is the label used in §2.01 and throughout Article II; the defined term is the singular \"Revolving Loan\" (\"a Loan made pursuant to Section 2.01\"). Cover page CUSIP line reads \"REV\".",
+        "maturity_date: \"Effective Date\" is defined as the date the §4.01 conditions are satisfied, not a calendar date, so the document states no hard date — basis is relative. §2.22 permits up to two one-year extensions; not reflected in the field.",
+        "applicable_margin_bps: deferral null. Ratings-based five-category grid (Eurodollar Spread 0.795% / 0.900% / 1.000% / 1.200% / 1.300%; ABR Spread 0.000%–0.300%; Facility Fee Rate 0.080%–0.200%). The agreement does not state an opening category; it defers to the Ratings applicable on any given day. Not the silence fallback — the agreement is explicit that the answer lives in the external rating.",
+        "has_margin_grid: the Eurodollar Spread itself steps with ratings, so this is a true margin grid (not merely a fee grid). The facility fee also has a grid keyed to the same categories.",
+        "interest_rate_benchmark: Eurodollar Rate resolves to LIBOR administered by ICE Benchmark Administration. §2.10 (Replacement of Rate) defines Term SOFR / Daily Simple SOFR as Benchmark Replacement fallback language only — conditional, not operative. Benchmark floor at zero (Eurodollar Rate clause (c)).",
+        "Excluded from facility records: Letter of Credit Sublimit ($200,000,000, \"part of, and not in addition to, the total Commitments\"); Swingline Loans (sublimit within Commitments); §2.20 Increase in Commitments (accordion, up to $500,000,000 — an option, not a commitment)."
+      ]
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "total_leverage_gross",
+        "citation": {
+          "section": "1.01 (definition of \"Leverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated Adjusted Funded Debt as of such date to (b) Consolidated EBITDAR for the period of four consecutive fiscal quarters of the Borrower most recently ended as of such date"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.75,
+        "citation": {
+          "section": "6.08 (Leverage Ratio)",
+          "quote": "The Borrower will not permit the Leverage Ratio as of the last day of any period of four consecutive fiscal quarters to be in excess of 3.75 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "6.08 (Leverage Ratio)",
+          "quote": "The Borrower will not permit the Leverage Ratio as of the last day of any period of four consecutive fiscal quarters to be in excess of 3.75 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.08 (Leverage Ratio)",
+          "quote": "as of the last day of any period of four consecutive fiscal quarters"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      },
+      "notes": [
+        "covenant_type: Consolidated Adjusted Funded Debt = Total Debt + operating lease liabilities (FASB 842); Total Debt is all Indebtedness with no cash netting → gross. Lease-adjusted (EBITDAR denominator); the enum has no lease-adjusted variant, so classified on lien scope (total) and netting (gross) per the rule. Hesitation recorded: `other` is the alternative reading.",
+        "initial_threshold / step_down_schedule: §6.08 proviso raises the level to 4.25:1.00 for four consecutive fiscal quarters following acquisitions with aggregate consideration ≥ $1,000,000,000 in a 12-month period (Leverage Increase Testing Period), with a requirement that the ratio be ≤ 3.75 for two consecutive quarters before any subsequent holiday. This is a covenant holiday (conditional override); the non-holiday level 3.75 is recorded and the schedule is confirmed flat.",
+        "testing_frequency: compliance certificate under §5.01(c) is delivered with annual and quarterly financial statements and demonstrates compliance with §§6.08 and 6.09 as of the end of each such period.",
+        "springing_trigger: tested unconditionally every period; absence null, no citation required."
+      ]
+    },
+    {
+      "covenant_type": {
+        "value": "fixed_charge_coverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Coverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated EBITDAR for such period to (b) the sum of Consolidated Interest Expense plus Consolidated Rent Expense for such period"
+        }
+      },
+      "initial_threshold": {
+        "value": 2.25,
+        "citation": {
+          "section": "6.09 (Consolidated Coverage Ratio)",
+          "quote": "The Borrower will not permit the Consolidated Coverage Ratio for any period of four fiscal quarters to be less than 2.25 to 1.00."
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "6.09 (Consolidated Coverage Ratio)",
+          "quote": "The Borrower will not permit the Consolidated Coverage Ratio for any period of four fiscal quarters to be less than 2.25 to 1.00."
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "5.01(c) (Financial Statements and Other Information)",
+          "quote": "setting forth reasonably detailed calculations demonstrating compliance with Sections 6.08 and 6.09 as of the end of the period covered by such financial statements"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      },
+      "notes": [
+        "covenant_type: the label is the neutral \"Consolidated Coverage Ratio\"; classified by definition. Denominator is interest expense plus rent expense, i.e. fixed charges, and numerator is EBITDAR — the standard rent-adjusted fixed charge coverage construction. Not `interest_coverage` because the denominator is not interest alone. Hesitation recorded: the schema does not define what counts as a fixed charge; a labeler who reads `fixed_charge_coverage` as requiring scheduled principal in the denominator would choose `other`.",
+        "testing_frequency: §6.09 is tested for \"any period of four fiscal quarters\"; the §5.01(c) certificate demonstrating compliance accompanies each quarterly and annual delivery, so the test is quarterly.",
+        "step_down_schedule: confirmed flat — a single level with no table.",
+        "springing_trigger: tested unconditionally; absence null."
+      ]
+    }
+  ]
+}
