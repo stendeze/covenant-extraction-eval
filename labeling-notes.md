@@ -266,6 +266,50 @@ deferral nulls, which uses machinery the harness already has.
 
 ---
 
+## The check that guaranteed the guarantee was missing
+
+The `applicable_margin_bps` deferral null is the field class this project
+argues hardest for. The case in [README.md](README.md) is that a `null` alone
+cannot distinguish a system that read the deferral clause from one that
+declined out of vagueness, and that requiring a citation resolves it "through
+the citation check the harness already performs." [schema.md](schema.md#6-applicable_margin_bps)
+says the same: the requirement makes `null` a falsifiable answer *using the
+citation check that already exists*.
+
+That check did not exist. The validator walked each field, and on seeing a
+null value it confirmed `null_kind` and confirmed that a deferral carried
+some citation — then returned, without ever testing the quote inside it
+against the document. **A deferral null could have carried an entirely
+invented quote and passed clean.** The guarantee the argument rests on was
+the one place no quote was verified.
+
+**How it surfaced.** Not by reading the code. The Advance Auto label declared
+15 citations and the validator reported 14 checked. One field had a citation
+nobody was looking at, and it was the deferral null.
+
+Two things worth taking from this rather than one.
+
+The first is about where to point a check. The rule was written, stated in
+two documents, and satisfied in every label file — and the mechanism that was
+supposed to enforce it silently skipped the case. A rule that is only enforced
+where it is easy to enforce is not enforced. Nulls were the early-return case
+in the walk precisely *because* they are the exceptional path, which is the
+same reason they are the path that needed checking.
+
+The second is that the discrepancy was found by a count, not by reading. The
+validator reported a number, the label file asserted a different number, and
+the gap was one line of arithmetic. That is worth generalizing: the cheapest
+audits available here are the ones where two independent sources produce a
+number that has to agree. This is the same shape as the Schedule 2.01
+reconciliation on Plains — 20 lenders × $64M + 2 × $35M against a defined term
+— and the same shape as the reasoning error above, which was caught by
+checking a claim against every labeled document rather than the ones in mind.
+
+Fixed in `2e03159`. Both label files now verify every citation they carry, and
+a deferral null with a fabricated quote fails.
+
+---
+
 ## Per-document observations
 
 ### Paya Holdings III, LLC — 2021-06-25 — `0001213900-21-034493`
