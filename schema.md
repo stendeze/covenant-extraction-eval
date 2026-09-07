@@ -452,9 +452,9 @@ exactly as it should be.
 ### 8. `covenant_type`
 
 **Type:** enum — `total_net_leverage`, `first_lien_net_leverage`,
-`secured_net_leverage`, `total_leverage_gross`, `interest_coverage`,
-`fixed_charge_coverage`, `debt_service_coverage`, `minimum_liquidity`,
-`capex_limit`, `other`.
+`secured_net_leverage`, `total_leverage_gross`, `debt_to_capitalization`,
+`interest_coverage`, `fixed_charge_coverage`, `debt_service_coverage`,
+`minimum_liquidity`, `capex_limit`, `other`.
 
 **Where it lives:** the financial covenants section — Article VI or VII, the
 section number varies (§6.12, §7.11, §6.10 are all common); and the Article I
@@ -468,6 +468,15 @@ its inputs ("Consolidated EBITDA", "Consolidated Total Debt").
   and counts only first lien debt is `first_lien_net_leverage`.
 - Netting is determined by whether the debt definition subtracts cash. If it
   does, it is a `net` variant; if not, `total_leverage_gross`.
+- **Classify by the denominator first, then by netting.** Every leverage value
+  above divides debt by EBITDA and is unbounded, typically 3.00x to 7.00x.
+  `debt_to_capitalization` divides debt by total capital — debt plus equity —
+  and is therefore bounded near 1.00. **A threshold below 1.00 cannot be an
+  EBITDA multiple**, which makes this a mechanical test rather than a judgment
+  call: a covenant set at 0.65 to 1.00 is a capitalization test whatever it is
+  labeled. Apply the denominator test before the netting test, since a
+  capitalization ratio may also net cash and would otherwise be misread as a
+  `net` leverage variant.
 - Direction is **not a field**. It is fully determined by type: leverage
   covenants are maximums, coverage covenants and liquidity minimums are
   minimums. Adding a direction field would be a field that is right by
@@ -475,6 +484,29 @@ its inputs ("Consolidated EBITDA", "Consolidated Total Debt").
 - Where a covenant runs for the benefit of revolving lenders only (the
   standard cov-lite structure), it is still recorded — it is a financial
   covenant in this agreement. The beneficiary is noted in free text.
+
+#### `debt_to_capitalization` — added under Roper Technologies
+
+**Trigger:** Roper Technologies, `0001193125-22-199694`.
+
+Roper was selected as the corpus's covenant-free case and is not covenant-free.
+§7.1, headed "Financial Condition Covenant", sets a Total Debt to Total Capital
+Ratio at 0.65 to 1.00, tested on the last day of any Test Period of four
+consecutive fiscal quarters. That is the standard investment-grade and utility
+covenant, and before this change it had no home in the enum — it would have
+been forced to `other`, which is the outcome the enum exists to avoid.
+
+The gap was already on the record. [corpus.md](corpus.md#covenant-detection-false-negatives)
+flagged `debt_to_capitalization` and `net_worth` as missing values after
+reading the 21 documents the covenant regexes reported as empty, naming
+Eversource Energy as a document that carries the first. Roper is the case that
+forces it, so it is added now.
+
+**`net_worth` is still not added.** Phillips 66 appears to carry a consolidated
+net worth covenant, but no document in the corpus has been read that requires
+the value, and enum values are added when a document forces them, not when one
+is anticipated. The gap stays recorded here so that the next labeler who meets
+a net worth covenant knows it was foreseen rather than missed.
 
 `debt_service_coverage` will almost certainly never fire in this corpus. DSCR
 is project and infrastructure finance; corporate syndicated credit uses
