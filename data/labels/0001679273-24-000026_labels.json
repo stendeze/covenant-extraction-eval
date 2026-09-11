@@ -202,7 +202,10 @@
       "step_down_schedule": {
         "value": [
           {
-            "effective_from": "2027-11",
+            "effective_from": {
+              "value": "2027-11",
+              "basis": "stated"
+            },
             "threshold": 4.75
           }
         ],
@@ -220,6 +223,7 @@
       },
       "springing_trigger": {
         "value": null,
+        "null_kind": "absence",
         "citation": null
       }
     },
@@ -254,6 +258,7 @@
       },
       "springing_trigger": {
         "value": null,
+        "null_kind": "absence",
         "citation": null
       }
     }
