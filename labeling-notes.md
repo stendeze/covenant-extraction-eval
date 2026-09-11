@@ -244,6 +244,67 @@ field that cannot be got wrong.
 Kept as a gold annotation that configures the scorer. Machine-checkability
 without the inflation.
 
+### `maturity_date` — basis is decided by one definition, and the field is exempted from the cut test
+
+**Trigger:** Extreme Networks, `0000950170-23-029645`.
+
+Extreme's maturity definitions are anniversary formulations — "the date
+occurring on the five-year anniversary of the Restatement Date" — but
+`Restatement Date` is itself hard-coded in §1.1 as June 22, 2023, so the
+maturity resolves inside the document to 2028-06-22. The rule said `stated`
+applies "where the agreement gives a hard date" and gave the anniversary form
+as its canonical `relative` example. It never said which one wins when the
+anchor is a date and the maturity is a period.
+
+**The gap was not confined to the document that flagged it.** Checking the
+anchor definition across all five labeled filings: Plains, Advance Auto and
+Kontoor define theirs by condition satisfaction and are unresolvable; Amentum
+defines `Closing Date` as "September 27, 2024" and is resolvable, and was
+already committed as `relative` with the resolved dates sitting in a note.
+Only Extreme's labeler raised it. Two documents, one question, one of them
+silent — the argument for checking a flag against the whole set rather than
+the document that produced it, which is the same habit the reasoning error
+above already argued for.
+
+Rule: basis is decided by the Maturity Date definition alone.
+
+**What settled it was a Saturday.** Amentum's term maturity resolves to
+2031-09-27, and the definition carries a succeeding-Business-Day proviso that
+the limb rule classifies as a mechanic to be disregarded. Resolving the date
+forces a choice the schema explicitly declines to make — 2031-09-27 or
+2031-09-29 — and the Amentum label had already computed both, which is the
+two-defensible-answers condition demonstrated rather than hypothesized.
+Secondary: resolving imports date arithmetic into an extraction score, and
+nothing is lost by declining, since the structured value plus the anchor's own
+definition resolves the date at scoring time.
+
+**Re-application:** no label changed. All six facility records across five
+documents are `relative`, including both resolvable ones.
+
+#### The exemption, and the test that grants it
+
+This was the fifth rule attached to `maturity_date`. `facility_name` was cut
+at three. That asymmetry needed answering rather than assuming, and the answer
+is a distinction rather than a count, now written into
+[schema.md](schema.md#when-a-field-has-accumulated-too-many-rules): a rule that
+**arbitrates between competing readings of the same construction** counts
+against a field, because each one is evidence the field is underdetermined; a
+rule that **extends coverage to a construction not previously seen** does not.
+Second arbitrating rule earns a written warning naming the third as fatal.
+
+`facility_name` took three arbitrating rules — which source ranks highest,
+what to do when only the cover page names the tranche, how to choose when
+Article I names it twice. `maturity_date`'s five each cover a different
+construction and none overrules another on the same facts.
+
+Applied retrospectively the test cuts `facility_name` at exactly the point it
+was cut and leaves `maturity_date` alone, which is the only reason to trust it.
+A test built after the fact that happened to spare the field in front of you
+would be worth nothing. The `facility_name` cut has value precisely because
+the trigger bound when it was unwelcome, and an exemption that read as carving
+out the interesting field would spend that. So the reasoning is on the page
+and a second reader can apply it to the same facts and disagree.
+
 ### `aggregate_commitment` — rolled-over loans are not commitments
 
 **Trigger:** Amentum Holdings, `0000950157-24-001363`.

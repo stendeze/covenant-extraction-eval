@@ -116,6 +116,43 @@ forced it:
    reported — including when it is empty, since empty-by-check and
    empty-by-assumption are different claims.
 
+### When a field has accumulated too many rules
+
+`facility_name` was cut on a standing instruction: a third adjudication rule
+meant cutting the field rather than writing it. That instruction was right and
+it bound. But a count is the wrong general test, because `maturity_date` now
+carries five rules and is not in trouble.
+
+**The test is what a new rule does, not how many there are.**
+
+- A rule that **arbitrates between competing readings of the same
+  construction** counts against the field. Each one is evidence the field is
+  underdetermined — the document offered several answers and the schema had to
+  invent a preference. `facility_name` accumulated three of these: which
+  source ranks highest, what to do when only the cover page names the tranche,
+  and how to choose when Article I names the tranche twice in two styles. The
+  field was not getting better defined; the ambiguity was being papered over
+  one document at a time.
+- A rule that **extends coverage to a construction not previously seen** does
+  not count. `maturity_date`'s five — which limb governs, springing provisos
+  excluded, the structured relative form, hard dates winning, and basis decided
+  by the definition alone — each address a different construction. None of them
+  overrules another on the same facts. That is coverage accumulating, not
+  ambiguity accumulating.
+
+**When a field takes its second arbitrating rule, it gets a written warning
+naming the third as fatal.** Applied retrospectively this cuts `facility_name`
+at exactly the point it was cut, and leaves `maturity_date` alone.
+
+> **On the exemption.** `maturity_date` is exempt under this test, not in spite
+> of it, and the distinction matters more than the outcome. The
+> `facility_name` cut is worth something only because the trigger bound when
+> it was unwelcome — a rule that binds only when convenient is not a rule. So
+> the exemption is stated with its reasoning on the page and a test a second
+> reader can apply to the same facts, rather than asserted for the field that
+> happens to be more interesting. If the reasoning is wrong, it is wrong
+> visibly, which is the most that can be asked of it.
+
 ---
 
 ## Record shape
@@ -267,8 +304,30 @@ both match.
 
 Adjudication rules:
 
-- Where the agreement gives a hard date, `basis` is `stated` even if it also
-  describes the date as an anniversary.
+- **`basis` is decided by the Maturity Date definition alone.** If that
+  definition names a calendar date, `stated` — even if it also describes the
+  date as an anniversary ("June 25, 2028, being the fifth anniversary of the
+  Closing Date"). If it names only a period, `relative`, **even where the
+  anchor is separately hard-coded elsewhere in Article I**. Extreme Networks
+  defines its Restatement Date as "June 22, 2023" and its maturity as the
+  five-year anniversary of it; Amentum defines its Closing Date as "September
+  27, 2024". Both are `relative`.
+
+  This is a one-hop test — read one definition — and it is the rule rather
+  than an arbitrary convention for a reason that shows up in this corpus.
+  Amentum's term maturity resolves to 2031-09-27, a **Saturday**, and the
+  definition carries a succeeding-Business-Day proviso that the limb rule
+  above classifies as a mechanic to be disregarded. Resolving the date would
+  force a choice this schema explicitly declines to make — 2031-09-27 or
+  2031-09-29 — and two careful readers would split. The label file computed
+  both.
+
+  Resolving would also import date arithmetic into an extraction score: a
+  system that correctly extracts both the period and the anchor could still
+  miss on a leap-year or convention slip, which measures arithmetic rather
+  than reading. Nothing is lost by declining, because `{tenor_years, anchor}`
+  plus the anchor's own definition resolves the date at scoring time for any
+  reader who wants it.
 - **Record the limb that states a date or a period.** Maturity is nearly
   always defined as the earliest or latest of several limbs. Limbs referencing
   **termination, acceleration, or an extension option** are mechanics, not

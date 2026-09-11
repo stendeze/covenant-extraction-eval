@@ -110,14 +110,22 @@ limb that states a date or a period; the rest are mechanics.
 calendar date, `basis: stated` and the value is that ISO date.
 
 If it names a *period* — "the fifth anniversary of the Closing Date", "such
-date that is five years from the Closing Date" — there is no calendar date in
-the document, because Closing Date and Effective Date are themselves defined
-by condition satisfaction. Then `basis: relative`, and the value is a
-**structured object**, never the sentence:
+date that is five years from the Closing Date" — then `basis: relative`, and
+the value is a **structured object**, never the sentence:
 
 ```json
 { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" }
 ```
+
+**Do not resolve the anchor, even when you can.** Some agreements hard-code
+it: Extreme Networks defines "Restatement Date" as June 22, 2023, Amentum
+defines "Closing Date" as September 27, 2024. The maturity is still
+`relative`, because the basis is decided by the Maturity Date definition
+alone — one definition, one hop, no arithmetic. Amentum is why: its term
+maturity lands on a Saturday, and resolving it would force you to decide
+whether to apply a Business Day proviso you were told to ignore as a
+mechanic. Note the resolved date in free text if it is useful; do not label
+it.
 
 Use `tenor_months` where the agreement counts in months. This is not
 cosmetic: as free text, "five years from the Closing Date", "the fifth
