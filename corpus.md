@@ -250,6 +250,55 @@ from reading the documents, never from these signals.
 Fifteen documents. Three were labeled or benchmark-confirmed during schema
 development; twelve were selected from the qualified pool afterward.
 
+> ## ⚠ The "Selected for" column is unverified, and is wrong wherever it has been checked
+>
+> **Read this before using the table.** The rationales below — what each
+> document is supposed to exercise — were generated from `screen.py`'s keyword
+> and regex signals, not by reading the agreements. Those signals have a
+> measured error rate. As each document is labeled, its rationale is checked
+> against the document, and the result so far is this:
+>
+> | Row | Rationale said | Document says | |
+> |---|---|---|---|
+> | 1 Paya | flat margin, no grid, springing | as described | ✅ |
+> | 2 Plains | revolver only; ratings grid; deferral null | as described | ✅ |
+> | 3 Advance Auto | revolver only; ratings grid; deferral null | as described | ✅ |
+> | 4 Kontoor | revolver + TLA + **TLB**; **3 covenants** | revolver + TLA; 2 covenants | ❌ |
+> | 5 Amentum | revolver + **TLA** + TLB; **4 covenant types** | revolver + TLB; **1** covenant | ❌ |
+> | 6 Extreme | revolver + TLA + **TLB**; **lettered tranches** | revolver + TLA; tranche is "Initial Term Loans" | ❌ |
+> | 7 Lamb Weston | revolver + TLA; **no grid** | neither exhibit matches; both have grids | ❌ |
+> | 13 Roper | **covenant-free** | §7.1 Total Debt to Total Capital at 0.65:1.00 | ❌ |
+>
+> **Three hold, five fail — and the split is not random.** Rows 1–3 are
+> precisely the three that the screen did not select; they were labeled or
+> benchmark-confirmed by hand during schema development. **Every
+> screen-derived rationale that has been checked has failed: five of five.**
+>
+> **The rows that got corrected are the rows that happened to be read, not the
+> rows that happened to be wrong.** Nothing about labeling order was chosen to
+> find errors, so the seven unread rows should be assumed to carry the same
+> error rate as the five read ones, not a lower one. Corrections appear here
+> as they are found, which makes the table look progressively more accurate
+> while the unread remainder is exactly as unverified as it was on day one.
+>
+> **What this does and does not undermine.** The *inclusion* filters are a
+> different question and mostly hold: these are real syndicated credit
+> agreements in the size band, and where one was not — Lamb Weston EX-10.2,
+> one lender of record — the criterion caught it on reading. What is
+> unreliable is the *rationale*: why a document was chosen and what field
+> values it is supposed to supply. Every claim in this file that depends on
+> that column depends on an unverified instrument. That includes the
+> stratification counts, the enrichment ratios quoted under [This is an
+> enriched test set](#this-is-an-enriched-test-set-not-a-representative-sample),
+> and any statement that a particular field is balanced across the corpus.
+>
+> The instrument's measured behaviour, and why this is also the baseline's
+> failure mode, is in
+> [labeling-notes.md](labeling-notes.md#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it).
+> This caveat stands until every row has been read, at which point it is
+> replaced by the corrected table and a count of how many rows needed
+> correcting.
+
 | # | Borrower | Accession number | Filed | Structure | Selected for |
 |---|---|---|---|---|---|
 | 1 | Paya Holdings III | `0001213900-21-034493` | 2021-06-28 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |

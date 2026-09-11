@@ -83,10 +83,23 @@ Three independent instances, in the order they surfaced:
    carries three tiered grids. `structure` reported `revolver_plus_tla` for a
    term-only agreement and confused TLA with TLB twice.
 
-**The pattern is directional.** These are not random errors. A keyword rule
-fires on language it was written for and stays silent on everything else, so
-its errors are overwhelmingly misses, and a corpus rationale built on them
-inherits the misses as false confidence. [corpus.md](corpus.md) row 7 selected
+4. **Covenant counts, in both directions.** The rationales also quote covenant
+   counts, and the signal that produced them matches *defined ratio
+   vocabulary* rather than identifying maintenance tests. Against the labels:
+   Amentum predicted four covenant types and has **one** — the other three
+   ratios are defined and used only for incurrence tests. Kontoor predicted
+   three and has two, for the same reason. Advance Auto predicted one and has
+   two, because its second covenant is labeled "Consolidated Coverage Ratio",
+   a neutral name no pattern matches. Two of five exact.
+
+**The errors are systematic, not random, but they are not all misses.** A
+keyword rule fires on the language it was written for and is silent on
+everything else, so anything asking *does this exist* — covenant presence,
+grid presence — fails as a miss, and every `pricing_grid_hint` error measured
+so far is a false negative. But anything asking *how many* over-counts
+instead, because a defined term that looks like a covenant is counted whether
+or not it is one. Both directions produce the same end state: a corpus
+rationale that asserts something the document does not support. [corpus.md](corpus.md) row 7 selected
 Lamb Weston for "Lettered TLA with no grid"; the document has no revolver and
 three grids. Row 12 selected G-III Apparel for "3 covenants with **no** grid"
 from the same signal, and it has not been read.
