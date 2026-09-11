@@ -1,0 +1,217 @@
+{
+  "source": {
+    "accession_number": "0000950170-23-029645",
+    "exhibit": "EX-10.1",
+    "filing_date": "2023-06-23",
+    "borrower": "Extreme Networks, Inc.",
+    "agreement_title": "Second Amended and Restated Credit Agreement",
+    "agreement_date": "2023-06-22",
+    "administrative_agent": "Bank of Montreal",
+    "corpus_check": {
+      "document_type": "amended_and_restated (in scope; full covenant package inline)",
+      "syndicated": "yes - Administrative Agent plus 15 lenders on signature pages",
+      "aggregate_commitments_usd": 350000000,
+      "structure_stratum": "revolver + TLA (pro rata)",
+      "benchmark_era": "post-transition (Term SOFR)"
+    }
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Initial Term Loans",
+        "citation": {
+          "section": "2.1 (Term Commitments)",
+          "quote": "there shall be a single tranche of Term Loans outstanding under this agreement comprised of the Initial Term Loans"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.3(a) (Repayment of Term Loans)",
+          "quote": "1.25% per quarter (aggregate of 5.0% annually)"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 200000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term Commitment\")",
+          "quote": "The original aggregate principal amount of the Initial Term Commitments as of the Restatement Date is $200,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Restatement Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Term Loan Maturity Date\")",
+          "quote": "is the date occurring on the five-year anniversary of the Restatement Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.13(a) (Interest Rates and Payment Dates)",
+          "quote": "Each SOFR Loan shall bear interest for each day during each Interest Period with respect thereto at a rate per annum equal to (i) Adjusted Term SOFR determined for such day"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 200,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the Applicable Margin shall be the rates corresponding to Level IV in the foregoing table"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the applicable rates per annum set forth under the relevant column headings below based upon the Consolidated Leverage Ratio set forth in the latest Compliance Certificate delivered pursuant to"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Facility\")",
+          "quote": "the Revolving Commitments, any Incremental Revolving Credit Commitments and the extensions of credit made thereunder"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.4(a) (Revolving Commitments)",
+          "quote": "each Revolving Lender severally agrees to make revolving credit loans"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 150000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Total Revolving Commitments\")",
+          "quote": "the amount of the Total Revolving Commitments in effect as of the Restatement Date is $150,000,000"
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Restatement Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Termination Date\")",
+          "quote": "is the date occurring on the five-year anniversary of the Restatement Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.13(a) (Interest Rates and Payment Dates)",
+          "quote": "Each SOFR Loan shall bear interest for each day during each Interest Period with respect thereto at a rate per annum equal to (i) Adjusted Term SOFR determined for such day"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 200,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the Applicable Margin shall be the rates corresponding to Level IV in the foregoing table"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the applicable rates per annum set forth under the relevant column headings below based upon the Consolidated Leverage Ratio set forth in the latest Compliance Certificate delivered pursuant to"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.1 (definition of \"Consolidated Interest Coverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated EBITDA for such period; to (b) Consolidated Interest Expense for such period"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.00,
+        "citation": {
+          "section": "7.1(a) (Minimum Consolidated Interest Coverage Ratio)",
+          "quote": "for the four fiscal quarter period then ended, to be less than 3.00:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.1(a) (Minimum Consolidated Interest Coverage Ratio)",
+          "quote": "for the four fiscal quarter period then ended, to be less than 3.00:1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.1(a) (Minimum Consolidated Interest Coverage Ratio)",
+          "quote": "Permit the Consolidated Interest Coverage Ratio, determined as of the last day of any fiscal quarter of the Borrower"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "total_net_leverage",
+        "citation": {
+          "section": "1.1 (definition of \"Consolidated Leverage Ratio\")",
+          "quote": "(ii) Unrestricted Cash as of such date up to a maximum amount not to exceed $200,000,000"
+        }
+      },
+      "initial_threshold": {
+        "value": 2.75,
+        "citation": {
+          "section": "7.1(b) (Maximum Consolidated Leverage Ratio)",
+          "quote": "for the four fiscal quarter period then ended, to exceed 2.75:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.1(b) (Maximum Consolidated Leverage Ratio)",
+          "quote": "for the four fiscal quarter period then ended, to exceed 2.75:1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.1(b) (Maximum Consolidated Leverage Ratio)",
+          "quote": "Permit the Consolidated Leverage Ratio, determined as of the last day of any fiscal quarter of the Borrower"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+  "notes": [
+    "Restatement Date is defined in Section 1.1 as June 22, 2023, so both relative maturities resolve to 2028-06-22. Labeled `relative` per the schema's literal rule (the Maturity Date definitions give an anniversary formulation, not a hard date). See labeler_flags[0].",
+    "Opening margin: Level IV applies from the Restatement Date until delivery of the Compliance Certificate for the fiscal year ending on or about June 30, 2023. Level IV SOFR Loans column = 2.00% (ABR column = 1.00%). Grid is four levels keyed to Consolidated Leverage Ratio (Level I >2.75x: 2.75%; Level II: 2.50%; Level III: 2.25%; Level IV <1.00x: 2.00%) and applies to both tranches under a single heading 'TERM LOANS and revolving LOANS'.",
+    "Benchmark: 'Adjusted Term SOFR' = Term SOFR + Term SOFR Adjustment (0.10% CSA), subject to a Floor. Term SOFR Administrator is CME Group Benchmark Administration Limited (CBA). CSA excluded from applicable_margin_bps per rule.",
+    "Section 2.25 (Sustainability Adjustments) permits a future ESG Amendment that could adjust the Applicable Margin by at most +/-0.05% per annum. Not operative at closing (the agreement states the Facilities are not a sustainability-linked loan unless and until an ESG Amendment becomes effective); does not affect the opening margin.",
+    "Commitment Fee Rate also has a four-level grid keyed to Consolidated Leverage Ratio (0.500% / 0.400% / ... ) with Level IV opening. Not a margin grid; noted for the v2 `has_commitment_fee_grid` candidate.",
+    "Excluded sub-facilities: Total L/C Commitments $20,000,000 and Swingline Commitment $5,000,000 are stated to be sublimits of, and not in addition to, the Total Revolving Commitments. Section 2.24 Incremental Loans and Commitments (accordion) excluded as an option, not a commitment.",
+    "Term tranche: labeled 'Initial Term Loans' with no letter; classified by amortization per rule (1.25%/qtr = 5.0%/yr in quarters 1-8, stepping to 7.5%/yr and 10%/yr) -> term_loan_a. Part of the Initial Term Loans was a cashless rollover of Existing Term Loans; the $200,000,000 is the commitment at closing as stated.",
+    "Leverage covenant netting: Consolidated Leverage Ratio = (Consolidated Total Funded Indebtedness minus Unrestricted Cash, capped at $200,000,000) / Consolidated EBITDA. Debt definition covers all Indebtedness of types (a)-(e), not first-lien- or secured-only -> total_net_leverage.",
+    "Covenant holiday (Section 7.1(b) proviso): following a Material Acquisition, and only if the ratio was <=2.75x for the two prior quarters, the maximum steps up to 3.25:1.00 for four fiscal quarters. Non-holiday level (2.75) recorded per rule.",
+    "Both covenants first tested for the fiscal quarter ended June 30, 2023 (the first fiscal quarter ended after the Restatement Date) on a trailing-four-quarter basis; both flat for life of the agreement; both tested unconditionally (no springing proviso, no 'Covenant Trigger Event' defined term). springing_trigger nulls are absence nulls - no citation required.",
+    "Schedule 1.1A (lender-by-lender commitments) is not included in the filed exhibit; the defined-term amounts govern in any case and reconcile to the $350,000,000 cover-page total."
+  ],
+  "labeler_flags": [
+    {
+      "field": "maturity_date (both facilities)",
+      "issue": "Rule gap. The Maturity Date definitions are relative ('five-year anniversary of the Restatement Date'), but 'Restatement Date' is itself a hard date in Section 1.1 (June 22, 2023), so the maturity is fully resolvable within the four corners to 2028-06-22. schema.md says `stated` applies 'where the agreement gives a hard date' and gives 'the fifth anniversary of the Closing Date' as the canonical `relative` example; it does not say what to do when the anchor is hard-coded elsewhere in Article I. Labeled `relative` on the literal reading. Recommend a one-line rule clarification either way; if the rule becomes 'resolve when the anchor date is defined in the document', relabel both to {value: 2028-06-22, basis: stated}."
+    },
+    {
+      "field": "facility_name (revolver)",
+      "issue": "Low-stakes naming choice. Agreement uses 'Revolving Facility' (Article I defined term, parallel to the schema example's 'Revolving Credit Facility'), 'Revolving Commitments' (Section 2.4 heading), and 'Revolving Loans' interchangeably. Used the Article I defined term. For the term tranche used 'Initial Term Loans' (the Section 2.1 tranche label, and the schema example's own convention) rather than the broader 'Term Facility', which by definition also includes future Incremental Term Loans."
+    }
+  ]
+}
