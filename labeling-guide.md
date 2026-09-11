@@ -227,8 +227,17 @@ the repayment section and read the amortization:
 
 | Amortization | Type |
 |---|---|
+| None — bullet, repaid in full at maturity (0%/yr) | `term_loan_b` |
 | 0.25% quarterly (1.00%/yr) | `term_loan_b` |
 | 1.25–2.5% quarterly (5–10%/yr) | `term_loan_a` |
+
+**A bullet counts as 0%/yr and lands in `term_loan_b`.** Expect this to feel
+wrong sometimes. Lamb Weston's €200M European Term Loan is a five-year bullet
+held by three relationship banks at the revolver's own pricing, which reads as
+a pro rata bank tranche in every commercial sense, and it is recorded
+`term_loan_b`. Record the rule's answer and note the discomfort; do not
+reclassify on lender base or pricing, which are not tests a second labeler can
+apply the same way twice.
 
 A delayed draw term loan is a facility — the commitment is made, only the
 funding is deferred.

@@ -582,6 +582,45 @@ it is that the rule and the domain disagree, and the rule is what a model
 would be scored against. That is a result about the schema, which is the kind
 of thing an agreement rate is supposed to surface and usually does not.
 
+**Lamb Weston `facility_type` on the European Term Loan — labeled
+`term_loan_b`.** An unlettered euro tranche with no scheduled amortization: a
+five-year bullet, held by three relationship banks, priced off the revolver's
+own grid. The rule classifies unlettered term loans by amortization and a
+bullet is 0%/yr, which satisfies ≤1%/yr, so `term_loan_b` follows without
+judgment.
+
+And every commercial instinct reads that as a pro rata bank tranche — a TLA.
+The labeler recorded `term_loan_b` and said so.
+
+The alternative was considered and rejected on a specific ground rather than a
+preference: classifying by lender base or pricing cannot be written
+mechanically. "Relationship banks" and "pro rata pricing" are judgments a
+second labeler cannot replicate, and a rule requiring taste is not one this
+schema can use. So the rule stands and the disagreement is recorded instead.
+
+### These two are a category, not two flags
+
+Both nominations have the same shape: **a rule fixed before labeling decides
+the case cleanly, and trained intuition says the opposite.** Neither is a hard
+reading or a close call. In both, the labeler knew what the rule returned,
+recorded it, and wrote down that it felt wrong.
+
+That makes them worth reporting as a group rather than as two incidents. If
+the blind pass reverses one, it is a finding about that rule. If it reverses
+both, the finding is about **how the rules were written** — that the schema
+was made mechanical at the cost of tracking the domain, which is a defensible
+trade and a very different claim from "the labeler was inconsistent." Either
+way it is a result about the schema, not about a document, and
+[schema.md](schema.md#one-category-of-disagreement-is-worth-more-than-the-rate)
+now says to report it separately from the headline agreement rate.
+
+The category also predicts where to look for more: any rule chosen for
+mechanical applicability over domain fidelity is a candidate, and this project
+has preferred mechanical rules deliberately and repeatedly — denominator-first
+covenant classification, basis decided by one definition, the citation test
+settling the Amentum rollover. Each of those bought reproducibility with a
+concession, and the concessions are what a blind pass surfaces.
+
 Recorded here so that a disagreement two weeks from now is a measurement
 rather than a reconstruction. The point of writing it down in advance is that
 it cannot be rationalized afterwards.

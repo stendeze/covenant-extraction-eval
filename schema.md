@@ -231,6 +231,21 @@ amortization schedule (a 1%/yr amortizing institutional tranche is a TLB; a
   label governs, even if the amortization profile is unusual.
 - Where it says only "Term Loans" with no letter, classify by amortization:
   ≤1%/yr → `term_loan_b`, more → `term_loan_a`.
+- **A bullet is 0%/yr, so an unlettered bullet term loan is `term_loan_b`.**
+  A tranche repayable in full at maturity with no scheduled installments
+  satisfies ≤1%/yr and needs no separate rule; this is stated only because the
+  amortization test reads as though it assumes some amortization exists, and a
+  labeler meeting a bullet should not have to re-derive it.
+
+  **This will sometimes disagree with market usage, and the rule still
+  governs.** Lamb Weston's €200M European Term Loan is a five-year bullet held
+  by three relationship banks, priced off the revolver's own grid — every
+  commercial instinct calls that a pro rata bank tranche, i.e. a TLA. It is
+  recorded `term_loan_b`. The alternative test, classifying by lender base or
+  by pricing, cannot be written mechanically: "relationship banks" and "pro
+  rata pricing" are judgments a second labeler cannot reliably replicate, and
+  a rule that requires taste is not one this schema can use. Flagged for the
+  [blind relabel](#annotator-agreement) rather than resolved by preference.
 - **Letter of credit and swingline sublimits are not facilities.** They are
   carve-outs of the revolving commitment and creating a separate record for
   them double-counts the commitment. No record.
@@ -870,6 +885,31 @@ answering with a measurement rather than an assurance.
 **Protocol:** two weeks after the initial pass, relabel **five agreements
 blind** — original labels not consulted, ideally not even opened — and report
 the agreement rate between the two passes, per field.
+
+### One category of disagreement is worth more than the rate
+
+Some labels are nominated in advance, with their reasoning recorded, because
+they share a specific shape: **a rule fixed before labeling decides the case
+cleanly, and trained market intuition says the opposite.** These are not close
+calls or hard readings; the labeler knew the answer the rule gave, recorded it,
+and wrote down that it felt wrong.
+
+Two so far, both in [labeling-notes.md](labeling-notes.md#flagged-in-advance-for-the-blind-relabel):
+
+- **Amentum `has_margin_grid`** — a flat margin with one one-way ratings
+  step-down is `true` under the fixed-versus-variable rule, and nobody in the
+  market would call it a grid.
+- **Lamb Weston `facility_type`** — an unlettered euro bullet held by three
+  relationship banks is `term_loan_b` under the amortization rule, and every
+  commercial instinct says pro rata bank tranche.
+
+If the blind pass reverses either, the finding is **not** that the document was
+misread. It is that the rule and the domain disagree, and the rule is what a
+model gets scored against. Reversing both would say something stronger still —
+that the schema was written to be mechanical at the cost of being right, which
+is a defensible trade but must be a stated one. Report this category
+separately from the headline agreement rate; a disagreement here is a result,
+not an error.
 
 This costs a couple of hours. It converts "I labeled these myself" from an
 unmeasured weakness into a stated limitation with a number attached, and it
