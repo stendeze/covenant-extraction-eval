@@ -1,0 +1,194 @@
+{
+  "source": {
+    "accession_number": "0001213900-21-034493",
+    "exhibit": "EX-10.1",
+    "file_name": "ea143383ex10-1_payaholdings.htm",
+    "document_title": "Credit Agreement",
+    "agreement_date": "2021-06-25",
+    "closing_date": "2021-06-25",
+    "filing_date": "2021-06-28",
+    "borrowers": ["Paya Holdings III, LLC (Parent Borrower)", "Paya, Inc."],
+    "holdings": "Paya Holdings II, LLC",
+    "administrative_agent": "Credit Suisse AG, Cayman Islands Branch",
+    "facility_structure": "revolver + TLB (institutional)",
+    "corpus_checks": {
+      "document_type": "Original credit agreement (not an amendment): has Article I §1.01 definitions and §2.01 commitments — included",
+      "filing_window": "Agreement dated 2021-06-25, inside the 2021-06-01+ frame; pre-transition LIBOR deal",
+      "aggregate_commitments_usd": 295000000,
+      "size_band": "within $150M–$5B",
+      "syndication": "Administrative Agent present; ≥3 lenders on signature pages (Credit Suisse, Morgan Stanley Senior Funding, Ares Capital, Jefferies Finance, GC Finance Operations Multicurrency)",
+      "borrower_sector": "US corporate (payments); not bank/insurer/REIT"
+    }
+  },
+
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Initial Term Loans",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "The Initial Term Borrowing shall consist of Initial Term Loans made simultaneously by the Term Lenders in accordance with their respective Initial Term Commitments."
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_b",
+        "citation": {
+          "section": "2.07(a)",
+          "quote": "0.25% of the aggregate principal amount of the aggregate initial principal amount of the Initial Term Loans on the Closing Date"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 250000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Initial Term Commitment\")",
+          "quote": "The initial aggregate amount of the Initial Term Commitments is $250,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": "2028-06-25", "basis": "stated" },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\"), clause (b)",
+          "quote": "with respect to the Initial Term Loans, the earliest of (i) June 25, 2028"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.01 (definition of \"Screen Rate\")",
+          "quote": "the London interbank offered rate as administered by ICE Benchmark Administration"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 325,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (a)",
+          "quote": "with respect to the Initial Term Loans, 3.25% per annum for Eurocurrency Rate Loans and 2.25% per annum for Base Rate Loans"
+        }
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (a)",
+          "quote": "with respect to the Initial Term Loans, 3.25% per annum for Eurocurrency Rate Loans and 2.25% per annum for Base Rate Loans"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Revolving Credit Facility",
+        "citation": {
+          "section": "1.01 (definition of \"Revolving Credit Facility\")",
+          "quote": "means, at any time, the aggregate amount of the Revolving Credit Lenders’ Revolving Credit Commitments at such time."
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(b)",
+          "quote": "the Borrowers may borrow under this Section 2.01(b), prepay under Section 2.05, and reborrow under this Section 2.01(b)"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 45000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Revolving Credit Commitments\")",
+          "quote": "The aggregate Revolving Credit Commitments shall be $45,000,000 on the Closing Date"
+        }
+      },
+      "maturity_date": {
+        "value": { "value": "2026-06-25", "basis": "stated" },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\"), clause (a)",
+          "quote": "with respect to the Revolving Credit Facility, the earlier of (i) June 25, 2026"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.01 (definition of \"Screen Rate\")",
+          "quote": "the London interbank offered rate as administered by ICE Benchmark Administration"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 325,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (b)",
+          "quote": "with respect to the Revolving Credit Facility, 3.25% per annum for Eurocurrency Rate Loans and 2.25% per annum for Base Rate Loans"
+        }
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (b)",
+          "quote": "with respect to the Revolving Credit Facility, 3.25% per annum for Eurocurrency Rate Loans and 2.25% per annum for Base Rate Loans"
+        }
+      }
+    }
+  ],
+
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "first_lien_net_leverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated First Lien Net Leverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated Funded First Lien Indebtedness (less the amount of unrestricted cash and Cash Equivalents"
+        }
+      },
+      "initial_threshold": {
+        "value": 6.50,
+        "citation": {
+          "section": "7.08",
+          "quote": "permit the Consolidated First Lien Net Leverage Ratio as of the end of such fiscal quarter of Holdings to be greater than 6.50 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.08",
+          "quote": "permit the Consolidated First Lien Net Leverage Ratio as of the end of such fiscal quarter of Holdings to be greater than 6.50 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.08",
+          "quote": "As of the end of each fiscal quarter of Holdings (commencing with the second full fiscal quarter ending after the Closing Date)"
+        }
+      },
+      "springing_trigger": {
+        "value": {
+          "condition_type": "revolver_utilization",
+          "threshold": 35,
+          "threshold_unit": "percent",
+          "quote": "solely to the extent the aggregate amount of L/C Obligations and Revolving Credit Loans outstanding as of the end of such fiscal quarter (excluding (i) Cash Collateralized Letters of Credit and (ii) undrawn Letters of Credit) exceeds 35.0% of the aggregate amount of all Revolving Credit Commitments in effect as of such date"
+        },
+        "citation": {
+          "section": "7.08",
+          "quote": "solely to the extent the aggregate amount of L/C Obligations and Revolving Credit Loans outstanding as of the end of such fiscal quarter (excluding (i) Cash Collateralized Letters of Credit and (ii) undrawn Letters of Credit) exceeds 35.0% of the aggregate amount of all Revolving Credit Commitments in effect as of such date"
+        }
+      }
+    }
+  ],
+
+  "notes": {
+    "benchmark_chain": "Applicable Rate → 'Eurocurrency Rate Loans' → Adjusted Eurocurrency Rate → Eurocurrency Rate → Screen Rate → ICE LIBOR, Reuters LIBOR01/LIBOR02. 'Eurocurrency' here means LIBOR per the vocabulary rule. Benchmark replacement machinery (§1.09, §3.04, 'Term SOFR', 'Daily Simple SOFR', 'Benchmark Replacement' definitions) is conditional and ignored.",
+    "libor_floor": "Not a field. Adjusted Eurocurrency Rate carries a 0.75% floor on the Initial Term Loans and a 0.00% floor on the Revolving Credit Facility.",
+    "base_rate_margin": "Not a field. 2.25% for both tranches — exactly 100 bps under the Eurocurrency margin, consistent with the convention.",
+    "commitment_fee_grid": "NOT a margin grid; has_margin_grid stays false. 'Applicable Commitment Fee' is 0.50% from the Closing Date until the first Compliance Certificate, then a three-level grid on Consolidated First Lien Net Leverage Ratio: >3.75x → 0.500%; 3.25x–3.75x → 0.375%; <3.25x → 0.250%, with a Pricing Level 1 default-to-worst on late financials. Candidate for a v2 has_commitment_fee_grid field; not added.",
+    "excluded_from_facilities": [
+      "Letter of Credit Sublimit ($10,000,000) — 'part of, and not in addition to, the Revolving Credit Facility'. No record.",
+      "§2.01(c) post-closing Term Loans under other Tranches / §2.14 Incremental Facilities / §2.15 New Incremental Debt / §2.18 Specified Refinancing Debt — options, not commitments at signing. No record.",
+      "No swingline facility in this agreement."
+    ],
+    "multicurrency": "Revolving Credit Loans may be denominated in Alternative Currencies (subject to agent and lender approval), but Article I defines the Eurocurrency Rate only for Dollar borrowings; no alternative-currency benchmark limb exists. Primary benchmark is unambiguously LIBOR.",
+    "maturity": "Both tranches use the ordinary 'earliest of' / 'earlier of' construction (stated date, termination of commitments, acceleration). The proviso re-pointing 'Maturity Date' for loan-modification, incremental, or specified-refinancing tranches does not affect the two closing-date tranches. No springing maturity proviso.",
+    "schedules": "Schedule 2.01 (lender-by-lender commitments) is listed in the TOC but not attached to the filed exhibit, so the lender-column cross-check cannot be performed. The defined terms ('Initial Term Commitment', 'Revolving Credit Commitments') state the aggregates and govern regardless.",
+    "covenant_beneficiary": "Standard cov-lite structure: the Financial Covenant is for the benefit of the Revolving Credit Lenders. §8.02 gives the Required Revolving Lenders sole control over remedies for a 'Financial Covenant Event of Default'; Term Lenders may not accelerate or exercise remedies on a Financial Covenant breach until the Cure Right (§8.03) has run. Recorded as a financial covenant of this agreement per the rule.",
+    "covenant_first_test": "Tested 'commencing with the second full fiscal quarter ending after the Closing Date' (2021-06-25). §2.07(a) references 'the fiscal quarter ending on December 31, 2021', indicating a calendar fiscal year, which puts the first test period at the quarter ending 2021-12-31. Level is flat at 6.50x for the life of the agreement — step_down_schedule [] is confirmed flat, not unknown.",
+    "covenant_lc_exclusion": "Cash Collateralized Letters of Credit and undrawn Letters of Credit are excluded from the utilization numerator for the 35.0% trigger. Noted per rule; does not change the threshold.",
+    "covenant_test_timing": "§7.08 second sentence: when the trigger is met, compliance is tested on the date Financial Statements for the Reference Period are delivered (or required to be delivered), not before. Timing mechanic only; frequency remains quarterly.",
+    "filing_date": "2021-06-28, from the EDGAR index for accession 0001213900-21-034493. Distinct from the 2021-06-25 agreement date, which is what the exhibit states.",
+    "hesitations": "None. This is the document schema.md already uses as its worked case for the has_margin_grid rename; every field resolved directly under the existing adjudication rules."
+  }
+}
