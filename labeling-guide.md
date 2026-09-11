@@ -323,6 +323,21 @@ If the table names a date — "the fiscal quarter ending closest to June 30,
 Do not resolve a 52/53-week fiscal calendar to a real date. The calendar is
 not in the document.
 
+**Record the precision the agreement gives, never more.** If the table names a
+month but no day — "the last day of the Fiscal Quarter ending November 2027" —
+record the month:
+
+```json
+{ "effective_from": { "value": "2027-11", "basis": "stated" }, "threshold": 4.75 }
+```
+
+Lamb Weston is the case. Its Fiscal Year ends on the last Sunday in May, so a
+13-week quarter convention would put that step at 2027-11-28 — but the
+convention is not in the document, and `"2027-11-28"` asserts a specific Sunday
+the agreement never states. Gold at `"2027-11"` scores a prediction of
+`"2027-11-28"` as **wrong**, deliberately. Resolving a calendar you were not
+given is the same error as inventing a margin for a deferred opening level.
+
 If the table names no date at all — only a formula, "the fourth full Fiscal
 Quarter ending after the Closing Date" — there is nothing to resolve, and the
 basis is relative:

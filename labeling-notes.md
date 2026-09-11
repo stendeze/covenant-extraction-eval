@@ -446,6 +446,45 @@ value changed. Amentum is the only document in the corpus so far with a step
 at all, which is worth noticing on its own: the field the schema calls the
 most expensive to label has fired exactly once in five documents.
 
+### `step_down_schedule` — `effective_from` accepts a month, and finer is wrong
+
+**Trigger:** Lamb Weston Holdings EX-10.1, `0001679273-24-000026`.
+
+The second `effective_from` gap in two documents, and a different one. Amentum
+keyed its table to a period measured from an anchor, which the `relative` basis
+now handles. Lamb Weston §8.11(a) instead **names a fiscal period** — "the last
+day of the Fiscal Quarter ending November 2027" — giving a month and no day.
+`relative` cannot express that without counting quarters through a 52/53-week
+calendar, which is the resolution the schema forbids. The agreement's only
+calendar fact is that the Fiscal Year ends on the last Sunday in May.
+
+Rule: `stated` accepts `YYYY-MM` as well as `YYYY-MM-DD`, and the labeler
+records the precision the agreement gives, never more.
+
+**The comparison rule is the part that needed writing down.** Gold `"2027-11"`
+against a predicted `"2027-11-28"` is a **miss**, not a near-match and not a
+rounding question, and the same in reverse. Left unstated, a scorer
+implementation would have had to guess, and would have inherited whatever a
+date library does with mixed precision — most likely parsing both to a
+timestamp and calling them equal, which is the wrong answer.
+
+It is the wrong answer for a reason this project already has a name for.
+`"2027-11-28"` is a claim: it asserts the fiscal quarter ends on a specific
+Sunday, which the document does not say. A system producing it has resolved a
+calendar it was not given — the same act as inventing a margin where the
+opening level was deferred. `applicable_margin_bps` refuses to reward that and
+so does this field. Scoring the finer answer as correct would teach precisely
+the behaviour the corpus exists to penalise.
+
+The symmetry is deliberate rather than incidental: gold `"2027-11-28"` against
+a predicted `"2027-11"` is also a miss, because the document stated a day and
+the system dropped it. The target is fidelity to what the agreement says, in
+both directions.
+
+**Re-application:** one step-down exists in the corpus besides this one —
+Amentum's, which is `relative` and unaffected. Every other covenant record is
+`[]`.
+
 ### `covenant_type` — coverage covenants classified by denominator
 
 **Trigger:** Advance Auto Parts, `0001158449-21-000208`.

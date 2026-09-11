@@ -1,0 +1,284 @@
+{
+  "source": {
+    "borrower": "Lamb Weston Holdings, Inc.",
+    "accession_number": "0001679273-24-000026",
+    "exhibit": "EX-10.1",
+    "exhibit_filename": "ex10_1conformed-lwxbofax.htm",
+    "filing_date": "2024-05-08",
+    "agreement_date": "2024-05-03",
+    "agreement_title": "Amended and Restated Credit Agreement",
+    "administrative_agent": "Bank of America, N.A.",
+    "corpus_row": 7
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving A-2 Loan",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "each Revolving A-2 Lender severally agrees to make loans (each such loan, a “Revolving A-2 Loan”) to the applicable Borrower in Dollars or in one or more Alternative Currencies"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "the applicable Borrower may borrow under this Section 2.01, prepay under Section 2.05, and reborrow under this Section 2.01"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 1440000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Aggregate Revolving A-2 Commitments\")",
+          "quote": "The initial amount of the Aggregate Revolving A-2 Commitments in effect on the Restatement Effective Date is $1,440,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-03",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Revolving A-2 Credit Maturity Date\")",
+          "quote": "“Revolving A-2 Credit Maturity Date” means May 3, 2029."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Term SOFR Screen Rate\")",
+          "quote": "“Term SOFR Screen Rate” means the forward-looking SOFR term rate administered by CME"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 125,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"; Pricing Tier 4 row, Term SOFR Loans column = 1.250%)",
+          "quote": "The Applicable Rate in effect from the Restatement Effective Date through the first Business Day immediately following the date a Compliance Certificate is delivered pursuant to Section 7.01(c) for the Fiscal Quarter ending after the Restatement Effective Date shall be determined based upon Pricing Tier 4."
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Revolving B-2 Loan",
+        "citation": {
+          "section": "2.01(b)",
+          "quote": "each Revolving B-2 Lender severally agrees to make loans (each such loan, a “Revolving B-2 Loan”) to the Company in Dollars"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(b)",
+          "quote": "the Company may borrow under this Section 2.01, prepay under Section 2.05, and reborrow under this Section 2.01"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 60000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Aggregate Revolving B-2 Commitments\")",
+          "quote": "The initial amount of the Aggregate Revolving B-2 Commitments in effect on the Restatement Effective Date is $60,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-03",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Revolving B-2 Credit Maturity Date\")",
+          "quote": "“Revolving B-2 Credit Maturity Date” means May 3, 2029."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.01(b)",
+          "quote": "Revolving B-2 Loans may be Base Rate Loans or Term SOFR Loans, or a combination thereof"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 125,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"; Pricing Tier 4 row, Term SOFR Loans column = 1.250%)",
+          "quote": "The Applicable Rate in effect from the Restatement Effective Date through the first Business Day immediately following the date a Compliance Certificate is delivered pursuant to Section 7.01(c) for the Fiscal Quarter ending after the Restatement Effective Date shall be determined based upon Pricing Tier 4."
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "European Term Loan",
+        "citation": {
+          "section": "2.01(c)",
+          "quote": "the European Term Lender agrees to make loans (such loan, a “European Term Loan”) to the European Borrower in Euros on the Restatement Effective Date"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_b",
+        "citation": {
+          "section": "2.07(b)",
+          "quote": "The European Borrower shall repay the European Term Loan on the European Term Loan Maturity Date the aggregate principal amount of all European Term Loans made to the European Borrower that are outstanding on such date."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 200000000,
+          "currency": "EUR"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"European Term Commitment\")",
+          "quote": "The initial amount of the European Term Commitments in effect on the Restatement Effective Date is €200,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-03",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"European Term Loan Maturity Date\")",
+          "quote": "“European Term Loan Maturity Date” means May 3, 2029."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "euribor",
+        "citation": {
+          "section": "1.01 (definition of \"Alternative Currency Term Rate\", clause (a))",
+          "quote": "denominated in Euros, the rate per annum equal to the Euro Interbank Offered Rate (“EURIBOR”)"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 125,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"; Pricing Tier 4 row, Alternative Currency Term Rate Loans column = 1.250%)",
+          "quote": "The Applicable Rate in effect from the Restatement Effective Date through the first Business Day immediately following the date a Compliance Certificate is delivered pursuant to Section 7.01(c) for the Fiscal Quarter ending after the Restatement Effective Date shall be determined based upon Pricing Tier 4."
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "total_net_leverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Net Leverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated Funded Indebtedness on such date, minus (i) unrestricted cash and Cash Equivalents of Loan Parties"
+        }
+      },
+      "initial_threshold": {
+        "value": 5.0,
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "After the Restatement Effective Date and prior to the last day of the Fiscal Quarter ending November 2027 5.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [
+          {
+            "effective_from": "2027-11",
+            "threshold": 4.75
+          }
+        ],
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "On and after the last day of the Fiscal Quarter ending November 2027 4.75 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "The Company shall not permit the Consolidated Net Leverage Ratio as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date) of the Company to be greater than"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Interest Coverage Ratio\")",
+          "quote": "of (a) Consolidated EBITDA to (b) Consolidated Interest Expense paid or payable in cash"
+        }
+      },
+      "initial_threshold": {
+        "value": 2.75,
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "The Company shall not permit the Consolidated Interest Coverage Ratio as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date) of the Company to be less than 2.75 to 1.00."
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "The Company shall not permit the Consolidated Interest Coverage Ratio as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date) of the Company to be less than 2.75 to 1.00."
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "The Company shall not permit the Consolidated Interest Coverage Ratio as of the end of any Fiscal Quarter"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null
+      }
+    }
+  ],
+  "notes": {
+    "facility_records_excluded": [
+      "Letter of Credit Sublimit ($150,000,000, 'part of, and not in addition to, the Aggregate Revolving A-2 Commitments') and Swing Line Sublimit ($250,000,000, increasable once to $400,000,000) — carve-outs of the Revolving A-2 Commitments, no record.",
+      "Incremental Term Loan Commitments / Revolving Commitment Increases / Additional Revolving Commitments (2.01(d)) — option, no record.",
+      "Extended Term Loans / Extended Revolving Commitments (2.01(e)-(f)) and Refinancing Term Loans — option, no record."
+    ],
+    "schedule_2_01_check": "Schedule 2.01 (pp. 188-189 of the exhibit) totals $1,440,000,000 Revolving A-2 across 15 lenders, $60,000,000 Revolving B-2 held entirely by AgWest Farm Credit, PCA, and €200,000,000 European Term Commitments across 3 lenders (Rabobank €67.5M, ING €67.5M, ABN AMRO €65M). Schedule and defined terms agree; no discrepancy.",
+    "applicable_rate_grid": "Single five-tier grid keyed to the Consolidated Net Leverage Ratio, applied uniformly to all Classes (2.08(a)). Term SOFR / Daily SOFR / Alternative Currency Daily / Alternative Currency Term columns carry identical margins at every tier: Tier 1 (>=4.00x) 1.750%; Tier 2 1.500%; Tier 3 1.375%; Tier 4 (<2.50x and >=1.75x) 1.250%; Tier 5 (<1.75x) 1.125%. Base Rate column is 100 bps lower at every tier. Commitment fee also steps with leverage (0.250% down to 0.150%). Opening level stated explicitly as Pricing Tier 4. Term SOFR carries a 0.10% Term SOFR Adjustment (CSA) — not part of the margin field.",
+    "benchmark_notes": "Revolving A-2 Loans may also be Daily SOFR Loans (Adjusted Daily Simple SOFR) and Alternative Currency Daily/Term Rate Loans (SONIA, SARON, EURIBOR, Term CORRA, TIBOR, BBSY, STIBOR, CIBOR); Term SOFR recorded as the primary benchmark per the multicurrency rule. Revolving B-2 Loans are Dollars only, Base Rate or Term SOFR. The European Term Loan is euro-denominated and bears the Alternative Currency Term Rate, whose Euro limb is EURIBOR.",
+    "maturity_notes": "All three Maturity Dates are hard-coded as May 3, 2029 (five years from the Restatement Effective Date). No 'earliest of' construction and no springing-maturity proviso; the only qualifier is the Business Day roll-back in the 'Maturity Date' definition.",
+    "covenant_notes": [
+      "Both covenants run for the benefit of all Lenders; tested as of the end of every Fiscal Quarter, commencing with the first full Fiscal Quarter after the Restatement Effective Date (May 3, 2024). Fiscal Year ends the last Sunday in May, so the first test date is the quarter ending in late August 2024.",
+      "Leverage covenant carries two conditional overrides, neither recorded as the level: (i) 3.50 to 1.00 during any Collateral and Guarantee Suspension Period (an elective unsecured period requiring an Investment Grade Rating from two Rating Agencies plus an officer's certificate — not in effect at closing; the deal is secured), and (ii) a 0.50x step-up for any Fiscal Quarter ended during an Acquisition Period (four full quarters after a Material Acquisition). The Acquisition Period step-up is treated as a covenant holiday per the schema rule; the Suspension Period level is treated the same way by analogy.",
+      "Leverage ratio classification: numerator is total Consolidated Funded Indebtedness (no lien or security limitation) net of unrestricted cash of Loan Parties and 100% of unrestricted cash of non-Loan-Party Restricted Subsidiaries; denominator is LTM Consolidated EBITDA. Hence total_net_leverage. A separate 'Consolidated Secured Net Leverage Ratio' is defined but is not a maintenance covenant.",
+      "Interest coverage numerator is Consolidated EBITDA, denominator is Consolidated Interest Expense paid or payable in cash. Flat 2.75x for the life of the agreement — step_down_schedule [] is confirmed flat."
+    ],
+    "hesitations": [
+      "facility_type (European Term Loan): the tranche carries no letter and no scheduled amortization — it is a bullet repayable in full on the European Term Loan Maturity Date (2.07(b)). The schema rule classifies unlettered term loans by amortization, <=1%/yr → term_loan_b, and 0%/yr satisfies <=1%, so term_loan_b is recorded. Economically, however, this is a five-year, bank-held (three relationship banks), pro-rata-priced euro term loan sharing the revolver's grid — the profile the rule's TLA/TLB split was meant to distinguish by amortization, not a syndicated institutional TLB. A bullet is a boundary case the amortization rule did not anticipate. Flagged for the schema owner: if the rule is amended (e.g. bullet term loans classified by lender base/pricing, or mapped to 'other'), this value changes and Paya/other unlettered tranches should be re-checked under the amended rule.",
+      "step_down_schedule.effective_from: the agreement states the step-down period only as 'the last day of the Fiscal Quarter ending November 2027' — no calendar day. The schema says to record the date the agreement itself states and not to resolve the 52/53-week fiscal calendar, so the value is recorded at month precision, '2027-11' (reduced-precision ISO-8601). The document's Fiscal Year definition (last Sunday in May) plus a 13-week quarter convention would put this at 2027-11-28, but the quarter-end convention is not in the document. Flagged: the schema's date type does not currently allow month precision, and either the type or the resolution rule needs a decision.",
+      "facility_name: the agreement has no 'Facility' defined terms. The §2.01 quoted names are the singular defined terms 'Revolving A-2 Loan' / 'Revolving B-2 Loan' / 'European Term Loan'; the §2.01 subsection headings and the cover-page CUSIP labels use 'Revolving A-2 Loans' / 'Revolving A-2 Commitments'. The guide's 'names in quotes' instruction was followed. The schema normalization does not collapse plurals, so a model returning 'Revolving A-2 Loans' would be scored as a miss on this field — a normalization gap worth noting."
+    ],
+    "rationale_check_vs_corpus_md": "Row 7 amended rationale (revolver + revolver + EUR term; non-USD commitment currency; EURIBOR benchmark; leverage grid) is confirmed by reading. Also supplies: two same-type facilities (two USD revolvers → alignment on commitment descending), a stated opening tier on a leverage grid, one step-down, and one flat coverage covenant."
+  }
+}

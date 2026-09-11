@@ -641,7 +641,10 @@ rules:
 the **first fiscal period at the new level**.
 
 - `stated`: `value` is an ISO-8601 date — the end date of that period, as the
-  agreement states it.
+  agreement states it. **Record the precision the agreement states**, which
+  may be a month: `"2027-11"` is a legal value where the table says only "the
+  Fiscal Quarter ending November 2027". See [Reduced
+  precision](#reduced-precision-and-how-it-is-scored) below.
 - `relative`: `value` is a **structured object**, `{quarters_after, anchor}` —
   `{"quarters_after": 5, "anchor": "Closing Date"}`. Use `months_after` where
   the agreement counts in months.
@@ -695,6 +698,35 @@ Adjudication rules:
   depending on basis would be worse than either meaning.
 - The final "and thereafter" row is a step-down like any other; the absence of
   an end date is expected.
+
+#### Reduced precision, and how it is scored
+
+A fiscal-period table can name a month without naming a day. Lamb Weston
+§8.11(a) steps from 5.00x to 4.75x "on and after the last day of the Fiscal
+Quarter ending November 2027", and the agreement's only calendar fact is that
+the Fiscal Year ends on the last Sunday in May. The day is not derivable
+without assuming a 13-week quarter, which this schema forbids.
+
+So `stated` accepts **`YYYY-MM` as well as `YYYY-MM-DD`**, and the rule is:
+record the precision the agreement states, never more.
+
+**Comparison is exact on the string, and a prediction finer than gold is a
+miss.** Gold `"2027-11"` against a predicted `"2027-11-28"` is **wrong**, not
+approximately right and not a rounding question.
+
+This is the intended behaviour rather than an artifact, and it is written down
+so that a scorer implementation does not have to guess and inherit whatever a
+date library happens to do. `"2027-11-28"` is a real claim: it asserts the
+fiscal quarter ends on a specific Sunday, which the document does not say. A
+system that produces it has resolved a calendar it was not given — the same
+class of error as inventing a margin for a deferred opening level, and this
+field's guard against it is the same one, refusing to reward a confident value
+the document does not support. Scoring it as correct would teach exactly the
+wrong thing.
+
+The converse, gold `"2027-11-28"` against a predicted `"2027-11"`, is also a
+miss: the document stated a day and the system dropped it. The rule is symmetric
+because the target is fidelity to what the agreement says, in both directions.
 
 ### 10. `testing_frequency`
 
@@ -935,6 +967,23 @@ full set — not by quietly picking whichever label looks better.
 | Dates | ISO-8601 `YYYY-MM-DD` |
 | Enums | exact match against the stated value set |
 | Free strings | lowercase, strip articles and punctuation, collapse whitespace |
+
+> **The free-string row currently governs nothing.** `facility_name` was the
+> only free-string field and it was
+> [cut](#facility-fields); every remaining scored field is an enum, a number, a
+> date, a boolean or a structured object, all compared exactly. The row is kept
+> because a v2 that reintroduces a string field will need it — and because
+> anyone reading this table cold would otherwise assume it is live.
+>
+> **A known gap for that v2: it does not collapse plurals.** Lamb Weston names
+> its tranches `Revolving A-2 Loan` in the §2.01 definition and `Revolving A-2
+> Loans` in the subsection heading and the cover-page CUSIP label. Under this
+> row those are different answers, so a system returning the heading's form
+> would be scored wrong for a difference of one character that carries no
+> meaning. Singularization is the obvious fix and it is not free — it has its
+> own failure modes on defined terms that are plural by construction
+> ("Commitments", "Obligations") — which is exactly why it should be decided
+> before a string field returns, not after.
 
 ---
 

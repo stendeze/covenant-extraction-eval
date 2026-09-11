@@ -211,6 +211,11 @@ def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
     )
 
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# step_down_schedule.effective_from may state a month where the agreement names
+# a fiscal period without a day. Comparison stays exact on the string: a
+# prediction finer than gold is a miss, because the extra precision is a claim
+# the document does not make. See schema.md, "Reduced precision".
+ISO_MONTH = re.compile(r"^\d{4}-\d{2}$")
 CURRENCY_CODE = re.compile(r"^[A-Z]{3}$")
 
 # Typographic variants that survive HTML-to-text and would fail an exact
@@ -459,9 +464,12 @@ def _check_effective_from(report: Report, path: str, value: Any, sets: SchemaSet
         return None
 
     if basis == "stated":
-        if not (isinstance(inner, str) and ISO_DATE.match(inner)):
+        if not (isinstance(inner, str) and (ISO_DATE.match(inner) or ISO_MONTH.match(inner))):
             report.add(
-                f"{path}.value", "malformed_field", f"stated basis wants an ISO-8601 date, found {inner!r}"
+                f"{path}.value",
+                "malformed_field",
+                f"stated basis wants an ISO-8601 date, or YYYY-MM where the agreement names "
+                f"only a month, found {inner!r}",
             )
             return None
         return ("stated", inner)
