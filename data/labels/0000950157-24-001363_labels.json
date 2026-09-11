@@ -35,7 +35,7 @@
       },
       "maturity_date": {
         "value": {
-          "value": "the date that is seven years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)",
+          "value": { "tenor_years": 7, "anchor": "Closing Date" },
           "basis": "relative"
         },
         "citation": {
@@ -89,7 +89,7 @@
       },
       "maturity_date": {
         "value": {
-          "value": "the date that is five years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)",
+          "value": { "tenor_years": 5, "anchor": "Closing Date" },
           "basis": "relative"
         },
         "citation": {
@@ -140,7 +140,10 @@
       "step_down_schedule": {
         "value": [
           {
-            "effective_from": "the first Test Period ending after the last day of the fourth full Fiscal Quarter ending after the Closing Date (no calendar date stated in the agreement — see notes)",
+            "effective_from": {
+              "value": { "quarters_after": 5, "anchor": "Closing Date" },
+              "basis": "relative"
+            },
             "threshold": 5.00
           }
         ],
