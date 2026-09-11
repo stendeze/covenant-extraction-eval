@@ -154,6 +154,56 @@ This covers both constructions without either being a special case and does
 not depend on limb order. An earlier draft said "the primary limb", which is
 not mechanical enough for a second labeler to apply.
 
+### `facility_name` — cut, not patched
+
+**Trigger:** Kontoor Brands, `0001760965-21-000058`.
+
+The field carried a standing instruction, written into schema.md after the
+cover-page rule below: it had generated its own sub-rule on the second
+document labeled, and **if it required a third rule it was to be cut rather
+than patched**. Kontoor required a third rule. The field is gone.
+
+Kontoor names the same tranche twice, in its own Article I defined terms, in
+two incompatible styles. The definition of "Facility" gives `Revolving
+Facility` and `Tranche A Term Facility`; §2.6(a) and §2.3 make `Revolving
+Loans` and a `Tranche A Term Loan`. Both are the borrower's own label for the
+tranche, which is all the rule ever said. Its list of places the name lives —
+Article I, the commitment section, the cover page, the commitment schedule —
+never ranked them, and its own examples pulled both ways, `"Revolving Credit
+Facility"` alongside `"Term A Loans"`. With no ordering, the document supplies
+two answers and the schema picks neither.
+
+**The tempting escape was itself the third rule.** It is easy to argue that no
+new rule is needed: the field is `facility_name`, Kontoor expressly names its
+*facilities*, and "Revolving Loans" names loans rather than a facility. That
+reading reaches the labeler's recorded values without adding a sentence to
+schema.md. But it is a fresh interpretive step that the existing text does not
+contain, and adopting it silently is how a field accumulates rules while
+appearing not to. Recognizing that was the actual decision point.
+
+**What the cut costs, honestly.** The case for keeping it was that a human
+reviewer keys off the tranche name, and that a model which cannot name what it
+just extracted is telling you something. But `facility_type` already carries
+the semantic weight, and [record alignment](schema.md#record-alignment) keys
+on `facility_type` and commitment, never on the name — so the diagnostic is
+largely duplicated by a field that is actually well defined. Against that: three
+documents, three rules, and a field where two careful readers disagree is
+measuring phrasing rather than extraction. The same reasoning already produced
+the structured `relative` maturity, which exists so that three correct
+phrasings of one answer stop scoring as two misses.
+
+The budget effect is small — one instance per facility, ~330 values instead of
+~360 — because the field was cheap. Cheapness was never the argument for
+keeping it.
+
+**Why this is a result rather than an embarrassment.** The trigger was written
+down before the document that fired it existed, which is what made it binding.
+A rule invented at the moment it is needed can be argued away; one pre-
+registered cannot, and the honest move is to honor it at the document that
+fires it rather than grant an exception and write a fourth rule at document
+seven. The three sub-rules the field generated are preserved below as the
+evidence that produced the decision.
+
 ### `facility_name` — the cover-page rule
 
 **Trigger:** document two, Plains GP Holdings.
@@ -172,6 +222,11 @@ Recorded with a maintenance warning in schema.md: this field has now generated
 its own sub-rule on the second document, and it is already the weakest-signal
 field, reported separately, first in the cut order. If it needs a third rule,
 it gets cut instead. A field that keeps needing exceptions is not well defined.
+
+> That warning came due at Kontoor Brands and the field was cut; the rule it
+> guarded no longer exists in schema.md. This note is kept as written, because
+> it is the record of the second of the three rules that produced the
+> decision — see [`facility_name` — cut, not patched](#facility_name--cut-not-patched).
 
 ### `null_kind` — added to gold, deliberately excluded from the schema
 

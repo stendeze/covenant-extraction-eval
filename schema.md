@@ -125,72 +125,46 @@ field.
 
 | # | Field | Level | Type |
 |---|-------|-------|------|
-| 1 | `facility_name` | facility | string |
-| 2 | `facility_type` | facility | enum |
-| 3 | `aggregate_commitment` | facility | {amount: integer, currency: ISO 4217} |
-| 4 | `maturity_date` | facility | {value: date \| string, basis: enum} |
-| 5 | `interest_rate_benchmark` | facility | enum |
-| 6 | `applicable_margin_bps` | facility | integer |
-| 7 | `has_margin_grid` | facility | boolean |
-| 8 | `covenant_type` | covenant | enum |
-| 9 | `initial_threshold` | covenant | number |
-| 10 | `step_down_schedule` | covenant | array of {effective_from, threshold} |
-| 11 | `testing_frequency` | covenant | enum |
-| 12 | `springing_trigger` | covenant | object \| null |
+| 1 | `facility_type` | facility | enum |
+| 2 | `aggregate_commitment` | facility | {amount: integer, currency: ISO 4217} |
+| 3 | `maturity_date` | facility | {value: date \| string, basis: enum} |
+| 4 | `interest_rate_benchmark` | facility | enum |
+| 5 | `applicable_margin_bps` | facility | integer |
+| 6 | `has_margin_grid` | facility | boolean |
+| 7 | `covenant_type` | covenant | enum |
+| 8 | `initial_threshold` | covenant | number |
+| 9 | `step_down_schedule` | covenant | array of {effective_from, threshold} |
+| 10 | `testing_frequency` | covenant | enum |
+| 11 | `springing_trigger` | covenant | object \| null |
 
-Twelve scored fields. Every one of them carries a citation (see
+Eleven scored fields. Every one of them carries a citation (see
 [Citations](#citations)), which is validated but scored separately.
 
 ---
 
 ## Facility fields
 
-### 1. `facility_name`
+> **`facility_name` was cut on a pre-registered trigger.** It was the twelfth
+> field: the tranche's own label, as a string. It carried a standing warning
+> that if it required a third adjudication rule it should be cut rather than
+> patched, and at Kontoor Brands it did. The full reasoning is in
+> [labeling-notes.md](labeling-notes.md#facility_name--cut-not-patched). The
+> short version is that an agreement can name the same tranche twice, in its
+> own defined terms, in two incompatible styles — Kontoor defines the
+> `Revolving Facility` in Article I and makes `Revolving Loans` under §2.6(a) —
+> and the field has no principled way to choose. A field two careful readers
+> answer differently is measuring phrasing, not extraction. `facility_type`
+> carries the semantic weight and record alignment keys off it, so almost
+> nothing is lost.
 
-**Type:** string — the borrower's own label for the tranche.
-
-**Where it lives:** the definitions in Article I ("Revolving Credit Facility",
-"Term A Loans", "Initial Term Loans"); the commitment section, usually §2.01;
-the cover page; and the commitment schedule, usually Schedule 1.01 or 2.01.
-
-**Correct when:** the string matches gold after normalization — lowercase,
-strip leading articles, strip punctuation, collapse whitespace. So "the
-Revolving Credit Facility" and "Revolving Credit Facility" match; "Revolving
-Facility" and "Revolving Credit Facility" do not.
-
-**Where the body never names the tranche.** A single-facility agreement often
-defines only "Commitment", "Committed Loans" and "Aggregate Commitments", and
-names the facility nowhere except the cover page. Plains GP is the extreme
-case: "Revolving Credit Facility" appears exactly once in 84,000 words, as the
-tail of the cover-page label "Senior Unsecured Revolving Credit Facility",
-between the arrangers and the table of contents.
-
-Rule: **for a single-facility agreement whose body uses only
-"Commitment"/"Loans", take the cover-page label excluding ranking and security
-descriptors** — "Senior", "Junior", "Secured", "Unsecured", "First Lien",
-"Second Lien". Those describe priority in the capital structure, not the
-tranche. So "Senior Unsecured Revolving Credit Facility" is recorded as
-"Revolving Credit Facility". The citation still quotes the full cover-page
-label, which appears verbatim; the value is derived from it.
-
-This is the weakest-signal field in the schema and it is reported separately
-from the headline number. It exists because it is what a human reviewer keys
-off, and because a model that cannot name the tranche it just extracted is
-telling you something. `facility_type` carries the semantic weight.
-
-> **Maintenance warning.** This field has now generated its own adjudication
-> sub-rule on the second document labeled. It is already designated
-> weakest-signal, reported separately, and first in the cut order. **If it
-> requires a third rule, cut it rather than writing one.** A field that keeps
-> needing exceptions is telling you it is not well defined, and no result
-> here justifies the maintenance.
-
-### 2. `facility_type`
+### 1. `facility_type`
 
 **Type:** enum — `revolver`, `term_loan_a`, `term_loan_b`,
 `delayed_draw_term_loan`, `bridge`, `other`.
 
-**Where it lives:** inferred from the same places as `facility_name`, plus the
+**Where it lives:** the definitions in Article I ("Revolving Credit Facility",
+"Term A Loans", "Initial Term Loans"); the commitment section, usually §2.01;
+the cover page; the commitment schedule; and the
 amortization schedule (a 1%/yr amortizing institutional tranche is a TLB; a
 5–10%/yr amortizing pro rata tranche is a TLA).
 
@@ -210,7 +184,7 @@ amortization schedule (a 1%/yr amortizing institutional tranche is a TLB; a
 - A delayed draw term loan *is* a facility — the commitment is made, only the
   funding is deferred.
 
-### 3. `aggregate_commitment`
+### 2. `aggregate_commitment`
 
 **Type:** object — `{amount: integer, currency: ISO 4217 code}`. Amount in
 whole units of the currency, not millions. $500,000,000 is `500000000`.
@@ -232,7 +206,7 @@ size.
   sublimit expressed in the alternative currency. The sublimit is not a
   separate facility.
 
-### 4. `maturity_date`
+### 3. `maturity_date`
 
 **Type:** object — `{value, basis}` where `basis` is `stated` or `relative`.
 
@@ -291,7 +265,7 @@ Adjudication rules:
   trade: resolving it correctly requires the notes indenture, which is not in
   the corpus.
 
-### 5. `interest_rate_benchmark`
+### 4. `interest_rate_benchmark`
 
 **Type:** enum — `term_sofr`, `daily_simple_sofr`, `libor`, `euribor`, `cdor`,
 `base_rate`, `prime`, `other`.
@@ -321,7 +295,7 @@ II.
   enum value costs nothing, and the alternative is forcing `other` on the one
   agreement that needs it mid-labeling.
 
-### 6. `applicable_margin_bps`
+### 5. `applicable_margin_bps`
 
 **Type:** integer or `null` — basis points over the benchmark.
 
@@ -392,7 +366,7 @@ Adjudication rules:
 - Where the agreement expresses the margin as a percentage (2.25%), convert to
   bps (225).
 
-### 7. `has_margin_grid`
+### 6. `has_margin_grid`
 
 **Type:** boolean.
 
@@ -449,7 +423,7 @@ loan B — the gold list is empty. That is a real and correct answer, not a
 labeling failure, and a model that invents a covenant there is penalized
 exactly as it should be.
 
-### 8. `covenant_type`
+### 7. `covenant_type`
 
 **Type:** enum — `total_net_leverage`, `first_lien_net_leverage`,
 `secured_net_leverage`, `total_leverage_gross`, `debt_to_capitalization`,
@@ -532,7 +506,7 @@ interest coverage or fixed charge coverage. The enum value stays because
 removing it would force an `other` on the one deal that has it, but an empty
 column for it is the expected result, not a labeling gap.
 
-### 9. `initial_threshold`
+### 8. `initial_threshold`
 
 **Type:** number — the level applicable at the first test date. Ratios to two
 decimals (`4.00`); dollar thresholds as integers in whole currency units.
@@ -552,7 +526,7 @@ rules:
   record the **non-holiday** level. The holiday is a conditional override, not
   the covenant level.
 
-### 10. `step_down_schedule`
+### 9. `step_down_schedule`
 
 **Type:** array of `{effective_from: date, threshold: number}`, ordered by
 `effective_from`. `effective_from` is the ISO-8601 **end date of the first
@@ -577,7 +551,7 @@ Adjudication rules:
 - The final "and thereafter" row is a step-down like any other; the absence of
   an end date is expected.
 
-### 11. `testing_frequency`
+### 10. `testing_frequency`
 
 **Type:** enum — `quarterly`, `monthly`, `semiannual`, `annual`,
 `event_driven`.
@@ -593,7 +567,7 @@ Conditionality lives in `springing_trigger`. Conflating the two is the single
 most common way this field gets labeled inconsistently by two careful people,
 which is exactly why it is split.
 
-### 12. `springing_trigger`
+### 11. `springing_trigger`
 
 **Type:** object or `null`. When non-null:
 `{condition_type: enum, threshold: number, threshold_unit: enum, quote: string}`
@@ -645,7 +619,7 @@ right.
 
 **Character offsets are not labeled by hand.** The span is derived
 programmatically from the quote by substring search at scoring time. Hand-
-locating offsets across ~360 field instances is the most painful thing this
+locating offsets across ~330 field instances is the most painful thing this
 schema could ask for and it buys nothing the quote does not already buy. If a
 quote matches at more than one offset the first is taken; ambiguity there is
 irrelevant, since the check is whether the language exists in the document at
@@ -700,20 +674,21 @@ comparable to published work, and the schema is the new part.
 
 ## Labeling budget
 
-Twelve fields sounds small. It is not, because they are nested.
+Eleven fields sounds small. It is not, because they are nested.
 
 A two-tranche, two-covenant agreement — the modal deal in this frame — is:
 
 ```
-7 facility fields  × 2 facilities =  14
+6 facility fields  × 2 facilities =  12
 5 covenant fields  × 2 covenants  =  10
                                     ---
-                                     24 field instances
+                                     22 field instances
 ```
 
 Each of those carries a section reference and a verbatim quote. At 15
-documents that is **~360 labeled values and ~720 supporting citations**; at 20
-it is ~480 and ~960.
+documents that is **~330 labeled values and ~660 supporting citations**; at 20
+it is ~440 and ~880. The figures were ~360 and ~720 when `facility_name` was
+a field.
 
 **Plan for 15.** Extend to 20 only if the first five go faster than expected.
 A complete, carefully adjudicated 15 beats a rushed 20, and the held-out set
@@ -721,13 +696,14 @@ is the credibility of the whole project — it is the wrong place to be tired.
 
 If the budget needs cutting further, the order is:
 
-1. **`facility_name`** goes first. It is already argued above as the weakest
-   signal and already reported separately from the headline number, so
-   dropping it costs the least. That removes 1 instance per facility.
-2. **`step_down_schedule`** is the most expensive single field — it is an
+1. **`step_down_schedule`** is the most expensive single field — it is an
    array, and it requires reading a table carefully. But it is also one of the
    most interesting results, since it is where regex baselines fail hardest.
    Cut it only if the alternative is not finishing.
+
+`facility_name` used to head this list and has already been cut, on its own
+pre-registered trigger rather than for budget. See the note under [Facility
+fields](#facility-fields).
 
 Do not cut the corpus below 15. Fewer documents means every per-field number
 is computed over a handful of instances and the confidence intervals swallow
@@ -822,7 +798,6 @@ An abbreviated record for a two-tranche agreement with one springing covenant:
   },
   "facilities": [
     {
-      "facility_name": "Revolving Credit Facility",
       "facility_type": "revolver",
       "aggregate_commitment": { "amount": 500000000, "currency": "USD" },
       "maturity_date": { "value": "2029-06-14", "basis": "stated" },
@@ -831,7 +806,6 @@ An abbreviated record for a two-tranche agreement with one springing covenant:
       "has_margin_grid": true
     },
     {
-      "facility_name": "Initial Term Loans",
       "facility_type": "term_loan_b",
       "aggregate_commitment": { "amount": 1200000000, "currency": "USD" },
       "maturity_date": { "value": "2031-06-14", "basis": "stated" },

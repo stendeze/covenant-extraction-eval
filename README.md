@@ -4,7 +4,11 @@ Structured extraction of financial covenants and key terms from SEC-filed credit
 
 ## Scope
 
-Twelve fields per agreement: facility name and type, aggregate commitment, maturity, interest rate benchmark and margin, whether a margin grid exists, and — per financial covenant — type, initial threshold, step-down schedule, testing frequency, and springing trigger. Every extracted field carries a source citation. See [schema.md](schema.md) for types, where each field lives in an agreement, and the rule that decides whether an extracted value is correct.
+Eleven fields per agreement: facility type, aggregate commitment, maturity, interest rate benchmark and margin, whether a margin grid exists, and — per financial covenant — type, initial threshold, step-down schedule, testing frequency, and springing trigger. Every extracted field carries a source citation. See [schema.md](schema.md) for types, where each field lives in an agreement, and the rule that decides whether an extracted value is correct.
+
+**It was twelve. A field was cut on a trigger set before labeling began.** `facility_name` — the tranche's own label — carried a written instruction that if it ever required a third adjudication rule it should be cut rather than patched, because a field that keeps needing exceptions is not well defined. The third rule came due at the fourth document labeled, where an agreement names the same tranche twice in its own defined terms, in two incompatible styles, and the schema had no principled way to choose. It was cut.
+
+This is worth stating plainly rather than leaving as a silent diff. A benchmark's credibility rests on its adjudication rules having been fixed in advance, and the way to demonstrate that is a rule that bound its author against his own preference at the moment it fired — not a schema in which every field happened to survive. The reasoning is in [labeling-notes.md](labeling-notes.md#facility_name--cut-not-patched); the cut itself is one commit, with the document that forced it named.
 
 ## Fields that test hallucination directly
 

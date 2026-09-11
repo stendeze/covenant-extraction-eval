@@ -40,9 +40,13 @@ from .screen import to_text
 SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schema.md"
 
 # schema.md "Field summary" — the scored fields, by level. A field absent from
-# a label file is a hole in the gold record, not a null.
+# a label file is a hole in the gold record, not a null. Unlike the enum value
+# sets, this list is transcribed rather than parsed: it changes when a field is
+# added or cut, which is rare and deliberate, and both ends of such a change
+# are edits a human is already making. facility_name was cut here when it was
+# cut from schema.md; label files written before the cut may still carry it,
+# and the extra key is ignored rather than flagged.
 SCORED_FACILITY_FIELDS = (
-    "facility_name",
     "facility_type",
     "aggregate_commitment",
     "maturity_date",
@@ -470,8 +474,6 @@ def _check_field(
         not isinstance(value, int) or isinstance(value, bool)
     ):
         report.add(path, "malformed_field", f"expected an integer in basis points, found {value!r}")
-    elif name == "facility_name" and not isinstance(value, str):
-        report.add(path, "malformed_field", f"expected a string, found {value!r}")
 
 
 def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
