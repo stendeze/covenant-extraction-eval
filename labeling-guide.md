@@ -37,7 +37,7 @@ on what earlier ones return.
 | # | Where | Yields |
 |---|-------|--------|
 | 1 | Table of contents | Section numbers for steps 2, 7, 8 |
-| 2 | §2.01 | How many facilities, and their names |
+| 2 | §2.01 | How many facilities, and what each one is |
 | 3 | Commitment definitions (Art. I) | `aggregate_commitment` |
 | 4 | "Maturity Date" definition (Art. I) | `maturity_date` |
 | 5 | "Applicable Rate" / "Applicable Margin" (Art. I) | `applicable_margin_bps`, `has_margin_grid`, and what the margin attaches to |
@@ -52,8 +52,15 @@ on what earlier ones return.
 ### Step 2 — §2.01: what facilities exist
 
 §2.01 is where commitments are made. Each subsection is a facility: (a) the
-term loan, (b) the revolver, and so on. The names in quotes are your
-`facility_name` values.
+term loan, (b) the revolver, and so on. This step tells you how many records
+the agreement produces.
+
+**The tranche names are not recorded.** `facility_name` was a field and was
+cut, because an agreement can name the same tranche twice in its own defined
+terms, in two incompatible styles — Kontoor Brands defines a `Revolving
+Facility` in Article I and makes `Revolving Loans` under §2.6(a) — and the
+rule had no principled way to choose. Read the names to orient yourself and
+to find the amortization in step 7; `facility_type` is what gets recorded.
 
 **Do not create a record for:**
 
@@ -83,12 +90,34 @@ respect to the Initial Term Loans..."
 **The "earliest of" construction is normal.** Nearly every agreement reads
 "the earliest of (i) [date], (ii) the date of termination in whole of the
 Commitments, (iii) the date the Loans are declared due and payable." Clauses
-(ii) and (iii) are ordinary termination and acceleration language. Record the
-stated date, `basis: stated`.
+(ii) and (iii) are ordinary termination and acceleration language. So is a
+"later of ... (b) if extended pursuant to Section 2.14" limb, and so is a
+preceding-Business-Day proviso, which is a day-count adjustment. Record the
+limb that states a date or a period; the rest are mechanics.
+
+**Two bases, and the limb decides which.** If the limb you kept names a
+calendar date, `basis: stated` and the value is that ISO date.
+
+If it names a *period* — "the fifth anniversary of the Closing Date", "such
+date that is five years from the Closing Date" — there is no calendar date in
+the document, because Closing Date and Effective Date are themselves defined
+by condition satisfaction. Then `basis: relative`, and the value is a
+**structured object**, never the sentence:
+
+```json
+{ "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" }
+```
+
+Use `tenor_months` where the agreement counts in months. This is not
+cosmetic: as free text, "five years from the Closing Date", "the fifth
+anniversary of the Closing Date" and "such date that is five years from the
+Closing Date" are three different strings for one answer, and two of them
+would score as misses. Quote whichever phrasing the agreement uses in the
+citation; the value is derived from it.
 
 A springing maturity proviso is different and rarer: "or, if earlier, the
 date 91 days prior to the stated maturity of the Senior Notes." That
-references an instrument outside the document. Record the stated date and
+references an instrument outside the document. Record the stated maturity and
 note the proviso in free text.
 
 ### Step 5 — margin and grid
@@ -199,10 +228,42 @@ have none. Record `[]`, not a guess.
 
 Classify by the ratio's own definition in Article I, not by its label. A
 covenant labeled "Leverage Ratio" whose definition nets unrestricted cash and
-counts only first lien debt is `first_lien_net_leverage`.
+counts only first lien debt is `first_lien_net_leverage`. The label is often
+deliberately neutral — "Consolidated Coverage Ratio", "Financial Condition
+Covenant" — and tells you nothing.
 
-Netting is decided by one question: does the debt definition subtract cash?
-If yes, it's a `net` variant. If no, `total_leverage_gross`.
+**Read the denominator first, then the netting.** Three questions in order:
+
+1. *What is the ratio divided by?* Debt over EBITDA is the leverage family,
+   unbounded, thresholds typically 3.00x–7.00x. Debt over total capital (debt
+   plus equity) is `debt_to_capitalization`, bounded near 1.00. **A threshold
+   below 1.00 cannot be an EBITDA multiple** — Roper's "0.65 to 1.00" is the
+   tell, and it is mechanical, not a judgment. Take this step first, because a
+   capitalization ratio may also net cash and would otherwise be misread as a
+   `net` leverage variant.
+2. *Does the debt definition subtract cash?* If yes, a `net` variant. If no,
+   `total_leverage_gross`.
+3. *Is it lien-limited?* First lien or secured debt only gives
+   `first_lien_net_leverage` or `secured_net_leverage`. A senior unsecured
+   facility has no lien-based variant.
+
+**Coverage covenants are classified by the denominator too.** Interest alone
+is `interest_coverage`. Interest plus one or more recurring fixed obligations
+— rent, scheduled principal, taxes, preferred dividends — is
+`fixed_charge_coverage`. The numerator does not decide it: EBITDA, EBITDAR and
+Consolidated Net Income all appear over the same denominators.
+
+Lease-adjusted constructions are `fixed_charge_coverage`. EBITDAR over
+interest plus rent is the standard rent-adjusted form and is common in retail
+credits; Advance Auto is the worked case. Do not reach for `other` because the
+denominator lacks scheduled principal — that reading would push a large share
+of real fixed charge covenants into the catch-all.
+
+**Incurrence ratios are not covenants.** A First Lien Leverage Ratio defined
+and used only to size incremental capacity or to gate ratio debt is not a
+maintenance test and gets no record. Check what the defined term is actually
+used for before recording it — Kontoor defines two such ratios and neither is
+a covenant.
 
 ### `initial_threshold`
 
@@ -286,3 +347,16 @@ hesitation is more valuable than the label.
 Rule changes go in `schema.md` as their own commit, with the document that
 forced them named in the message. Then re-apply to everything already
 labeled.
+
+**And update this file in that same commit.** This is the document labeling
+is actually done from, so a schema change that does not reach it keeps being
+applied in its old form — silently, and by construction, at every document
+labeled afterward. That is not hypothetical: the structured relative-maturity
+form landed in `schema.md` while step 4 here still described only `basis:
+stated`, and the next three documents were all labeled with string-form
+maturities that then had to be corrected one at a time. The conformance fixes
+looked like labeler error and were a stale instruction.
+
+So the protocol is three parts, not two: change the rule in `schema.md`,
+change the instruction here, re-apply to everything already labeled — one
+commit, naming the document that forced it.

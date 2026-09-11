@@ -96,6 +96,26 @@ turns out to be unlabelable — truncated exhibit, scanned image, wrong document
 type that passed the filter — it is replaced and the replacement is recorded
 in the corpus file with the reason.
 
+### Changing a rule
+
+The rules below are expected to move under contact with real documents; that
+is the point of labeling in document order and committing as you go. When one
+does, the change is **one commit with three parts**, naming the document that
+forced it:
+
+1. The rule changes here. This document governs.
+2. **The corresponding instruction in [labeling-guide.md](labeling-guide.md)
+   changes with it.** That file is what labeling is actually done from, and a
+   rule that does not reach it keeps being applied in its old form at every
+   document labeled afterward. This happened: the structured relative-maturity
+   form was added here while the guide still described only `basis: stated`,
+   and the next three documents were labeled with string-form maturities that
+   had to be corrected one at a time. Each correction looked like labeler
+   error and was a stale instruction.
+3. The change is re-applied to everything already labeled, and the result is
+   reported — including when it is empty, since empty-by-check and
+   empty-by-assumption are different claims.
+
 ---
 
 ## Record shape
