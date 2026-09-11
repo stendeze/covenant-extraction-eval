@@ -1,0 +1,210 @@
+{
+  "source": {
+    "borrower": "Kontoor Brands, Inc.",
+    "accession_number": "0001760965-21-000058",
+    "exhibit": "EX-10.1",
+    "document_title": "Amended and Restated Credit Agreement",
+    "agreement_date": "2021-11-18",
+    "filing_date": "2021-11-19",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "corpus_checks": {
+      "document_type": "amended_and_restated_credit_agreement (in scope; full restatement, Article I definitions and Section 2 commitments present)",
+      "syndicated": true,
+      "aggregate_commitments_usd": 900000000,
+      "facility_structure": "revolver + TLA (pro rata)",
+      "period": "pre-transition (LIBOR-based, filed after 2021-06-01)"
+    }
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Facility\")",
+          "quote": "the Revolving Commitments and the extensions of credit made thereunder (the “Revolving Facility”)"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.6(a)",
+          "quote": "each Revolving Lender severally agrees (i) to make revolving credit loans denominated in U.S. Dollars (“Dollar Revolving Loans”) to the Borrowers"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 500000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Commitment\")",
+          "quote": "The initial amount of the Total Revolving Commitments is $500,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Termination Date\")",
+          "quote": "the date which is the earlier to occur of (a) the fifth anniversary of the Closing Date and (b) the date on which the Revolving Commitments are terminated"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.1 (definition of \"LIBO Screen Rate\")",
+          "quote": "the London interbank offered rate as administered by ICE Benchmark Administration (or any other Person that takes over the administration of such rate) for Dollars"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 150,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "Term Benchmark Loans / RFR Loans / Daily Simple ESTR Loans / CDOR Loans 0.500% 1.500%"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the Applicable Margin with respect to Revolving Loans, Swingline Loans and Tranche A Term Loans will be determined pursuant to the Pricing Grid"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Tranche A Term Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Facility\")",
+          "quote": "the Tranche A Term Loans (the “Tranche A Term Facility”)"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.3",
+          "quote": "each Tranche A Term Lender severally agrees to make a term loan denominated in U.S. Dollars (a “Tranche A Term Loan”) to the Company on the Closing Date"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 400000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Tranche A Term Loan\")",
+          "quote": "The initial aggregate amount of the Tranche A Term Loans is $400,000,000"
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Tranche A Final Maturity Date\")",
+          "quote": "the date which is the fifth anniversary of the Closing Date; provided, however, if such date is not a Business Day, the Tranche A Final Maturity Date shall be the next preceding Business Day"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "2.16(a)",
+          "quote": "Each Term Benchmark Loan denominated in Dollars shall bear interest for each day during each Interest Period with respect thereto at a rate per annum equal to the Adjusted LIBO Rate determined for such day plus the Applicable Margin."
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 150,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "Term Benchmark Loans / RFR Loans / Daily Simple ESTR Loans / CDOR Loans 0.500% 1.500%"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "the Applicable Margin with respect to Revolving Loans, Swingline Loans and Tranche A Term Loans will be determined pursuant to the Pricing Grid"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "total_net_leverage",
+        "citation": {
+          "section": "1.1 (definition of \"Total Leverage Ratio\")",
+          "quote": "the ratio of (x) Consolidated Total Debt as of such date less Netted Cash as of such date to (y) Consolidated EBITDA of the Company and its Subsidiaries for the applicable Test Period"
+        }
+      },
+      "initial_threshold": {
+        "value": 4.50,
+        "citation": {
+          "section": "7.1(a)",
+          "quote": "Permit the Total Leverage Ratio as at the last day of any Test Period to exceed 4.50 to 1.00, commencing with the Test Period for which the last fiscal quarter is the first full fiscal quarter ending after the Closing Date."
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.1(a)",
+          "quote": "Permit the Total Leverage Ratio as at the last day of any Test Period to exceed 4.50 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.2(b)(ii)",
+          "quote": "a Compliance Certificate as of the last day of the fiscal quarter or fiscal year of the Company, as the case may be"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.1 (definition of \"Consolidated Interest Coverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated EBITDA of the Company and its Subsidiaries for such Test Period to (b) Consolidated Interest Expense of the Company and its Subsidiaries for such Test Period"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.00,
+        "citation": {
+          "section": "7.1(b)",
+          "quote": "Permit the Consolidated Interest Coverage Ratio as of the last day of any Test Period to be less than 3.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.1(b)",
+          "quote": "Permit the Consolidated Interest Coverage Ratio as of the last day of any Test Period to be less than 3.00 to 1.00, commencing with the Test Period for which the last fiscal quarter is the first full fiscal quarter ending after the Closing Date."
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.2(b)(ii)",
+          "quote": "a Compliance Certificate as of the last day of the fiscal quarter or fiscal year of the Company, as the case may be"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+  "notes": {
+    "facility_name": "Judgment call. The agreement's own labels for the two tranches as facilities are \"Revolving Facility\" and \"Tranche A Term Facility\" (Article I definition of \"Facility\"; also the Annex A heading). The quoted names at the commitment sections are \"Revolving Loans\" (2.6(a)) and \"Tranche A Term Loan\" (2.3); Article I also defines \"Tranche A Term Loans\". If gold keys off the commitment-section quoted names per labeling-guide step 2, the values would be \"Revolving Loans\" / \"Tranche A Term Loan\". Adjudication rule is underspecified for agreements that carry both a \"Facility\" label and a \"Loans\" label; flagged for schema tightening.",
+    "facility_type_tranche_a": "Labeled \"Tranche A\" explicitly, so the label governs. Amortization in 2.5 is consistent: $0 for quarters 1-4, then $2.5M/quarter (0.625%/yr equivalent 2.5%) and $5.0M/quarter (1.25%/qtr, 5%/yr) with a balloon at the Tranche A Final Maturity Date.",
+    "aggregate_commitment": "Schedule 1.1A (lender-by-lender) is not attached to the filed exhibit; amounts are taken from the defined terms, which govern in any case. Recitals independently state $900,000,000 comprised of a $400,000,000 term loan A facility and a $500,000,000 revolving credit facility.",
+    "multicurrency": "The Revolving Facility permits Foreign Currency Revolving Loans (Canadian Dollars, Euro, Sterling, Swiss Francs, Yen). Aggregate is expressed in USD with foreign-currency loans measured at Dollar Equivalent; no separate facility. Primary benchmark is USD LIBOR (Adjusted LIBO Rate); alternate-currency limbs (Adjusted EURIBOR Rate, Adjusted TIBOR Rate, Daily Simple RFR for SONIA/SARON, CDO Rate, Daily Simple ESTR) are not the primary benchmark. The Tranche A Term Loans are USD-only.",
+    "interest_rate_benchmark": "Term Benchmark Loans in Dollars price off the Adjusted LIBO Rate -> LIBO Rate -> LIBO Screen Rate -> London interbank offered rate administered by ICE Benchmark Administration (Reuters LIBOR01/LIBOR02). Adjusted variant (Statutory Reserve Rate multiplier) maps to the unadjusted enum. The extensive Benchmark Replacement / Term SOFR Transition Event / Early Opt-in Election machinery (definitions and 2.18) is conditional future language and does not change the answer. Section 1.6 (LIBOR Notification) likewise.",
+    "applicable_margin_bps": "Opening level is stated explicitly in the Applicable Margin definition as 1.500% for Term Benchmark Loans (0.500% for ABR Loans), in effect until the first Adjustment Date after the first full fiscal quarter ending after the Closing Date. Not a deferral null: the number is on the face of the agreement. Thereafter the Pricing Grid (Annex A) applies; it is a hybrid grid keyed to the higher of an S&P/Moody's corporate rating level and the Total Leverage Ratio level, five levels from 1.375% (Level I) to 2.00% (Level V) for Term Benchmark Loans. Base Rate margin (0.500%, i.e. benchmark margin minus 100bps) is deliberately not recorded.",
+    "has_margin_grid": "True: the interest margin itself varies with the Pricing Grid. Separately, the Commitment Fee Rate opens at 0.25% and also steps under the same grid (0.20% to 0.35%); that is a commitment-fee grid and does not affect this field.",
+    "maturity_date": "The Closing Date is defined by satisfaction of the 5.1 conditions, not as a calendar date, and no hard maturity date appears anywhere in the exhibit, so basis is relative for both tranches. The Revolving Termination Date uses the ordinary \"earlier of\" construction; limb (b) is commitment termination mechanics and is disregarded. The Tranche A Final Maturity Date carries a preceding-Business-Day proviso, which is a day-count adjustment, not a springing maturity. No springing-maturity proviso keyed to the Senior Unsecured Notes was found.",
+    "non_facilities": "No record created for: Swingline Loans (2.8, \"a portion of the credit otherwise available to a Borrower under the Revolving Commitments\"); Letters of Credit / L/C Commitments (Section 3, participations under the Revolving Commitments); Incremental Facilities / Incremental Cap (2.27, greater of $425,000,000 and 100% of Consolidated EBITDA plus ratio-based amounts); Extended Term Loans / Extended Revolving Commitments (2.26); Refinancing Term Loans / Other Revolving Commitments (2.30). Existing Letters of Credit (Schedule 1.1C) are rolled into the Revolving Facility.",
+    "financial_covenants_scope": "The defined term \"Financial Covenants\" is Sections 7.1(a) and 7.1(b), which is exactly the two records here. First Lien Leverage Ratio and Senior Secured Leverage Ratio are defined but used only for incurrence tests (Incremental Cap, 7.2 ratio debt) and the Applicable Prepayment Percentage; they are not maintenance covenants and are not recorded.",
+    "total_net_leverage": "Classified by the ratio definition: Consolidated Total Debt (all Indebtedness for borrowed money, notes, purchase money and Capital Lease Obligations, not limited to secured or first-lien debt) less Netted Cash (unrestricted cash and Cash Equivalents) over Consolidated EBITDA. Netting present -> net variant; not lien-limited -> total_net_leverage.",
+    "covenant_holiday": "7.1(a) permits the Company to elect, at most twice during the term, a step-up of the Total Leverage Ratio level to 5.00 to 1.00 for the four Test Periods following a Material Acquisition (consideration above $100,000,000), with a required return to 4.50 to 1.00 for the two Test Periods after. This is a conditional override; the non-holiday level 4.50 is recorded and the step-down schedule is empty (confirmed flat).",
+    "testing_frequency": "Both covenants are tested \"as at/as of the last day of any Test Period\"; Test Period is a rolling four-fiscal-quarter period and 6.2(b)(ii) requires a Compliance Certificate as of the last day of each fiscal quarter or fiscal year. Tested unconditionally every quarter; no springing trigger, so springing_trigger is an absence null with no citation.",
+    "first_test_date": "Both covenants commence with the Test Period whose last fiscal quarter is the first full fiscal quarter ending after the Closing Date; the initial thresholds are the levels at that first test date."
+  }
+}
