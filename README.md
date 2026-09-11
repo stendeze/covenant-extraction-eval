@@ -36,6 +36,10 @@ Smaller exclusions, each argued at the field it belongs to in [schema.md](schema
 
 [labeling-notes.md](labeling-notes.md) records what labeling turns up: documented false-positive mechanisms for the baseline, found in real documents rather than hypothesized; schema changes made under contact with those documents, with the case that forced each one; and how disagreements between readers were resolved. The first agreement labeled produced all three.
 
+**The baseline's errors are measured and directional, not assumed.** The comparison here is against a keyword/regex extractor, and a baseline whose failures nobody can articulate is not a fair comparison. Both directions are documented from real documents. The false positives are the interesting ones — template residue that asserts a margin is leverage-linked when the governing definition is flat. The false negatives are the larger ones: a keyword rule fires on the language it was written for and is silent on everything else, so it misses a debt-to-capitalization covenant sitting under a heading that reads "Financial Condition Covenant", and misses a five-level ratings grid because it was looking for the word "leverage". Measured against the documents read so far, the structure signal is right 3 of 6 and the grid signal 3 of 6 with every error a miss.
+
+That matters twice over, and the second time is uncomfortable: **this project used the same class of tool to help choose its own test set.** The selection signals in [corpus.md](corpus.md) came from that screen, so a document selected as "no grid" may have three. The defect is recoverable — selection signals are checkable by reading, and they are being re-checked by reading — but it is stated here rather than left for a reader to find, because a corpus rationale that inherited a tool's blind spot is exactly the kind of thing a benchmark should disclose about itself.
+
 ## Data
 
 The hand-labeled set is committed to this repo. It is the part of the project that does not exist publicly, and a benchmark without its benchmark is not one.

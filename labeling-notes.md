@@ -49,6 +49,62 @@ requires reading the definition that governs, not matching a pattern near it.
 That is the gap the extraction system is supposed to close, and this is a
 measured instance of it rather than an assertion.
 
+### Keyword heuristics under-detect, and the corpus rationales inherited it
+
+**Affects:** the baseline, and `corpus.md`'s selection rationales.
+
+The false-positive mechanisms below are the ones a keyword baseline will fall
+into. This is the other half, and it is larger: the same heuristics **miss**
+constructions systematically, and because `screen.py`'s signals were used to
+write the selection rationales in [corpus.md](corpus.md), documents were
+selected for properties they do not have.
+
+Three independent instances, in the order they surfaced:
+
+1. **Covenant detection.** The regexes match `Leverage Ratio`, `Interest
+   Coverage Ratio`, `Fixed Charge Coverage` and `First Lien Leverage`. Reading
+   the 21 documents they reported as covenant-free turned up debt-to-
+   capitalization, consolidated net worth, and interest coverage written as a
+   ratio of components — none matched. Roper is the costly case: it was
+   selected as the corpus's covenant-free document and has a Total Debt to
+   Total Capital Ratio at 0.65 to 1.00 in §7.1, under a heading reading
+   "Financial Condition Covenant" inside an article headed NEGATIVE COVENANTS.
+   A phrase search for "financial covenant" never sees it.
+2. **The re-read that was supposed to catch it.** Two documents were then
+   cleared by hand as genuinely covenant-free, Roper and PPG Industries. Roper
+   was wrong. PPG was cleared by the same reader applying the same method in
+   the same pass, so its status is unverified rather than confirmed — the
+   check and the thing it was checking failed together.
+3. **Structure and grid signals, measured.** Comparing `screened.jsonl`
+   against the labels, over the six documents read so far: `structure` is
+   correct 3 of 6, and `pricing_grid_hint` is correct 3 of 6 **with every
+   error a false negative**. It scored `false` on Plains and Advance Auto,
+   both of which carry five-level ratings grids, and on Lamb Weston, which
+   carries three tiered grids. `structure` reported `revolver_plus_tla` for a
+   term-only agreement and confused TLA with TLB twice.
+
+**The pattern is directional.** These are not random errors. A keyword rule
+fires on language it was written for and stays silent on everything else, so
+its errors are overwhelmingly misses, and a corpus rationale built on them
+inherits the misses as false confidence. [corpus.md](corpus.md) row 7 selected
+Lamb Weston for "Lettered TLA with no grid"; the document has no revolver and
+three grids. Row 12 selected G-III Apparel for "3 covenants with **no** grid"
+from the same signal, and it has not been read.
+
+**Why this belongs with the baseline rather than only in the corpus file.**
+The baseline this project scores against is a keyword/regex extractor. These
+are measured instances of its failure mode, on real documents, with the
+correct answer established by reading — which is exactly what makes the
+comparison fair rather than a strawman. The headline result is extraction
+accuracy against that baseline, and a reader is entitled to know the baseline's
+errors are characterized and directional rather than hand-waved. Stated in
+[README.md](README.md) for that reason.
+
+The uncomfortable corollary is that this project used the same class of tool to
+choose its own test set. That is recoverable — selection signals are checkable
+by reading, and reading is what the grid audit does — but it has to be said
+plainly rather than discovered by a reader.
+
 ### Eurocurrency usage is not a LIBOR tell after 2023
 
 **Affects:** `interest_rate_benchmark`, and corpus selection
@@ -591,6 +647,35 @@ the labeler meets once is the one where a sentence is most likely reconstructed
 from memory rather than pasted. The place the check is weakest is the place the
 label is weakest. They fail together, which is precisely when a guarantee is
 worth least.
+
+### The same shape, in a claim about the corpus
+
+While reporting the screen-reliability finding above, a reader counted
+`has_margin_grid` across the six label files then written — eleven facilities,
+all `true` — and concluded the field was degenerate, i.e. that the corpus could
+not score it at all. **The count was right and the conclusion was wrong.** Paya
+Holdings is corpus row 1, was labeled, and carries two `false` values: a flat
+3.25% margin on both the revolver and the TLB, no grid anywhere. The standing
+count is 11 true / 2 false. The field is thin, not degenerate.
+
+The error was computing over the *labeled subset* and reporting the result as a
+property of the *corpus*. The disconfirming document was not hard to find — it
+is the first row of the selection table and it had already been read.
+
+This is the second time this exact substitution has produced a false claim in
+this project; see [A reasoning error worth
+recording](#a-reasoning-error-worth-recording), where a pattern was
+generalized from the two most recent documents backward over one already
+checked. And it is the same shape as the screen failures above: a conclusion
+drawn confidently from the subset the tool happened to look at, with the
+counterexample sitting outside the window.
+
+That recurrence is the argument for making the habit mechanical rather than
+intentional. *When reporting any claim about the corpus, enumerate the corpus,
+not the artifacts currently in hand.* Fifteen rows are listed in
+[corpus.md](corpus.md); a claim about the set is not ready until it has been
+checked against all of them, including the ones not yet labeled — and where
+they cannot be checked, the claim is about the labeled subset and must say so.
 
 ---
 
