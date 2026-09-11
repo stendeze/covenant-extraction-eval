@@ -1,0 +1,188 @@
+{
+  "source": {
+    "accession_number": "0000950157-24-001363",
+    "exhibit": "EX-10.1",
+    "borrower": "Amentum Parent Holdings LLC (becoming Amentum Holdings, Inc. on the Closing Date)",
+    "agreement_date": "2024-09-27",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "document_type": "Credit Agreement (original, not an amendment; full Article 1 definitions and Section 2.01 present)",
+    "closing_date_as_defined": "2024-09-27",
+    "facility_structure": "revolver + TLB (institutional)"
+  },
+
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Initial Term Loans",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "each Initial Term Lender severally, and not jointly, agrees to make Initial Term Loans denominated in U.S. Dollars to the Company on the Closing Date"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_b",
+        "citation": {
+          "section": "2.09(a)(i)",
+          "quote": "in an amount equal to 0.25% of the original principal amount of the Initial Term Loans made on the Closing Date"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 2620000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Initial Term Commitment\")",
+          "quote": "The aggregate amount of the Initial Term Commitments on the Closing Date is US$2,620,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "the date that is seven years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)",
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Initial Term Loan Maturity Date\")",
+          "quote": "means the date that is seven years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Term SOFR Reference Rate\")",
+          "quote": "the rate per annum published by the CME Term SOFR Administrator and identified by the Administrative Agent as the forward-looking term rate based on SOFR"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 225,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (a)",
+          "quote": "with respect to any Initial Term Loan that is a Term SOFR Loan or, if applicable pursuant to Section 2.13, a Daily Simple SOFR Loan, 2.25% per annum"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (a) proviso",
+          "quote": "on and after the first date on which the Company’s corporate family rating or corporate rating, as applicable, of each of Moody’s, S&P and Fitch is Ba3 or better, BB- or better and BB- or better, respectively, the “Applicable Rate” for any Initial Term Loan of any Type shall be reduced by 0.25% per annum"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Initial Revolving Facility",
+        "citation": {
+          "section": "Recitals",
+          "quote": "an Initial Revolving Facility in an aggregate available amount thereunder as of the Closing Date of US$850,000,000"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(b)",
+          "quote": "each Initial Revolving Lender severally, and not jointly, agrees to make Initial Revolving Loans denominated in U.S. Dollars or Alternative Currencies to any Borrower at any time and from time to time during the Availability Period"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 850000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Initial Revolving Credit Commitment\")",
+          "quote": "The aggregate amount of the Initial Revolving Credit Commitments on the Closing Date is US$850,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "the date that is five years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)",
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Initial Revolving Credit Maturity Date\")",
+          "quote": "means the date that is five years after the Closing Date (or if such date is not a Business Day, the immediately succeeding Business Day)"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.12(b)",
+          "quote": "in the case of any such Borrowing denominated in U.S. Dollars, at the Term SOFR"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 200,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (b) proviso and Category 2 row",
+          "quote": "the “Applicable Rate” for any Initial Revolving Loan of any Type or any Swingline Loan shall be the applicable rate per annum set forth in the table below in Category 2 for such Class and Type of Loans"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), clause (b)",
+          "quote": "based upon the First Lien Leverage Ratio as of the last day of the most recently ended Test Period"
+        }
+      }
+    }
+  ],
+
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "first_lien_net_leverage",
+        "citation": {
+          "section": "1.01 (definition of \"First Lien Leverage Ratio\")",
+          "quote": "ratio of (a) (i) Consolidated First Lien Debt less (ii) the Unrestricted Cash Amount, in each case, as of the last day of the Test Period then most recently ended to (b) Consolidated Adjusted EBITDA for the Test Period then most recently ended"
+        }
+      },
+      "initial_threshold": {
+        "value": 5.25,
+        "citation": {
+          "section": "6.09 (table, first row)",
+          "quote": "For any Test Period ending on or after the last day of the second full Fiscal Quarter ending after the Closing Date to and including the last day of the fourth full Fiscal Quarter ending after the Closing Date 5.25 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [
+          {
+            "effective_from": "the first Test Period ending after the last day of the fourth full Fiscal Quarter ending after the Closing Date (no calendar date stated in the agreement — see notes)",
+            "threshold": 5.00
+          }
+        ],
+        "citation": {
+          "section": "6.09 (table, second row)",
+          "quote": "For any Test Period ending thereafter 5.00 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.09 / 1.01 (definition of \"Test Period\")",
+          "quote": "the period of four consecutive Fiscal Quarters then most recently ended"
+        }
+      },
+      "springing_trigger": {
+        "value": {
+          "condition_type": "revolver_utilization",
+          "threshold": 40,
+          "threshold_unit": "percent",
+          "quote": "exceeds an amount equal to 40% of the aggregate Revolving Credit Commitments"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Revolving Facility Test Condition\")",
+          "quote": "the aggregate Outstanding Amount of all Revolving Loans, all Swingline Loans and all drawings under Letters of Credit that have not been reimbursed within five Business Days (excluding any such drawings under any Letter of Credit that is subject to cash collateral or backstop arrangements equal to at least 100% of the amount of the LC Exposure attributable to such Letter of Credit) exceeds an amount equal to 40% of the aggregate Revolving Credit Commitments"
+        }
+      }
+    }
+  ],
+
+  "notes": {
+    "HESITATION_1_term_loan_commitment_vs_spinco_rollover": "The Initial Term Loan class is larger than the Initial Term Commitment. Section 1.13 and the definition of \"Initial Term Loans\" (\"means (a) the term loans made by the Initial Term Lenders to the Company pursuant to Section 2.01(a) and (b) the SpinCo Term Loans\") roll US$1,130,000,000 of SpinCo Term Loans, funded under a separate Term Credit Agreement of the same date, into this class at the Merger effective time, so US$3,750,000,000 of Initial Term Loans are outstanding on the Closing Date. Labeled 2,620,000,000 because (i) the field is the commitment and the defined term \"Initial Term Commitment\" states that figure, (ii) the SpinCo loans are not commitments under this agreement — 1.13(c)(i) says they \"shall not be required to be funded in accordance with Section 2.06\" — and were extended under an instrument outside this document, and (iii) the combined US$3,750,000,000 figure never appears in the document, so it cannot carry a verbatim citation. Proposed rule for schema.md: aggregate_commitment records the defined-term commitment made under the agreement; loans converted or assumed from another instrument at closing are noted here, not added. A reviewer keying off the economic tranche size would expect 3.75B.",
+    "HESITATION_2_step_down_effective_from_has_no_stated_date": "step_down_schedule.effective_from is typed as a date, but the 6.09 table states only a fiscal-period formula and \"Fiscal Year\" is defined as \"the fiscal year of the Company\" with no date. The document elsewhere references \"the Fiscal Year ending on or about October 3, 2025\" (Section 2.10), i.e. a 52/53-week calendar — the case schema.md says not to resolve. Recorded the agreement's own formulation as the value. Diagnostic only, not labeled: the fourth full Fiscal Quarter after the Closing Date is Q4 FY2025 (ending on or about 2025-10-03), so the first Test Period at 5.00x is the one ending Q1 FY2026 (on or about early January 2026). Proposed rule: where no calendar date is stated, effective_from is the verbatim period formulation, scored as a normalized string, mirroring maturity_date basis=relative.",
+    "HESITATION_3_term_loan_has_margin_grid": "The Initial Term Loan margin is a flat 2.25% with no table, but carries a one-time, one-way 0.25% step-down triggered by an external ratings event (Ba3 / BB- / BB- from all three agencies). Labeled true under the explicit rule that \"a single step-down on a one-time event ... is true\" and that the field draws fixed-vs-variable, not table-vs-no-table. Flagging because in market usage this is not called a grid, and a relabel might reach false if that rule were ever loosened.",
+    "facility_name_choice": "Section 2.01 does not put tranche names in quotes. Term tranche labeled \"Initial Term Loans\" (2.01(a), cover page, and the defined-loan-term convention of the worked example). Revolver labeled \"Initial Revolving Facility\" (defined facility term; recitals). Alternatives the borrower also uses: \"Initial Term Facility\", \"Initial Revolving Loans\", \"Revolving Facility\" (cover page and 6.09).",
+    "maturity_diagnostics": "Closing Date is defined as September 27, 2024. Computed, not labeled: term loan 2031-09-27 is a Saturday, so the Business Day proviso would push it to 2031-09-29; revolver 2029-09-27 is a Thursday. basis=relative because the agreement states a formula, not a hard date. No springing-maturity proviso in either Maturity Date definition (\"Inside Maturity Amount\" governs incremental debt only).",
+    "revolver_margin": "Opening level is explicitly Category 2 until the first Adjustment Date following completion of at least one full Fiscal Quarter after the Closing Date — stated, not deferred, so an integer not null. Category 2 Term Benchmark/RFR Spread = 2.00%. Full grid (Term Benchmark/RFR): Cat 1 >3.75x 2.25%; Cat 2 <=3.75x >2.75x 2.00%; Cat 3 <=2.75x >1.75x 1.75%; Cat 4 <=1.75x 1.50%. ABR spreads are 100 bps lower in every row. Failure to deliver a Compliance Certificate reverts pricing to Category 1.",
+    "commitment_fee_grid_not_a_margin_grid": "A separate \"Commitment Fee Rate\" grid keyed to the same First Lien Leverage Ratio exists (Category 1 0.40%, Category 2 0.35%, opening Category 2). Not scored; noted per the Paya rule as a candidate for a v2 has_commitment_fee_grid field.",
+    "benchmark_multicurrency": "Revolver permits Alternative Currencies (Canadian Dollars, Euro, Sterling). 2.12(b) prices USD Term Benchmark Borrowings at Term SOFR, Euro at the EURIBO Rate, CAD at Term CORRA; Sterling is an RFR (Daily Simple SONIA) borrowing. Primary benchmark is USD Term SOFR. Daily Simple SOFR appears only as a 2.13 fallback. No credit spread adjustment issue — \"Term SOFR\" is unadjusted with a zero floor.",
+    "covenant_notes": "Single financial covenant; \"Financial Covenant\" is defined as \"the covenant contained in Section 6.09\". It runs \"Solely with respect to the Revolving Facility\" — standard cov-lite TLB structure; recorded per the rule, beneficiary noted here. Interest Coverage Ratio, Secured Leverage Ratio and Total Leverage Ratio are defined but used only as incurrence tests. First test date: Test Period ending on the last day of the second full Fiscal Quarter ending after the Closing Date. Test Period is four consecutive Fiscal Quarters, tested at each Fiscal Quarter end (quarterly, springing — springing is not a frequency).",
+    "springing_trigger_exclusions": "Utilization counts Revolving Loans, Swingline Loans and LC drawings unreimbursed for more than five Business Days; undrawn LCs do not count, and drawings under LCs that are 100% cash-collateralized or backstopped are excluded. Proviso: (a) Closing Date revolver borrowings used to fund the Transactions are excluded for the first and second full Fiscal Quarters after the Closing Date, then included; (b) Closing Date borrowings funding OID/fees are excluded permanently. None of this changes the 40% threshold.",
+    "excluded_from_records": "Letter of Credit Sublimit US$200,000,000 and the Swingline sublimit (2.04) are carve-outs of the revolver — no records. Section 2.21 Incremental Credit Extensions, Incremental Equivalent Debt, Replacement Term Loans / Replacement Revolving Facility, and Extended/Modified facilities are options or future classes — no records. Section 2.09(a)(i) first amortization payment is March 31, 2025.",
+    "citation_method": "Every quote was checked as a verbatim substring of the whitespace-normalized text extracted from the HTML exhibit; each quote matches exactly once except the revolver has_margin_grid quote, which matches four times (first occurrence is in the Applicable Rate definition). Quotes were kept within a single page span because the exhibit embeds page numbers (e.g. \"82\") mid-sentence at page breaks, which would break a longer verbatim match."
+  }
+}

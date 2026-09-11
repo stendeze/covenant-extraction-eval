@@ -218,6 +218,19 @@ size.
 
 - Record the commitment **at closing**, as stated in the document under
   review. Not as later amended, not net of any incremental capacity.
+- **Loans converted, rolled or assumed from another instrument at closing are
+  not commitments under this agreement.** A tranche can be larger than its
+  commitment: Amentum's `Initial Term Loans` are defined as the loans made
+  under §2.01(a) *plus* US$1,130,000,000 of SpinCo Term Loans funded under a
+  separate agreement of the same date, so US$3,750,000,000 is outstanding on
+  day one against an `Initial Term Commitment` of US$2,620,000,000. Record the
+  commitment — US$2,620,000,000 — and note the rollover in free text.
+
+  The citation requirement is what makes this decisive rather than a
+  preference. The combined figure appears nowhere in the document, so the
+  alternative answer cannot carry a verbatim quote; a rule that forces an
+  uncitable value is the wrong rule. A reviewer thinking in economic tranche
+  size will expect the larger number, which is why the label notes it.
 - Where the lender-by-lender schedule and the defined term disagree (it
   happens, usually a drafting error), the defined term governs and the
   discrepancy is noted in the label file.

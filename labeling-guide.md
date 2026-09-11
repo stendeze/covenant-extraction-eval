@@ -81,6 +81,17 @@ lender-by-lender column.
 Where the schedule and the defined term disagree, the defined term governs.
 Note the discrepancy in the label file.
 
+**A tranche can be bigger than its commitment.** Watch for a loan definition
+that folds in debt from somewhere else: "means (a) the term loans made by the
+Initial Term Lenders pursuant to Section 2.01(a) **and (b) the SpinCo Term
+Loans**". Amentum rolls $1.13B funded under a separate agreement into the
+Initial Term Loan class at closing, so $3.75B is outstanding against a $2.62B
+commitment. Record the commitment. Note the rollover.
+
+The quick test is the citation: if the number you want to record does not
+appear in the document, it is not the answer. $3.75B appears nowhere in
+Amentum.
+
 ### Step 4 — maturity
 
 One "Maturity Date" definition usually covers all facilities with lettered

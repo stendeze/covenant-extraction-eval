@@ -244,6 +244,35 @@ field that cannot be got wrong.
 Kept as a gold annotation that configures the scorer. Machine-checkability
 without the inflation.
 
+### `aggregate_commitment` — rolled-over loans are not commitments
+
+**Trigger:** Amentum Holdings, `0000950157-24-001363`.
+
+The existing rules covered later amendments and incremental capacity, both of
+which are about debt that does not exist yet. Amentum is the mirror case: debt
+that exists at closing but was committed somewhere else. `Initial Term Loans`
+is defined as the loans made under §2.01(a) **plus** US$1,130,000,000 of
+SpinCo Term Loans funded under a separate Term Credit Agreement of the same
+date, rolled in at the Merger effective time. US$3,750,000,000 is outstanding
+on day one against an `Initial Term Commitment` of US$2,620,000,000.
+
+Rule: record the commitment made under this agreement; loans converted, rolled
+or assumed from another instrument are noted in free text, not added.
+
+**The citation requirement decided it, which is the point worth keeping.** Two
+defensible readings existed — the commitment, or the economic tranche — and
+the tie-break was not judgment. US$3,750,000,000 appears nowhere in the
+document, so that answer cannot carry a verbatim quote. A rule that forces an
+uncitable value is the wrong rule, and the citation guard turned a question of
+taste into a mechanical test. That is the second time a rule written for
+hallucination control has settled an unrelated classification question; the
+first was the deferral null on Advance Auto, where "document **or** fact" held
+for a case it was not written against.
+
+Worth flagging for anyone reading the label: a reviewer keying off economic
+tranche size will expect US$3.75B and should not conclude the label is wrong.
+The note in the label file says so.
+
 ### `step_down_schedule` — `effective_from` gets the two-basis treatment
 
 **Trigger:** Amentum Holdings, `0000950157-24-001363`.
