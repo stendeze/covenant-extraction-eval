@@ -428,6 +428,36 @@ deferral nulls, which uses machinery the harness already has.
 
 ---
 
+## Flagged in advance for the blind relabel
+
+The intra-annotator check in [schema.md](schema.md#annotator-agreement)
+relabels five agreements blind two weeks on. One label is nominated now, with
+its reasoning recorded, because a disagreement there would be worth more than
+the agreement rate.
+
+**Amentum `has_margin_grid` on the Initial Term Loans — labeled `true`.** The
+margin is a flat 2.25% with no table. It carries one step-down: a one-time,
+one-way 25bp reduction if Moody's, S&P and Fitch all reach Ba3/BB-/BB-. The
+rule is explicit that *a single step-down on a one-time event is `true`* and
+that the field draws fixed-versus-variable, not table-versus-no-table, so
+`true` follows without judgment.
+
+And nobody in the market would call this a grid. The labeler said so while
+recording `true` anyway.
+
+That is the interesting configuration: a rule fixed in advance that decides
+the case cleanly, against a trained intuition that says otherwise. If the
+blind pass returns `false`, the finding is not that the document was misread —
+it is that the rule and the domain disagree, and the rule is what a model
+would be scored against. That is a result about the schema, which is the kind
+of thing an agreement rate is supposed to surface and usually does not.
+
+Recorded here so that a disagreement two weeks from now is a measurement
+rather than a reconstruction. The point of writing it down in advance is that
+it cannot be rationalized afterwards.
+
+---
+
 ## The check that guaranteed the guarantee was missing
 
 The `applicable_margin_bps` deferral null is the field class this project
@@ -469,6 +499,37 @@ checking a claim against every labeled document rather than the ones in mind.
 
 Fixed in `2e03159`. Both label files now verify every citation they carry, and
 a deferral null with a fabricated quote fails.
+
+### It happened again, on the other exceptional branch
+
+Amentum is the first document in the corpus with a **non-null**
+`springing_trigger`, and the trigger carries a quote inside the value — the
+sentence establishing the condition — separate from the field's own citation.
+That quote was checked for presence and never against the document, exactly as
+the deferral null had been. Fixed in `9b28290`.
+
+Two gaps, found five weeks apart by two unrelated documents, and both sat on
+the same kind of code path: the branch taken when a field is *not* an ordinary
+value. The null branch, and the non-null object branch of a field that is
+usually null. Routine values were verified from the first version.
+
+**That convergence predicts where to look next.** Not "read the validator more
+carefully" — the useful form is narrower: *any branch that fires rarely is
+unverified until a document forces it*, and the corpus is what forces them. So
+the remaining candidates are enumerable rather than vague. As of five
+documents, `maturity_date` has never been `stated` in a label file; no covenant
+has used `minimum_availability` or a `currency` threshold unit; no facility has
+been `delayed_draw_term_loan`, `bridge` or `other`; no `step_down_schedule` has
+carried more than one step, so the ordering check has never actually compared
+two elements. Each is a path that will run for the first time on some document
+between six and sixteen, and each should be assumed unverified until it does.
+
+There is a second reason this matters beyond tooling hygiene. The rare branch
+in the checker is the rare construction in the document — and a construction
+the labeler meets once is the one where a sentence is most likely reconstructed
+from memory rather than pasted. The place the check is weakest is the place the
+label is weakest. They fail together, which is precisely when a guarantee is
+worth least.
 
 ---
 
