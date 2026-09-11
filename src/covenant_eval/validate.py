@@ -400,7 +400,9 @@ def _check_commitment(report: Report, path: str, value: Any) -> None:
         report.add(f"{path}.currency", "malformed_field", f"expected an ISO 4217 code, found {currency!r}")
 
 
-def _check_springing(report: Report, path: str, value: Any, sets: SchemaSets) -> None:
+def _check_springing(
+    report: Report, path: str, value: Any, sets: SchemaSets, document: str | None
+) -> None:
     if not isinstance(value, dict):
         report.add(path, "malformed_field", "expected an object or null")
         return
@@ -420,8 +422,15 @@ def _check_springing(report: Report, path: str, value: Any, sets: SchemaSets) ->
         )
     if not isinstance(value.get("threshold"), (int, float)) or isinstance(value.get("threshold"), bool):
         report.add(f"{path}.threshold", "malformed_field", f"expected a number, found {value.get('threshold')!r}")
-    if not value.get("quote"):
+    # springing_trigger carries a quote inside the value, in addition to the
+    # field's citation. It is the sentence that establishes the trigger, so it
+    # gets the same verbatim check as any other quote — the deferral-null gap
+    # fixed in 2e03159 was this same shape, a quote the walk never reached.
+    quote = value.get("quote")
+    if not quote:
         report.add(f"{path}.quote", "missing_citation_field", "springing_trigger carries its own quote")
+    elif isinstance(quote, str) and document is not None:
+        _check_citation(report, path, {"section": "n/a", "quote": quote}, document)
 
 
 def _check_step_downs(report: Report, path: str, value: Any) -> None:
@@ -494,7 +503,7 @@ def _check_field(
     elif name == "aggregate_commitment":
         _check_commitment(report, path, value)
     elif name == "springing_trigger":
-        _check_springing(report, path, value, sets)
+        _check_springing(report, path, value, sets, document)
     elif name == "step_down_schedule":
         _check_step_downs(report, path, value)
     elif name == "has_margin_grid" and not isinstance(value, bool):
