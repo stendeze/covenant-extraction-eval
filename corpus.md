@@ -258,7 +258,7 @@ development; twelve were selected from the qualified pool afterward.
 | 4 | Kontoor Brands | — | 2021-11-19 | revolver + TLA + TLB | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
 | 5 | Amentum Holdings | — | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
 | 6 | Extreme Networks | — | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
-| 7 | Lamb Weston Holdings | — | 2024-05-08 | revolver + TLA | Lettered TLA with no grid |
+| 7 | Lamb Weston Holdings | `0001679273-24-000026` **EX-10.1** | 2024-05-08 | 2 revolvers + EUR term | Non-USD commitment currency; EURIBOR — see [amendment](#row-7-amended-the-wrong-exhibit-and-a-false-rationale) |
 | 8 | Avaya Holdings | — | 2023-09-08 | revolver + term | Springing covenant; 3 covenants; post-restructuring credit |
 | 9 | MP Materials | — | 2025-08-25 | revolver + term | Springing covenant |
 | 10 | Peloton Interactive | — | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
@@ -286,6 +286,68 @@ one exercises the `facility_type` rule that classifies by amortization rather
 than by name — a 1%/yr institutional tranche is a TLB whatever the agreement
 calls it — which is among the more fragile adjudications in the schema and
 would go untested by a corpus of neatly labeled Term A and Term B facilities.
+
+### Row 7 amended: the wrong exhibit, and a false rationale
+
+Row 7 originally read **"revolver + TLA | Lettered TLA with no grid"**. That
+described neither document in the filing, and the accession alone did not
+identify one: `0001679273-24-000026` contains **two** full credit agreements
+filed the same day, both amended and restated, both dated 2024-05-03.
+
+- **EX-10.2** (`ex10_2conformed-lwxagwes.htm`) — the AgWest Farm Credit
+  facility. Term-loan-only: three tranches, Term A, Term A-3 and Term A-4, no
+  revolver. **Three leverage grids.** Schedule 2.01 lists **one Lender of
+  record**, AgWest Farm Credit PCA, holding 100% of every tranche; the ~13
+  other Farm Credit institutions on the signature pages are Voting
+  Participants under §11.06(e), not lenders on the commitment schedule.
+- **EX-10.1** (`ex10_1conformed-lwxbofax.htm`) — the Bank of America facility.
+  Revolving A-2 (~$1.44B, 13 lenders), Revolving B-2 ($60M, held entirely by
+  AgWest), and a **€200,000,000 European Term Loan** to Lamb-Weston/Meijer
+  v.o.f. across three lenders. Schedule 2.01 lists 14+ institutions with real
+  commitments, Bank of America as Administrative Agent. **Also a leverage
+  grid**, keyed to the Consolidated Net Leverage Ratio.
+
+**EX-10.2 was labeled before this was noticed, then discarded.** It fails the
+syndication criterion outright — the frame requires an Administrative Agent
+and ≥3 lenders on the commitment schedule, and one lender of record is one,
+whatever the economic reality of the participations. That disqualifies it
+regardless of anything else, so the label was not committed. It is retained
+outside `data/labels/` as evidence of the episode rather than deleted.
+
+**The amended rationale** is EX-10.1, selected for two things the corpus has
+never contained: a **non-USD commitment currency** (the term loan is
+denominated in euro) and a **EURIBOR benchmark** (the Alternative Currency
+Term Rate resolves to it). Both are enum values and code paths that have not
+fired in any document read so far, so one document supplies two.
+
+#### The "no grid" slot from this row was never real
+
+The original rationale came from `pricing_grid_hint`, which the screen
+computed as `false` — **on EX-10.2, and wrongly**. That document carries three
+leverage grids. Its sibling EX-10.1 carries one too. So the signal was wrong
+about the document it was computed on and also wrong about the agreement the
+row was meant to describe.
+
+The consequence matters more than the correction: **the "no grid" slot does
+not transfer to the amended row, because it never existed.** No `false` value
+for `has_margin_grid` was ever available from this filing. Paya Holdings
+(row 1) supplies the only two `false` values in the corpus at present, and
+row 12 — G-III Apparel, "3 covenants with **no** grid" — rests on the same
+signal and has not been read. A manual audit of the Applicable Margin
+definition across the unlabeled rows is underway; until it lands, the corpus
+cannot claim `has_margin_grid` is balanced.
+
+The general finding — that keyword heuristics under-detect, and that the
+rationales in this file inherited the misses — is recorded in
+[labeling-notes.md](labeling-notes.md#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it)
+and in [README.md](README.md), because it is also the baseline's failure mode.
+
+**A note on the Structure column generally.** It was derived from the same
+screen signal, which is correct 3 of 6 on the documents read so far. Row 7 is
+corrected here because it was read; the other unread rows are not corrected,
+because correcting them from the same signal would be no better than leaving
+them. Treat the column as a selection artifact, not a finding, until each row
+is labeled. The "Resulting distribution" line below inherits that caveat.
 
 ### Amendment to the stratification target
 

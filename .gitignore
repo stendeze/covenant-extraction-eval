@@ -228,3 +228,8 @@ CLAUDE.md
 # Accession numbers are recorded in corpus.md, so the set is reproducible.
 data/raw/
 data/search/hits.jsonl
+
+# Labels for documents that were read and then discarded on a frame criterion.
+# Kept on disk as evidence of how the document was handled; deliberately not
+# committed, because data/labels/ is the gold set and these are not in it.
+data/discarded/
