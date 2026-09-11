@@ -15,9 +15,12 @@ deliberate call, where the labeler read the document and disagrees. Auto-fixing
 would silently convert the second into the first, and a label file edited to
 satisfy a checker is no longer evidence of what a human found in the document.
 
-The value sets are read out of schema.md at runtime rather than transcribed
-here, so the two cannot drift. Four of them — the scored enums — are written in
-a uniform shape and are parsed. The remaining four are structural sets defined
+What the schema says is read out of schema.md at runtime rather than
+transcribed here, so the two cannot drift. The list of scored fields comes from
+the Field summary table — it changed once already, when facility_name was cut,
+and a transcribed copy would have had to be edited in the same breath. Four
+value sets — the scored enums — are written in a uniform shape and are parsed
+too. The remaining four are structural sets defined
 inside prose sentences, in three different shapes; parsing English would break
 on rewording that changes nothing, so those stay transcribed and are guarded by
 asserting their defining sentence still appears verbatim in schema.md. Either
@@ -39,28 +42,15 @@ from .screen import to_text
 
 SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schema.md"
 
-# schema.md "Field summary" — the scored fields, by level. A field absent from
-# a label file is a hole in the gold record, not a null. Unlike the enum value
-# sets, this list is transcribed rather than parsed: it changes when a field is
-# added or cut, which is rare and deliberate, and both ends of such a change
-# are edits a human is already making. facility_name was cut here when it was
-# cut from schema.md; label files written before the cut may still carry it,
-# and the extra key is ignored rather than flagged.
-SCORED_FACILITY_FIELDS = (
-    "facility_type",
-    "aggregate_commitment",
-    "maturity_date",
-    "interest_rate_benchmark",
-    "applicable_margin_bps",
-    "has_margin_grid",
-)
-SCORED_COVENANT_FIELDS = (
-    "covenant_type",
-    "initial_threshold",
-    "step_down_schedule",
-    "testing_frequency",
-    "springing_trigger",
-)
+# The scored fields are parsed from the "Field summary" table in schema.md, for
+# the same reason the enum values are: a transcribed copy is a second source of
+# truth for something that changes. It changed at Kontoor, where facility_name
+# was cut, and the cut had to be made in two places at once. A field absent
+# from a label file is a hole in the gold record, not a null; a field a label
+# file carries but the schema no longer scores — facility_name, in files
+# written before the cut — is ignored rather than flagged.
+FIELD_SUMMARY_ROW = re.compile(r"^\|\s*(\d+)\s*\|\s*`([a-z_0-9]+)`\s*\|\s*(\w+)\s*\|", re.M)
+FIELD_LEVELS = ("facility", "covenant")
 
 # The scored enums, parsed from schema.md. Each is written as a "### N.
 # `field_name`" heading followed by a "**Type:** enum — " line whose backticked
@@ -113,6 +103,8 @@ class SchemaParseError(Exception):
 @dataclass(frozen=True)
 class SchemaSets:
     enums: dict[str, frozenset[str]]
+    facility_fields: tuple[str, ...]
+    covenant_fields: tuple[str, ...]
     maturity_basis: frozenset[str]
     condition_type: frozenset[str]
     threshold_unit: frozenset[str]
@@ -150,6 +142,44 @@ def parse_enum(schema_text: str, field: str) -> frozenset[str]:
     return values
 
 
+def parse_scored_fields(schema_text: str) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Read the scored fields and their levels out of the Field summary table."""
+    heading = re.search(r"^## Field summary$", schema_text, re.M)
+    if heading is None:
+        raise SchemaParseError("schema.md: no '## Field summary' heading found")
+    break_match = re.search(r"\n---", schema_text[heading.end() :])
+    body = schema_text[heading.end() :][: break_match.start() if break_match else None]
+
+    rows = FIELD_SUMMARY_ROW.findall(body)
+    if not rows:
+        raise SchemaParseError(
+            "schema.md: the Field summary table parsed to no rows; expected lines shaped "
+            "'| N | `field_name` | facility|covenant | type |'"
+        )
+
+    by_level: dict[str, list[str]] = {level: [] for level in FIELD_LEVELS}
+    for _, field, level in rows:
+        if level not in by_level:
+            raise SchemaParseError(
+                f"schema.md: field `{field}` has level {level!r}, expected one of {list(FIELD_LEVELS)}"
+            )
+        by_level[level].append(field)
+
+    # The numbering is the cheapest check that a row was not dropped or
+    # duplicated by an edit — exactly the kind of slip cutting a field invites.
+    numbers = [int(n) for n, _, _ in rows]
+    if numbers != list(range(1, len(numbers) + 1)):
+        raise SchemaParseError(
+            f"schema.md: Field summary rows are numbered {numbers}, expected 1..{len(numbers)}; "
+            f"a row was probably added or removed without renumbering"
+        )
+    for level, fields in by_level.items():
+        if not fields:
+            raise SchemaParseError(f"schema.md: the Field summary table has no {level}-level fields")
+
+    return tuple(by_level["facility"]), tuple(by_level["covenant"])
+
+
 def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
     """Parse the scored enums; assert the guarded sets are still defined as transcribed."""
     try:
@@ -158,6 +188,7 @@ def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
         raise SchemaParseError(f"cannot read {schema_path}: {exc}") from exc
 
     enums = {field: parse_enum(schema_text, field) for field in PARSED_ENUMS}
+    facility_fields, covenant_fields = parse_scored_fields(schema_text)
 
     flat = _normalize_prose(schema_text)
     for name, (_, sentence) in GUARDED_SETS.items():
@@ -171,6 +202,8 @@ def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
 
     return SchemaSets(
         enums=enums,
+        facility_fields=facility_fields,
+        covenant_fields=covenant_fields,
         maturity_basis=GUARDED_SETS["maturity_basis"][0],
         condition_type=GUARDED_SETS["condition_type"][0],
         threshold_unit=GUARDED_SETS["threshold_unit"][0],
@@ -507,7 +540,7 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
         report.add("facilities", "missing_field", "expected a non-empty array of facilities")
         facilities = []
     for i, facility in enumerate(facilities):
-        for name in SCORED_FACILITY_FIELDS:
+        for name in sets.facility_fields:
             path = f"facilities[{i}].{name}"
             if name not in facility:
                 report.add(path, "missing_field", "scored field absent from the record")
@@ -521,7 +554,7 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
         report.add("financial_covenants", "missing_field", "expected an array, possibly empty")
         covenants = []
     for i, covenant in enumerate(covenants):
-        for name in SCORED_COVENANT_FIELDS:
+        for name in sets.covenant_fields:
             path = f"financial_covenants[{i}].{name}"
             if name not in covenant:
                 report.add(path, "missing_field", "scored field absent from the record")
