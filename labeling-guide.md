@@ -282,8 +282,41 @@ level, record the **non-holiday** level.
 Do not repeat `initial_threshold` as the first element. The array holds only
 changes.
 
-Record dates as the agreement states them. Do not resolve a fiscal calendar
-to a real date.
+**`effective_from` has two bases, exactly like `maturity_date`.** In both, it
+means the first fiscal period at the new level.
+
+If the table names a date — "the fiscal quarter ending closest to June 30,
+2026" — record it as the agreement states it:
+
+```json
+{ "effective_from": { "value": "2026-06-30", "basis": "stated" }, "threshold": 4.25 }
+```
+
+Do not resolve a 52/53-week fiscal calendar to a real date. The calendar is
+not in the document.
+
+If the table names no date at all — only a formula, "the fourth full Fiscal
+Quarter ending after the Closing Date" — there is nothing to resolve, and the
+basis is relative:
+
+```json
+{
+  "effective_from": { "value": { "quarters_after": 5, "anchor": "Closing Date" },
+                      "basis": "relative" },
+  "threshold": 5.00
+}
+```
+
+Use `months_after` where the agreement counts in months. Structured, not the
+sentence, for the same reason as maturity: one answer must not depend on which
+phrasing you copied.
+
+**Count to the first period at the new level.** The drafting will point you
+the other way. Amentum's table reads 5.25x through the *fourth* full Fiscal
+Quarter after the Closing Date, then 5.00x "for any Test Period ending
+thereafter" — and the value is `quarters_after: 5`, the first period actually
+tested at 5.00x, not the fourth that "thereafter" refers back to. Whenever you
+see "thereafter", add one.
 
 ### `testing_frequency`
 

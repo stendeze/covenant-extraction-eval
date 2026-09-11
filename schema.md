@@ -548,15 +548,24 @@ rules:
 
 ### 9. `step_down_schedule`
 
-**Type:** array of `{effective_from: date, threshold: number}`, ordered by
-`effective_from`. `effective_from` is the ISO-8601 **end date of the first
-fiscal period at the new level**.
+**Type:** array of `{effective_from, threshold: number}`, ordered by
+`effective_from`. `effective_from` takes the same `{value, basis}` shape as
+[`maturity_date`](#3-maturity_date), and means the same thing in both bases:
+the **first fiscal period at the new level**.
+
+- `stated`: `value` is an ISO-8601 date — the end date of that period, as the
+  agreement states it.
+- `relative`: `value` is a **structured object**, `{quarters_after, anchor}` —
+  `{"quarters_after": 5, "anchor": "Closing Date"}`. Use `months_after` where
+  the agreement counts in months.
 
 **Where it lives:** same table as `initial_threshold`.
 
 **Correct when:** the arrays match as ordered sequences — same length, and
-every pair matches on both keys. A partial match is scored as a miss on this
-field; per-step credit is reported separately as a diagnostic.
+every pair matches on both keys. For `relative`, `quarters_after` (or
+`months_after`) and the normalized `anchor` must both match. A partial match is
+scored as a miss on this field; per-step credit is reported separately as a
+diagnostic.
 
 Adjudication rules:
 
@@ -566,8 +575,37 @@ Adjudication rules:
   holds only changes from the initial level.
 - Where the table's periods are described relative to fiscal quarters ("the
   fiscal quarter ending closest to June 30, 2026"), record the date the
-  agreement itself states. Do not attempt to resolve a 52/53-week fiscal
-  calendar to a real date — the calendar is not in the document.
+  agreement itself states, `basis: stated`. Do not attempt to resolve a
+  52/53-week fiscal calendar to a real date — the calendar is not in the
+  document.
+- **Where the agreement states no date at all, `basis` is `relative`.** A table
+  keyed purely to a formula — "the fourth full Fiscal Quarter ending after the
+  Closing Date" — has no date to record, and the Closing Date is itself defined
+  by condition satisfaction. The two rules above were written for an agreement
+  that names a date somewhere; this one does not.
+
+  > **Why structured rather than the sentence verbatim.** The same reason
+  > `maturity_date` is structured. "The first Test Period ending after the last
+  > day of the fourth full Fiscal Quarter ending after the Closing Date" and
+  > "after the fourth full fiscal quarter following the Closing Date" are one
+  > answer and two strings, and under free-string normalization one of them
+  > would score as a miss. This field already has a harsh scoring rule — the
+  > whole array is a miss if any pair differs — so a phrasing-sensitive key
+  > would compound.
+
+- **Count to the first period at the new level, not the last at the old one.**
+  This is where the mistake will be made, because the drafting says the
+  opposite. Amentum §6.09 has two rows: 5.25x for Test Periods through the
+  **fourth** full Fiscal Quarter after the Closing Date, then 5.00x "for any
+  Test Period ending **thereafter**". "Thereafter" points backwards at the
+  fourth; the value records the fifth —
+  `{"quarters_after": 5, "anchor": "Closing Date"}` — because that is the first
+  period actually tested at 5.00x.
+
+  The convention is chosen so the two bases stay semantically identical: a
+  `stated` `effective_from` has always meant the first period at the new level,
+  and a `relative` one now means the same. A field name with two meanings
+  depending on basis would be worse than either meaning.
 - The final "and thereafter" row is a step-down like any other; the absence of
   an end date is expected.
 
@@ -839,8 +877,14 @@ An abbreviated record for a two-tranche agreement with one springing covenant:
       "covenant_type": "first_lien_net_leverage",
       "initial_threshold": 4.5,
       "step_down_schedule": [
-        { "effective_from": "2026-06-30", "threshold": 4.25 },
-        { "effective_from": "2027-06-30", "threshold": 4.0 }
+        {
+          "effective_from": { "value": "2026-06-30", "basis": "stated" },
+          "threshold": 4.25
+        },
+        {
+          "effective_from": { "value": "2027-06-30", "basis": "stated" },
+          "threshold": 4.0
+        }
       ],
       "testing_frequency": "quarterly",
       "springing_trigger": {

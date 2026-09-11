@@ -244,6 +244,49 @@ field that cannot be got wrong.
 Kept as a gold annotation that configures the scorer. Machine-checkability
 without the inflation.
 
+### `step_down_schedule` — `effective_from` gets the two-basis treatment
+
+**Trigger:** Amentum Holdings, `0000950157-24-001363`.
+
+`effective_from` was typed as an ISO-8601 date, and the field carried a rule
+for fiscal-period drafting: record the date the agreement itself states, and
+do not resolve a 52/53-week calendar. Both assumed the agreement names a date
+somewhere. Amentum's §6.09 table names none. It is keyed purely to a formula —
+5.25x for Test Periods through the fourth full Fiscal Quarter after the
+Closing Date, 5.00x thereafter — and the Closing Date is itself defined by
+condition satisfaction. The type had no legal value to hold, and the two rules
+contradicted each other on this document.
+
+`effective_from` now takes the same `{value, basis}` shape as `maturity_date`,
+with `relative` carrying `{quarters_after, anchor}`.
+
+**The rejected fix is the instructive part.** The obvious repair — record the
+agreement's own formulation as a string — was proposed and declined, because
+it rebuilds precisely the false-negative mechanism removed at Plains. "The
+first Test Period ending after the last day of the fourth full Fiscal Quarter
+ending after the Closing Date" and "after the fourth full fiscal quarter
+following the Closing Date" are one answer and two strings. This field is
+harsher than most: the whole array scores as a miss if any pair differs, so a
+phrasing-sensitive key compounds rather than costing one instance. The second
+time the same trap was walked into, which is an argument for stating the
+principle rather than the instance — a value that a labeler could phrase two
+ways is not a value.
+
+**The off-by-one, and why the convention went the way it did.** Amentum's
+second row reads "for any Test Period ending **thereafter**", and "thereafter"
+points backwards at the fourth quarter. The recorded value is the fifth, the
+first period actually tested at the new level. That matches what a `stated`
+`effective_from` has always meant, so the two bases stay semantically
+identical instead of becoming one field name with two meanings. The phrasing
+is the trap and it is written into both the rule and the guide with this row
+as the worked example.
+
+**Re-application:** every committed label has `step_down_schedule: []` —
+Plains, both Advance Auto covenants, both Kontoor covenants — so no committed
+value changed. Amentum is the only document in the corpus so far with a step
+at all, which is worth noticing on its own: the field the schema calls the
+most expensive to label has fired exactly once in five documents.
+
 ### `covenant_type` — coverage covenants classified by denominator
 
 **Trigger:** Advance Auto Parts, `0001158449-21-000208`.

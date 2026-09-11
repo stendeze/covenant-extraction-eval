@@ -433,28 +433,83 @@ def _check_springing(
         _check_citation(report, path, {"section": "n/a", "quote": quote}, document)
 
 
-def _check_step_downs(report: Report, path: str, value: Any) -> None:
+def _check_effective_from(report: Report, path: str, value: Any, sets: SchemaSets) -> Any:
+    """`effective_from` mirrors `maturity_date`: {value, basis}, both bases.
+
+    Returns a sort key where the step is comparable to its neighbours, else
+    None. The two bases share the value set defined in the maturity_date
+    section of schema.md, which is what `sets.maturity_basis` holds.
+    """
+    if isinstance(value, str):
+        report.add(
+            path,
+            "effective_from_not_structured",
+            f"expected {{value, basis}} as in maturity_date, found the bare value {value!r}",
+        )
+        return None
+    if not isinstance(value, dict) or "basis" not in value:
+        report.add(path, "malformed_field", "expected {value, basis}")
+        return None
+
+    basis, inner = value.get("basis"), value.get("value")
+    if basis not in sets.maturity_basis:
+        report.add(
+            f"{path}.basis", "enum_not_in_schema", f"{basis!r} is not one of {sorted(sets.maturity_basis)}"
+        )
+        return None
+
+    if basis == "stated":
+        if not (isinstance(inner, str) and ISO_DATE.match(inner)):
+            report.add(
+                f"{path}.value", "malformed_field", f"stated basis wants an ISO-8601 date, found {inner!r}"
+            )
+            return None
+        return ("stated", inner)
+
+    if not isinstance(inner, dict):
+        report.add(
+            f"{path}.value",
+            "malformed_field",
+            f"relative basis wants {{quarters_after|months_after, anchor}}, found {inner!r}",
+        )
+        return None
+    periods = inner.get("quarters_after", inner.get("months_after"))
+    if not isinstance(periods, int) or isinstance(periods, bool):
+        report.add(
+            f"{path}.value",
+            "malformed_field",
+            "relative value needs an integer quarters_after or months_after",
+        )
+        return None
+    if not inner.get("anchor"):
+        report.add(f"{path}.value", "malformed_field", "relative value has no anchor")
+        return None
+    unit = "quarters_after" if "quarters_after" in inner else "months_after"
+    return ("relative", inner["anchor"], unit, periods)
+
+
+def _check_step_downs(report: Report, path: str, value: Any, sets: SchemaSets) -> None:
     if not isinstance(value, list):
         report.add(path, "malformed_field", f"expected an array, found {type(value).__name__}")
         return
-    dates: list[str] = []
+    keys: list[Any] = []
     for i, step in enumerate(value):
         if not isinstance(step, dict):
             report.add(f"{path}[{i}]", "malformed_field", "expected {effective_from, threshold}")
             continue
-        effective = step.get("effective_from")
-        if not (isinstance(effective, str) and ISO_DATE.match(effective)):
-            report.add(
-                f"{path}[{i}].effective_from",
-                "malformed_field",
-                f"expected an ISO-8601 date, found {effective!r}",
-            )
-        else:
-            dates.append(effective)
+        keys.append(_check_effective_from(report, f"{path}[{i}].effective_from", step.get("effective_from"), sets))
         if not isinstance(step.get("threshold"), (int, float)) or isinstance(step.get("threshold"), bool):
             report.add(f"{path}[{i}].threshold", "malformed_field", f"expected a number, found {step.get('threshold')!r}")
-    if dates != sorted(dates):
-        report.add(path, "step_downs_out_of_order", "schema.md orders the array by effective_from")
+
+    # Ordering is only meaningful between steps expressed the same way. Mixed
+    # bases, or relative steps off different anchors, are not comparable — and
+    # a corpus that produces one is telling you something the schema should
+    # answer before a checker pretends to.
+    comparable = [k for k in keys if k is not None]
+    if len(comparable) == len(keys) and len(comparable) > 1:
+        kinds = {k[:2] if k[0] == "relative" else k[:1] for k in comparable}
+        if len(kinds) == 1 and comparable != sorted(comparable):
+            report.add(path, "step_downs_out_of_order", "schema.md orders the array by effective_from")
 
 
 def _check_field(
@@ -505,7 +560,7 @@ def _check_field(
     elif name == "springing_trigger":
         _check_springing(report, path, value, sets, document)
     elif name == "step_down_schedule":
-        _check_step_downs(report, path, value)
+        _check_step_downs(report, path, value, sets)
     elif name == "has_margin_grid" and not isinstance(value, bool):
         report.add(path, "malformed_field", f"expected a boolean, found {value!r}")
     elif name in ("initial_threshold",) and (
