@@ -749,9 +749,21 @@ worth recording rather than the two incidents separately.
 
 ## `has_margin_grid`: the minority class comes from one document
 
-Nine documents, sixteen facility records, **fourteen `true` and two `false`** —
-and both `false` values are Paya Holdings, whose revolver and TLB share a flat
-3.25% margin.
+Eleven documents, eighteen facility records, **fifteen `true` and three
+`false`** — from **two** documents, and the two are not the same kind of
+`false`.
+
+- **Paya Holdings** supplies two: a revolver and a TLB both priced at a flat
+  3.25% over LIBOR for the life of the facility. Genuinely fixed pricing.
+- **PureCycle** supplies one: a margin that escalates 5.00% → 10.00% → 12.50%
+  → 15.00% → 17.50% on fixed dates. Not fixed at all — `false` because the
+  escalation is predetermined rather than performance-linked.
+
+**A reader comparing them should see that rather than infer a homogeneous
+minority class.** "No grid" covers two structurally different things here, and
+a system that learned `false` from flat pricing has learned only half of what
+the label means. The corpus table records PureCycle as "escalator, no grid"
+for that reason.
 
 The two documents selected to supply `false` did not. [corpus.md](corpus.md)
 row 7 chose Lamb Weston for "Lettered TLA with no grid" and row 12 chose G-III
@@ -769,12 +781,13 @@ and it is the same posture already recorded for
 [`step_down_schedule`](#step_down_schedule-will-report-over-n1-and-that-has-to-be-said).
 
 **It is reported instead.** Per-field numbers carry their instance count, and
-`has_margin_grid` carries one sentence more: the minority class is 2 of 16 and
-both instances are the same agreement, so the field measures whether a system
-can recognise one flat-margin document rather than whether it can tell flat
-pricing from a grid in general. **A model that answered `true` unconditionally
-and read nothing would score 88% on this field.** That number belongs beside
-the result, because it is the score to beat and it is high.
+`has_margin_grid` carries one sentence more: the minority class is 3 of 18
+across two documents, one flat and one an escalator, so the field measures
+whether a system can recognise two specific non-grid documents rather than
+whether it can tell flat pricing from a grid in general. **A model that
+answered `true` unconditionally and read nothing would score 83% on this
+field.** That number belongs beside the result, because it is the score to
+beat and it is high.
 
 The underlying cause is not a selection accident but a measurement failure,
 recorded at [Keyword heuristics

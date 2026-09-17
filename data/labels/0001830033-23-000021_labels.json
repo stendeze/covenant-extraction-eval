@@ -1,0 +1,89 @@
+{
+  "source": {
+    "accession_number": "0001830033-23-000021",
+    "exhibit": "EX-10.2",
+    "document_file": "pct-form8xk3152023ex102xsy.htm",
+    "filing_date": "2023-03-15",
+    "borrower": "PureCycle Technologies, Inc.",
+    "agreement_date": "2023-03-15",
+    "administrative_agent": "Madison Pacific Trust Limited",
+    "lenders_on_signature_pages": [
+      "Sylebra Capital Partners Master Fund, Ltd",
+      "Sylebra Capital Parc Master Fund",
+      "Sylebra Capital Menlo Master Fund"
+    ],
+    "corpus_row": 16
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "1.01 (definition of \"Facility\")",
+          "quote": "“Facility” means the Revolving Facility, as the context may require."
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01",
+          "quote": "the Borrower may borrow Revolving Loans, prepay under Section 2.05, and reborrow under this Section 2.01"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 150000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Commitment\")",
+          "quote": "The aggregate Commitment of all of the Lenders on the Closing Date shall be $150,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2024-06-30",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\")",
+          "quote": "“Maturity Date” means June 30, 2024; provided, however, that if such date is not a Business Day, the Maturity Date shall be the next preceding Business Day."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Term SOFR Screen Rate\")",
+          "quote": "“Term SOFR Screen Rate” means the forward-looking SOFR term rate administered by CME"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 500,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Margin\")",
+          "quote": "“Applicable Margin” means a percentage per annum equal to (i) 5.00% from the Closing Date through June 30, 2023"
+        }
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Margin\")",
+          "quote": "“Applicable Margin” means a percentage per annum equal to (i) 5.00% from the Closing Date through June 30, 2023, (ii) 10.00% from July 1, 2023 through September 30, 2023, (iii) 12.50% from October 1, 2023 through December 31, 2023, (iv) 15.00% from January 1, 2024 through March 31, 2024, and (v) 17.50% thereafter."
+        }
+      }
+    }
+  ],
+  "financial_covenants": [],
+  "notes": {
+    "corpus_fit": "Does not meet the schema's sampling frame on three counts: (1) three lenders sign, but all are Sylebra Capital affiliated funds, so this is functionally a bilateral insider loan; (2) $150M is at the floor of the $150M-$5B band; (3) no margin grid keyed to leverage or ratings. Added to the corpus as a documented exception in 0a71c23, because it is the only empty-covenant case available; all three deviations are recorded in corpus.md under 'Document 16'.",
+    "facility_name": "§2.01 labels the loans 'Revolving Loans'; the tranche itself is the defined term 'Revolving Facility'. 'Facility' means the Revolving Facility. Only one facility exists — no term loan, no L/C or swingline sublimit, no incremental/accordion. Field is no longer scored (cut at Kontoor); retained as a record.",
+    "aggregate_commitment": "Recitals also state 'an aggregate amount of up to $150,000,000'. Schedule 1.01(b) (lender-by-lender commitments) is not attached to the filed exhibit, so no schedule-vs-definition check possible. §2.06(b) provides for automatic permanent reduction dollar-for-dollar for Indebtedness under §7.02(f) above $50,000,000 — post-closing mechanic, does not change closing commitment.",
+    "maturity_date": "June 30, 2024 is a Sunday. The definition adjusts to the next preceding Business Day, so the operative maturity is Friday, June 28, 2024. Recorded the stated calendar date; the Business Day proviso is a mechanical adjustment like the 'earliest of' limbs, not an alternative maturity. Flag: schema.md does not state the Business Day convention explicitly, though labeling-guide.md does and the rule for maturity basis added under Extreme Networks relies on it. Third document in the corpus where it arises (Amentum, Lamb Weston EX-10.2, this). No springing maturity proviso.",
+    "interest_rate_benchmark": "§2.01: 'Revolving Loans will be Term SOFR Loans' — Term SOFR is the only pricing option; Base Rate is defined but used only in the §3.03 fallback. The 'Term SOFR' definition bakes in the SOFR Adjustment (CSA of 10/15/25 bps by tenor); adjusted variant maps to term_sofr per rule.",
+    "applicable_margin_bps": "Opening margin is 5.00% from Closing Date through June 30, 2023 → 500 bps. Not deferred, not silent. CSA (SOFR Adjustment) is inside the Term SOFR definition and excluded from the margin per rule. Known limitation: 500 bps is the correct opening value under the rule but describes only the first three and a half months of a fifteen-month facility, after which the margin escalates to 1750 bps. The field records an opening margin and this document is the case where that is least representative of the economics.",
+    "has_margin_grid": "AUDITED 2026-09-11, CORRECTED true -> false. 'Applicable Margin' occurs exactly twice in the document: its definition and its single use in §2.08(a). The margin varies only with the calendar (5.00% -> 10.00% -> 12.50% -> 15.00% -> 17.50%, on fixed dates), not with any measured condition. Zero occurrences of: Pricing Level, Pricing Grid, Leverage Ratio, utilization, ratings-keyed pricing, or any compliance-certificate reset (no Compliance Certificate is defined at all). 'Debt Rating' appears once, undefined, in the §6.03(f) notice covenant — template residue, not pricing. Commitment fee is a flat 0.25% (no fee grid either, unlike Paya). This is a time-based escalator, not a grid. It is a genuine no-grid document, but it is NOT a flat-margin document: record it as 'escalator, no grid' in the corpus table, not alongside Paya's flat pricing. Proposed rule for schema.md: a margin that changes only with the passage of time (escalator/step-up on fixed dates) is has_margin_grid=false; the schedule is noted in free text. Rationale: every 'true' example in the rule is contingent on a fact that must be observed about the borrower; a calendar is certain at signing; and the applicable_margin_bps rules (opening level until first compliance certificate; silent -> highest level) presuppose a compliance-measured grid.",
+    "financial_covenants": "Confirmed empty. §6.12, §7.11 and §7.12 are all [Reserved]. Article VII contains only incurrence-style negative covenants (liens, indebtedness, investments, etc.). No leverage, coverage, liquidity or capex test anywhere; no Compliance Certificate is defined or required. Zero occurrences of EBITDA in the document. Not a labeling gap.",
+    "fees_not_labeled": "Commitment fee 0.25% p.a. on undrawn (flat, no grid); upfront fee 0.75% of Commitments (§2.09). Default Rate = +2.00%.",
+    "document_file_added": "document_file added on filing so the validator resolves the exhibit explicitly. No scored value altered."
+  }
+}

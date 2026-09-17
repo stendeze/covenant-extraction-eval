@@ -330,7 +330,7 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 | 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
 | 14 | Lithia Motors | — | 2022-06-08 | revolver only | Grid; leverage + fixed charge |
 | 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
-| 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list** — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
+| 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list**; escalator, no grid — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
 
 Accession numbers for 4–15 are to be filled from `data/screen/shortlist.jsonl`
 when the set is frozen.
@@ -396,10 +396,10 @@ This file originally said the empty-covenant case would come from a
 **cov-lite syndicated term loan B** — an institutional tranche whose lenders
 accept no maintenance covenant because the revolver carries one. PureCycle is
 not that. It is a **fifteen-month distressed bridge**: `Maturity Date` of June
-30, 2024, and an `Applicable Margin` that escalates on a calendar schedule
-from **5.00% to 15.00%** in four steps, with no pricing grid and no pricing
-levels anywhere in the document. Rescue financing from a single manager's
-funds, not a syndicated leveraged loan.
+30, 2024, and an `Applicable Margin` that escalates on a calendar schedule in
+five steps — **5.00% → 10.00% → 12.50% → 15.00% → 17.50% thereafter** — with no
+pricing grid and no pricing levels anywhere in the document. Rescue financing
+from a single manager's funds, not a syndicated leveraged loan.
 
 **State this wherever the empty-covenant result is reported.** A reader should
 discount it appropriately rather than assume the corpus tested cov-lite
