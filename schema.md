@@ -174,6 +174,16 @@ forced it:
    reported — including when it is empty, since empty-by-check and
    empty-by-assumption are different claims.
 
+**Re-application that changes a recorded value is confirmed with the labeler
+first, every time.** Most corrections are structural: a maturity string
+becoming `{tenor_years, anchor}`, a null gaining `null_kind`. Those change how
+a record is shaped, not what it says, and the right answer is already in the
+label. A change like Roper's `other` → `debt_to_capitalization` is different
+in kind — it changes what the gold record asserts about the document — and
+gold data is the one thing in this repo that cannot be reconstructed from the
+repo. It is put to the labeler before it is written, even when the rule makes
+it mechanical and even when leaving it alone would be plainly wrong.
+
 ### When a field has accumulated too many rules
 
 `facility_name` was cut on a standing instruction: a third adjudication rule
