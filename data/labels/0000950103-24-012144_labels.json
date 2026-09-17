@@ -1,0 +1,208 @@
+{
+  "source": {
+    "borrower": "ANI Pharmaceuticals, Inc. (Lead Borrower); ANIP Acquisition Company (Initial Subsidiary Borrower)",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "agreement_date": "2024-08-13",
+    "accession_number": "0000950103-24-012144",
+    "exhibit": "EX-10.2",
+    "document_file": "dp216536_ex1002.htm",
+    "filing_date": "2024-08-13",
+    "form": "8-K",
+    "structure": "revolver + TLA (pro rata)",
+    "schedules_included": false
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Loans",
+        "citation": {
+          "section": "2.1(a) (Revolving Commitment)",
+          "quote": "agrees to make revolving credit loans in Dollars (“Revolving Loans”)"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.1(a) (Revolving Commitment)",
+          "quote": "may be repaid and reborrowed in accordance with the provisions hereof"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 75000000, "currency": "USD" },
+        "citation": {
+          "section": "Recitals (fifth WHEREAS clause)",
+          "quote": "the Revolving Lenders provide the Revolving Facility on the Closing Date with commitments in an aggregate principal amount equal to $75.0 million"
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Maturity Date\"), clause (a)",
+          "quote": "with respect to the Revolving Commitment established on the Closing Date (and Revolving Loans thereunder) and any Revolving Facility Increase established after the Closing Date (and Revolving Loans thereunder), the date that is five (5) years following the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.1(d)(iii) (Term Benchmark Loans); 1.1 (definition of \"Term SOFR Rate\")",
+          "quote": "as such rate is published by the CME Term SOFR Administrator"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 275,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "initially, 1.75% in the case of ABR Loans, 2.75% in the case of Term Benchmark Loans and RFR Loans and 0.35% with respect to Commitment Fees"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "from and after the first adjustment date determined in accordance with the paragraph immediately following the table below, the applicable margin determined in accordance with the provisions set forth below"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Initial Term Loans",
+        "citation": {
+          "section": "2.2(a)(i) (Initial Term Loans)",
+          "quote": "the Initial Term Loans and the Initial Term Loan Commitments, collectively, the “Initial Term Loan Facility”"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.2(a)(ii) (Repayment of Initial Term Loan)",
+          "quote": "0.625% of the original principal amount of the Initial Term Loans funded on the Acquisition Closing Date"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 325000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term Loan Commitment\")",
+          "quote": "The aggregate amount of the Initial Term Loan Commitments on the Closing Date is $325,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Term Maturity Date\"), clause (a)",
+          "quote": "with respect to the Initial Term Loans, the date that is five (5) years following the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.2(b)(iii) (Term Benchmark Loans); 1.1 (definition of \"Term SOFR Rate\")",
+          "quote": "each such Term Benchmark Loan shall bear interest at a per annum rate equal to the sum of the Adjusted Term SOFR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 275,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "2.75% in the case of Term Benchmark Loans and RFR Loans"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\")",
+          "quote": "Any increase or decrease in the Applicable Margin resulting from a change in the First Lien Net Leverage Ratio shall become effective as of the third Business Day immediately following the date a Compliance Certificate is delivered"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "first_lien_net_leverage",
+        "citation": {
+          "section": "1.1 (definition of \"First Lien Net Leverage Ratio\")",
+          "quote": "net of Unrestricted Cash in an aggregate amount of up to $100,000,000) to (b) Consolidated EBITDA for the most recently ended Test Period"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.00,
+        "citation": {
+          "section": "5.9(a) (First Lien Net Leverage Ratio)",
+          "quote": "not permit the First Lien Net Leverage Ratio to exceed 3.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "5.9(a) (First Lien Net Leverage Ratio)",
+          "quote": "not permit the First Lien Net Leverage Ratio to exceed 3.00 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "5.9(a) (First Lien Net Leverage Ratio)",
+          "quote": "As of the last day of each fiscal quarter of the Lead Borrower (commencing with the fiscal quarter ending on or about December 31, 2024), not permit the First Lien Net Leverage Ratio"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.1 (definition of \"Interest Coverage Ratio\")",
+          "quote": "the ratio of (i) Consolidated EBITDA for such Test Period to (ii) Consolidated Cash Interest Expense for such Test Period"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.00,
+        "citation": {
+          "section": "5.9(b) (Minimum Interest Coverage Ratio)",
+          "quote": "not permit the Interest Coverage Ratio to be less than 3.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "5.9(b) (Minimum Interest Coverage Ratio)",
+          "quote": "not permit the Interest Coverage Ratio to be less than 3.00 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "5.9(b) (Minimum Interest Coverage Ratio)",
+          "quote": "As of the last day of each fiscal quarter of the Lead Borrower (commencing with the fiscal quarter ending on or about December 31, 2024), not permit the Interest Coverage Ratio"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+  "notes": {
+    "hesitations": [
+      "facility_type (Initial Term Loans): the agreement never uses 'Term A'/'Term B' or 'delayed draw'. Classified by amortization per the unlettered-tranche rule: 0.625%/qtr (2.5%/yr) through year 1, 1.25%/qtr (5%/yr) years 2-3, 1.875%/qtr (7.5%/yr) thereafter -> term_loan_a. HOWEVER the commitment is made on the Closing Date (2024-08-13) and funded in a single draw on the Acquisition Closing Date (Alimera; funded 2024-09-16), with a ticking fee on the unused Initial Term Loan Commitments from two months after Closing and automatic termination on the Acquisition Outside Date (5th Business Day after 2024-12-21). The borrower's own 8-K and 10-Q describe it as a 'delayed-draw term loan facility (the Term Loan A)'. schema.md has no rule stating when delayed_draw_term_loan applies versus term_loan_a; this document forces one. Proposed rule: delayed_draw_term_loan only where the agreement itself labels the tranche delayed-draw or provides a multi-draw availability period; a single-draw acquisition term loan committed at signing and funded on the acquisition closing date is classified by amortization. If the rule goes the other way, this record's value becomes delayed_draw_term_loan.",
+      "facility_name: labeling-guide step 2 says to use the names quoted in the commitment section, which are 'Revolving Loans' (2.1(a)) and 'Initial Term Loan' / 'Initial Term Loan Facility' (2.2(a)(i)). Defensible alternatives are the Article I facility-level defined term 'Revolving Facility' (also used in the recitals) and 'Initial Term Loan Facility'. Weak-signal field; recorded the section-heading form for both tranches.",
+      "aggregate_commitment (revolver): the 'Revolving Commitment' definition points only to Schedule 2.1(a), which is omitted from the exhibit (8-K footnote: schedules omitted under Item 601(a)(5)). The $75.0 million figure appears only in the recitals; there is no Article I defined term stating the aggregate. Recital governs by necessity.",
+      "maturity_date: no hard calendar date anywhere in the document; both facilities are defined as five years following the Closing Date, and 'Closing Date' is defined as 'the date of this Agreement' (2024-08-13), which would compute to 2029-08-13. Recorded as basis=relative per the rule that stated requires a hard date in the document."
+    ],
+    "springing_maturity_proviso": "Both the Revolving Maturity Date and the Term Maturity Date spring to the date that is 91 days prior to the final maturity of the Convertible Notes (2.25% Convertible Senior Notes due 2029-09-01, i.e. 2029-06-02) if any Convertible Notes remain outstanding on that date, unless (i) Unrestricted Cash >= outstanding Convertible Notes principal or (ii) 30-day average Daily VWAP >= 120% of the Conversion Price. Excluded from maturity_date per schema; noted here.",
+    "covenant_holiday": "5.9(a): upon a Material Acquisition the Lead Borrower may elect to increase the maximum First Lien Net Leverage Ratio to 3.50:1.00 for four consecutive fiscal quarters. Conditional override; non-holiday level 3.00 recorded.",
+    "first_test_date": "Both covenants commence with the fiscal quarter ending on or about December 31, 2024.",
+    "equity_cure": "5.9(c) Specified Equity Contribution cure right (max 2 of any 4 consecutive quarters). Not a field.",
+    "margin_grid_detail": "Four-level grid keyed to First Lien Net Leverage Ratio: Level I (>2.00x) 3.00% / Level II (<=2.00x, >1.25x) 2.75% / Level III (<=1.25x, >0.50x) 2.50% / Level IV (<=0.50x) 2.25% for Term Benchmark and RFR Loans; ABR margins are 100 bps lower (2.00/1.75/1.50/1.25). Opening level stated explicitly as 2.75% (Level II). One Applicable Margin definition applies to both facilities. Level I applies as a penalty pricing level when financials are late. The same table carries a commitment fee grid (0.40/0.35/0.30/0.25%), which does not bear on has_margin_grid.",
+    "benchmark_detail": "Adjusted Term SOFR Rate = Term SOFR Rate + 0.10% CSA, subject to the Floor; Term SOFR Rate resolves to the Term SOFR Reference Rate published by the CME Term SOFR Administrator. RFR Loans (Adjusted Daily Simple SOFR) may be requested only after a Benchmark Transition Event with respect to Term SOFR (2.1(a), 2.2(a)(i)) - fallback, not primary. ABR loans are the customary alternative and are not the answer.",
+    "excluded_records": "Letter of Credit Subfacility (2.3; $10,000,000 L/C commitment) and Swingline Loan Subfacility (2.4; $10,000,000) are sublimits of the Revolving Commitments. Incremental Facilities (2.22; Revolving Facility Increases and Incremental Term Facilities) are an option, not a commitment. Refinancing Amendments / Extended tranches (2.23) are contingent. None recorded.",
+    "base_rate_margin_not_recorded": "Opening ABR margin 1.75% (175 bps) - mechanically benchmark margin minus 100 bps; deliberately not a field.",
+    "lender_count": "Syndicated: JPMorgan Chase Bank, N.A. as Administrative Agent; Regions, Huntington, Bank of America as Joint Lead Arrangers/Syndication Agents; Wells Fargo, U.S. Bank, Capital One, PNC, Fifth Third as Documentation Agents; City National Bank also a signing Lender. Satisfies the >=3 lenders frame.",
+    "document_file_added": "document_file added on filing: the accession contains two exhibits (dp216536_ex1001.htm and dp216536_ex1002.htm) and the validator requires a filename to resolve which document a label describes. No scored value altered."
+  }
+}
