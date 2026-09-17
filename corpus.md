@@ -247,8 +247,13 @@ from reading the documents, never from these signals.
 
 ## Selected agreements
 
-Fifteen documents. Three were labeled or benchmark-confirmed during schema
-development; twelve were selected from the qualified pool afterward.
+Sixteen documents, selected three ways. **Three** were labeled or
+benchmark-confirmed by hand during schema development (rows 1–3). **Twelve**
+were selected from the qualified pool afterward by the stratification
+described above (rows 4–15). **One** — row 16, PureCycle — was added
+purposively, after selection, to supply the empty-covenant case that nothing
+else in the slate supplies. It is a documented exception to the frame rather
+than a draw from it; see [Document 16](#document-16-purecycle-a-documented-exception).
 
 > ## ⚠ The "Selected for" column is unverified, and is wrong wherever it has been checked
 >
@@ -325,6 +330,7 @@ development; twelve were selected from the qualified pool afterward.
 | 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
 | 14 | Lithia Motors | — | 2022-06-08 | revolver only | Grid; leverage + fixed charge |
 | 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
+| 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list** — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
 
 Accession numbers for 4–15 are to be filled from `data/screen/shortlist.jsonl`
 when the set is frozen.
@@ -344,6 +350,67 @@ one exercises the `facility_type` rule that classifies by amortization rather
 than by name — a 1%/yr institutional tranche is a TLB whatever the agreement
 calls it — which is among the more fragile adjudications in the schema and
 would go untested by a corpus of neatly labeled Term A and Term B facilities.
+
+### Document 16: PureCycle, a documented exception
+
+The slate was extended from fifteen documents to sixteen after selection, for
+one reason: **nothing in it supplies an empty covenant list.** Row 13, Roper,
+was chosen for that case and turned out to carry a debt-to-capitalization
+covenant in §7.1. No other row was ever selected for it, and no unread row is
+a candidate.
+
+That case is not optional. [schema.md](schema.md#covenant-fields) states that
+an empty `financial_covenants` list is a real and correct answer and that a
+model inventing a covenant there is penalised, and [README.md](README.md)
+builds its central argument on the corpus measuring whether a system knows
+when there is nothing to find. A corpus that never tests it leaves a hole in
+exactly the claim the project makes loudest.
+
+PureCycle Technologies, `0001830033-23-000021` EX-10.2, filed 2023-03-15, is
+the only candidate. **Verified covenant-free by reading, not by regex:** zero
+occurrences of `EBITDA` in 65,001 words; §7.11 and §7.12 both `[Reserved]`;
+and all five occurrences of "Compliance Certificate" are *U.S. Tax Compliance
+Certificate*, four in the withholding-tax provisions and one in the exhibit
+index. There is no covenant compliance certificate in the document.
+
+#### It deviates from the frame in three ways, all recorded
+
+1. **The three lenders are affiliated funds of one manager.** Sylebra Capital
+   Partners Master Fund, Sylebra Capital Parc Master Fund and Sylebra Capital
+   Menlo Master Fund — three vehicles, one manager, Madison Pacific Trust
+   Limited as Administrative Agent and Security Agent. The frame's "≥3
+   lenders" test passes on form and arguably fails on substance.
+2. **The commitment schedule is not attached.** `SCHEDULE 2.01` appears
+   nowhere in the exhibit; "Commitments and Applicable Percentages" is listed
+   in the schedule index only. The frame's test is ≥3 lenders *on the
+   commitment schedule*, and that test cannot be run on this document at all —
+   the count comes from signature pages.
+3. **Aggregate commitments are $150,000,000 — the floor exactly.** *"The
+   aggregate Commitment of all of the Lenders on the Closing Date shall be
+   $150,000,000."* Inside the band as written, since the band is inclusive,
+   but on the line rather than within it.
+
+#### And it is not the kind of document the empty case was expected to come from
+
+This file originally said the empty-covenant case would come from a
+**cov-lite syndicated term loan B** — an institutional tranche whose lenders
+accept no maintenance covenant because the revolver carries one. PureCycle is
+not that. It is a **fifteen-month distressed bridge**: `Maturity Date` of June
+30, 2024, and an `Applicable Margin` that escalates on a calendar schedule
+from **5.00% to 15.00%** in four steps, with no pricing grid and no pricing
+levels anywhere in the document. Rescue financing from a single manager's
+funds, not a syndicated leveraged loan.
+
+**State this wherever the empty-covenant result is reported.** A reader should
+discount it appropriately rather than assume the corpus tested cov-lite
+structures and found a model inventing covenants in one. What it tests is
+whether a system invents covenants in a document that has none — which is the
+hallucination mode that matters — on an atypical document, with n=1.
+
+The pricing structure also raises a question the schema has not answered: a
+margin that varies only with the passage of time is neither flat nor keyed to
+a measured condition. That is left open deliberately until the document is
+labeled, so the rule is written against what is in it.
 
 ### Row 7 amended: the wrong exhibit, and a false rationale
 

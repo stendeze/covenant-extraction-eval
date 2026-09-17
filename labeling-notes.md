@@ -665,6 +665,47 @@ deferral nulls, which uses machinery the harness already has.
 
 ---
 
+## The syndication test is a proxy, and it fails at both tails
+
+Two documents, found five days apart, break the frame's "Administrative Agent
+and ≥3 lenders on the commitment schedule" test in opposite directions. Read
+together they say more than either does alone.
+
+**Lamb Weston EX-10.2 fails on form while being economically syndicated.**
+Schedule 2.01 lists **one** Lender of record — AgWest Farm Credit, PCA —
+holding 100% of every tranche. Roughly thirteen other Farm Credit institutions
+sit behind it as Voting Participants under §11.06(e), with real economic
+exposure and real votes. The document was excluded.
+
+**PureCycle EX-10.2 passes on form while being economically one creditor.**
+Three lenders sign: Sylebra Capital Partners Master Fund, Sylebra Capital Parc
+Master Fund, Sylebra Capital Menlo Master Fund. Three vehicles, one manager,
+one credit decision. The document is included, as a documented exception.
+
+**What the test is actually for.** [schema.md](schema.md#sampling-frame) gives
+the reason: "Bilateral agreements have no margin grid and often no agent, which
+degenerates two fields." The lender count is a proxy for *is this a real
+syndicated facility with the drafting conventions that come with one*. Counting
+signature blocks approximates that well in the middle of the distribution and
+badly at the edges — a participation structure hides lenders behind one name,
+and a fund family multiplies one lender into several.
+
+**Neither document was decided by the count.** Lamb Weston EX-10.2 went on
+size as well as form; PureCycle is admitted on the strength of being the only
+empty-covenant case available, with the count deviation written down rather
+than argued away. In both, the count was evidence, and reading the document
+was the decision.
+
+**The general lesson is the one this project keeps relearning:** a mechanical
+proxy is worth having because it is reproducible, and it is worth checking
+because reproducible is not the same as correct. The screen's grid and
+structure signals failed the same way — right often enough to be trusted,
+wrong in a direction nobody was looking. The difference here is that the
+failure is visible in both directions at once, which is what makes the pair
+worth recording rather than the two incidents separately.
+
+---
+
 ## `has_margin_grid`: the minority class comes from one document
 
 Nine documents, sixteen facility records, **fourteen `true` and two `false`** —
