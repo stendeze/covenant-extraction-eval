@@ -446,6 +446,35 @@ value changed. Amentum is the only document in the corpus so far with a step
 at all, which is worth noticing on its own: the field the schema calls the
 most expensive to label has fired exactly once in five documents.
 
+### `springing_trigger` — greater-of triggers record the currency limb
+
+**Trigger:** G-III Apparel, `0001558370-24-008935`.
+
+G-III's fixed-charge covenant springs when Availability falls below "the
+greater of 10% of the Maximum Borrowing Amount and $52,500,000" — a percentage
+paired with a dollar floor, in a field that holds one `threshold` and one
+`threshold_unit`. The rule records the currency limb.
+
+**The labeler's first justification was wrong on the facts and is recorded
+here because the correction is the useful part.** The note said the dollar
+figure was "the only figure the document itself states". It is not: 10% is
+stated too, and `threshold: 10, threshold_unit: percent` is expressible. Had
+that reasoning gone into the schema unchecked, the rule would have rested on a
+false premise and the next labeler would have had no way to see it.
+
+The two reasons that survive: this field already pairs `minimum_availability`
+with `currency`; and the dollar limb is a constant of the agreement, while the
+percentage limb floats with a borrowing base redetermined monthly and absent
+from the document, so only the currency limb has a level the document fixes.
+
+**And the rule records the limb that usually does not bind.** At $700M of
+commitments the 10% limb is $70M and governs whenever the borrowing base is
+$525M or more; $52,500,000 is a floor that rarely operates. The rule prefers a
+determinate value to an operative one. That is a real concession and it is
+written into the rule rather than left to be worked out — the same handling as
+the bullet-term-loan call, where the mechanical answer and the commercial one
+diverge and the mechanical answer governs.
+
 ### `facility_type` — `delayed_draw_term_loan` requires the agreement to say so
 
 **Trigger:** ANI Pharmaceuticals, `0000950103-24-012144`.

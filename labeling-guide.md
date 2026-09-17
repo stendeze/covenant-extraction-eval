@@ -401,6 +401,20 @@ Record `35`, unit `percent`, `condition_type: revolver_utilization`.
 Where letters of credit are excluded from the utilization calculation — very
 common — note it in free text. It does not change the threshold.
 
+**ABL triggers are availability, not utilization**, and they usually come as a
+"greater of" pairing a percentage with a dollar floor:
+
+> "Availability is less than the greater of 10% of the Maximum Borrowing
+> Amount and $52,500,000"
+
+Record `condition_type: minimum_availability`, `threshold: 52500000`,
+`threshold_unit: currency` — the dollar limb, always — and put the percentage
+limb in free text. The dollar figure is fixed for the life of the agreement;
+the percentage floats with a borrowing base that is redetermined monthly and
+is not in the document. Expect the dollar limb to be the one that does not
+bind: at G-III's $700M, 10% is $70M and governs most of the time. Record it
+anyway; consistency across the corpus is what the field is for.
+
 ---
 
 ## Trap list

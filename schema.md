@@ -850,6 +850,25 @@ Adjudication rules:
 - Where letters of credit are excluded from the utilization calculation (very
   common — undrawn LCs up to some amount do not count toward the trigger),
   that exclusion is noted in free text and does not change the threshold.
+- **Where the trigger is a "greater of" or "lesser of" pairing a percentage
+  with a dollar amount, record the currency limb.** G-III's covenant springs
+  when Availability falls below "the greater of 10% of the Maximum Borrowing
+  Amount and $52,500,000"; the recorded threshold is `52500000`, unit
+  `currency`, and the percentage limb goes in free text.
+
+  Two reasons, neither of which is that the other limb is unstated — `10` and
+  `percent` would both be recordable. First, this field already pairs
+  `minimum_availability` with `currency` in the rule above. Second, the dollar
+  limb is a constant of the agreement, while the percentage limb floats with a
+  borrowing base that is redetermined monthly and is not in the document, so
+  only the currency limb has a level the document fixes.
+
+  **The cost, stated because it is real: the recorded limb is usually the one
+  that does not bind.** At G-III's $700M of commitments the 10% limb is $70M
+  and governs whenever the borrowing base is $525M or more, so $52,500,000 is
+  a floor that rarely operates. The rule takes a determinate value over an
+  operative one, deliberately, and a reader should not discover that by
+  working it out.
 
 ---
 
