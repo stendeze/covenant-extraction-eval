@@ -633,6 +633,40 @@ deferral nulls, which uses machinery the harness already has.
 
 ---
 
+## `step_down_schedule` will report over n=1, and that has to be said
+
+Eight documents labeled, twenty covenant records, and **one non-empty
+`step_down_schedule`** — Amentum's single step from 5.25x to 5.00x. Lamb
+Weston EX-10.1 has a second. Every other covenant in the corpus is flat.
+
+That is a problem for the field the schema calls the most expensive to label
+and the most interesting to measure, "where regex baselines fail hardest". A
+per-field F1 computed over one or two instances is not a measurement, and
+**the scorer's ordering comparison has never run on real data**, because it
+only compares when an array holds two or more elements and no array in the
+corpus does.
+
+**The two documents that were supposed to supply this came from the signal
+that has now failed seven of seven.** Rows 10 and 11 are both labeled
+"step-down candidate" in [corpus.md](corpus.md); ANI is row 11 and has none.
+Peloton is row 10 and is unread. If Peloton also has none, the field ends the
+corpus at n=1.
+
+**This is not a reason to reselect now.** Swapping documents to make a field
+look scoreable, after seeing which documents produce which values, is the
+precise move the frozen-corpus discipline exists to prevent — and it would
+poison a set whose whole claim is that selection preceded labeling. The honest
+handling is to report it: state the instance count alongside the F1, and say
+that `step_down_schedule` is not measurable at this corpus size rather than
+publishing a number computed over one array.
+
+Where they live, for whatever selection happens after this corpus is frozen:
+time-based step-down tables are a sponsor-deal convention, clustering in
+leverage-grid LBO credits. Two unread rows might qualify. That is an
+observation for a v2 frame, not a licence to swap a row now.
+
+---
+
 ## Flagged in advance for the blind relabel
 
 The intra-annotator check in [schema.md](schema.md#annotator-agreement)

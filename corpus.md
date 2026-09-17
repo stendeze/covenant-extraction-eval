@@ -267,12 +267,21 @@ development; twelve were selected from the qualified pool afterward.
 > | 5 Amentum | revolver + **TLA** + TLB; **4 covenant types** | revolver + TLB; **1** covenant | ❌ |
 > | 6 Extreme | revolver + TLA + **TLB**; **lettered tranches** | revolver + TLA; tranche is "Initial Term Loans" | ❌ |
 > | 7 Lamb Weston | revolver + TLA; **no grid** | neither exhibit matches; both have grids | ❌ |
+> | 8 Avaya | revolver + term; springing; **3 covenants** | no exhibit in the filing matches; DIP is revolver-only with 1 liquidity covenant | ❌ |
+> | 11 ANI Pharma | grid; **3 covenants**; **step-down candidate** | grid holds; 2 covenants; **no step-downs** | ❌ |
 > | 13 Roper | **covenant-free** | §7.1 Total Debt to Total Capital at 0.65:1.00 | ❌ |
 >
-> **Three hold, five fail — and the split is not random.** Rows 1–3 are
+> **Three hold, seven fail — and the split is not random.** Rows 1–3 are
 > precisely the three that the screen did not select; they were labeled or
 > benchmark-confirmed by hand during schema development. **Every
-> screen-derived rationale that has been checked has failed: five of five.**
+> screen-derived rationale that has been checked has failed: seven of seven.**
+>
+> That count has been five of five, then six of six, then seven of seven, on
+> consecutive documents. It is not drifting toward a rate — it has not yet
+> produced a single success. The rationales are not partially reliable; they
+> are unreliable, with a measured failure rate of 100% over seven trials, and
+> the only rationales that hold describe the three documents the instrument
+> never touched.
 >
 > **The rows that got corrected are the rows that happened to be read, not the
 > rows that happened to be wrong.** Nothing about labeling order was chosen to
