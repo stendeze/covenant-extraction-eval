@@ -12,6 +12,36 @@ Every rule below exists because a specific real case would otherwise produce
 two defensible answers, and a field with two defensible answers cannot be
 scored.
 
+## The four corners rule
+
+One principle decides more of this schema than any other, so it is stated once
+here rather than re-argued at each field: **the agreement is the source. What
+the company says about the agreement is not.**
+
+It has now settled three fields independently, each time against an answer
+that was more informative:
+
+- `applicable_margin_bps` is `null` where a ratings grid defers its opening
+  level, rather than the rate implied by the borrower's actual credit rating.
+  The rating is real and public and it is not in the document.
+- `aggregate_commitment` records Amentum's US$2,620,000,000 commitment, not the
+  US$3,750,000,000 tranche outstanding on day one, because the larger figure
+  appears nowhere in the agreement and so cannot carry a citation.
+- `facility_type` records ANI's tranche as `term_loan_a` on its amortization,
+  though the borrower's own 8-K and 10-Q call it a "delayed-draw term loan
+  facility". The agreement never uses the phrase.
+
+Each time, the rejected answer was the one a credit analyst would give. That is
+the cost, and it is deliberate: this measures extraction from a document, and a
+gold value that requires knowledge from outside it is not extractable — it is
+recall, or inference, and a system scored against it would be rewarded for
+knowing things rather than for reading. The citation requirement enforces this
+mechanically, since a value with no supporting sentence in the document cannot
+be cited.
+
+Where the honest answer genuinely lives outside the document, the field says so
+— that is what a deferral `null` is for — rather than importing it.
+
 ---
 
 ## Corpus selection
@@ -255,6 +285,27 @@ amortization schedule (a 1%/yr amortizing institutional tranche is a TLB; a
   total, and excluding it is a deliberate choice, not an oversight.
 - A delayed draw term loan *is* a facility — the commitment is made, only the
   funding is deferred.
+- **`delayed_draw_term_loan` requires the agreement to say so**, either by
+  labeling the tranche delayed-draw or by providing a multi-draw availability
+  period. Both are things a second labeler can find by searching the document.
+  A single-draw acquisition term loan, committed at signing and funded on the
+  acquisition closing date, is classified by amortization like any other
+  unlettered tranche — even where the borrower calls it delayed-draw
+  elsewhere.
+
+  ANI Pharmaceuticals is the case and it is not a close one commercially: the
+  commitment is made at signing, funded in one draw at the acquisition close a
+  month later, carries a ticking fee on the undrawn amount, and terminates on
+  an Acquisition Outside Date. ANI's own 8-K and 10-Q call it a "delayed-draw
+  term loan facility (the Term Loan A)". The agreement never uses the phrase,
+  so the value is `term_loan_a`, on 2.5%/5%/7.5% amortization. See [The four
+  corners rule](#the-four-corners-rule).
+
+  **This makes `delayed_draw_term_loan` harder to fire, and it may not fire at
+  all.** That is the accepted outcome, on the same basis as
+  `debt_service_coverage`: an enum value that never fires costs nothing, and
+  the alternative — admitting an external characterisation as evidence — costs
+  the field's meaning.
 
 ### 2. `aggregate_commitment`
 

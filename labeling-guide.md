@@ -242,6 +242,21 @@ apply the same way twice.
 A delayed draw term loan is a facility — the commitment is made, only the
 funding is deferred.
 
+**But `delayed_draw_term_loan` needs the agreement to say it.** Search the
+document for "delayed draw" and for a multi-draw availability period. If
+neither is there, classify by amortization, whatever the tranche is called
+outside the document. ANI Pharmaceuticals is the trap: committed at signing,
+funded in one draw at an acquisition close, ticking fee on the undrawn amount,
+outside date — and the borrower's own 8-K calls it a delayed-draw term loan
+facility. The agreement never does, so it is `term_loan_a` on its
+amortization.
+
+This is the general rule, not a quirk of this field: **the agreement is the
+source, and what the company says about the agreement is not.** The same line
+makes a deferred opening margin `null` rather than a looked-up rating, and
+records a commitment rather than the economic tranche size. If the value you
+want to record cannot be quoted from the document, it is not the value.
+
 ---
 
 ## Covenant fields — step 8

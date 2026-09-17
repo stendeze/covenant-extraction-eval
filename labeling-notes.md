@@ -446,6 +446,42 @@ value changed. Amentum is the only document in the corpus so far with a step
 at all, which is worth noticing on its own: the field the schema calls the
 most expensive to label has fired exactly once in five documents.
 
+### `facility_type` — `delayed_draw_term_loan` requires the agreement to say so
+
+**Trigger:** ANI Pharmaceuticals, `0000950103-24-012144`.
+
+ANI's term tranche is, commercially, a delayed-draw term loan: committed on
+the Closing Date, funded in a single draw at the Alimera acquisition close a
+month later, with a ticking fee on the undrawn commitment and automatic
+termination on an Acquisition Outside Date. **ANI's own 8-K and 10-Q call it
+"a delayed-draw term loan facility (the Term Loan A)".** The agreement itself
+never uses the phrase.
+
+Rule: `delayed_draw_term_loan` applies where the agreement labels the tranche
+delayed-draw or provides a multi-draw availability period. Both are findable
+by searching the document. Otherwise classify by amortization — here
+2.5%/5%/7.5%, so `term_loan_a`.
+
+**This is the third field decided by the same principle, which is why the
+principle is now stated once in [schema.md](schema.md#the-four-corners-rule)
+instead of re-argued each time.** `applicable_margin_bps` goes `null` on a
+deferred ratings grid rather than importing the borrower's actual credit
+rating. `aggregate_commitment` records Amentum's US$2.62B commitment rather
+than the US$3.75B tranche outstanding on day one. And now `facility_type`
+reads amortization rather than the borrower's own press description.
+
+Each time, the rejected answer was the one a credit analyst would give, and
+each time the ground was the same: a gold value requiring knowledge from
+outside the document is not extractable. Scoring against it would reward a
+system for knowing things rather than for reading, which is a different
+capability and not the one being measured. The citation requirement enforces
+it mechanically — none of the three rejected answers can be quoted.
+
+**The cost, stated:** `delayed_draw_term_loan` now needs a document that says
+so itself, and may finish the corpus unfired. Accepted on the same basis as
+`debt_service_coverage` — an unused enum value costs nothing, and admitting
+external characterisation as evidence would cost the field its meaning.
+
 ### `step_down_schedule` — `effective_from` accepts a month, and finer is wrong
 
 **Trigger:** Lamb Weston Holdings EX-10.1, `0001679273-24-000026`.
