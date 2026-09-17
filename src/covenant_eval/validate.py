@@ -344,10 +344,17 @@ def _check_citation(
         )
         return
     if needle.replace(" ", "") in document.replace(" ", ""):
+        # The characters are all there in order and only the spacing differs.
+        # Two causes, both artifacts of HTML-to-text rather than labeling: a
+        # table cell boundary, and a tag boundary inside a sentence — G-III
+        # renders "Section 5.01(f)," with the section number underlined, which
+        # strips to "Section 5.01(f) ,". Named for the symptom, not a guessed
+        # cause, because the labeler has to look either way.
         report.add(
             f"{path}.quote",
-            "quote_spans_table_cells",
-            f"present only with spacing removed, likely a table split: {quote[:90]!r}",
+            "quote_whitespace_differs",
+            f"present, but only once spacing is ignored — a table or tag boundary in the "
+            f"source, not a wrong quote: {quote[:80]!r}",
             severity="warn",
         )
         return

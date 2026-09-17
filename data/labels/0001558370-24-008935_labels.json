@@ -1,0 +1,133 @@
+{
+  "source": {
+    "accession_number": "0001558370-24-008935",
+    "exhibit": "EX-10.1",
+    "document_file": "giii-20240604xex10d1.htm",
+    "filing_date": "2024-06-06",
+    "agreement_date": "2024-06-04",
+    "borrower": "G-III Leather Fashions, Inc. (Holdings: G-III Apparel Group, Ltd.)",
+    "title": "Third Amended and Restated Credit Agreement (Asset Based Lending)",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "structure": "revolver-only (ABL)",
+    "in_scope_basis": "Full amended and restated agreement; syndicated (JPMorgan agent, 10+ lenders); $700M aggregate commitments; US corporate borrower"
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Loans",
+        "citation": {
+          "section": "2.01 (Commitments)",
+          "quote": "each Lender severally (and not jointly) agrees to make Revolving Loans in Dollars to the Borrowers from time to time during the Availability Period"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01 (Commitments)",
+          "quote": "the Borrowers may borrow, prepay and reborrow Revolving Loans"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 700000000, "currency": "USD" },
+        "citation": {
+          "section": "1.01 (definition of \"Aggregate Commitments\")",
+          "quote": "As of the Effective Date, the Aggregate Commitments are $700,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": "2029-06-04", "basis": "stated" },
+        "citation": {
+          "section": "1.01 (definition of \"Maturity Date\")",
+          "quote": "means the earliest to occur of (a) June 4, 2029"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Term SOFR Rate\")",
+          "quote": "the Term SOFR Reference Rate at approximately 5:00 a.m., Chicago time, two U.S. Government Securities Business Days prior to the commencement of such tenor comparable to the applicable Interest Period, as such rate is published by the CME Term SOFR Administrator"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 150,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "until the first Business Day after the delivery to the Administrative Agent, pursuant to Section 5.01(f), of the Borrowing Base Certificate as of the last day of the first full fiscal quarter of Holdings ending after the Effective Date, the “Applicable Rate” shall be the applicable rates per annum set forth below in Category 1"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "based upon the Availability Percentage as of the most recent determination date"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "fixed_charge_coverage",
+        "citation": {
+          "section": "1.01 (definition of \"Fixed Charge Coverage Ratio\")",
+          "quote": "the ratio of (a) Consolidated EBITDA for such period minus the unfinanced portion of Capital Expenditures"
+        }
+      },
+      "initial_threshold": {
+        "value": 1.00,
+        "citation": {
+          "section": "6.12 (Fixed Charge Coverage Ratio)",
+          "quote": "to be less than 1.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "6.12 (Fixed Charge Coverage Ratio)",
+          "quote": "During any FCCR Test Period, the Loan Parties will not permit the Fixed Charge Coverage Ratio determined as of the last day of each period of twelve consecutive fiscal months of Holdings ending during such FCCR Test Period, to be less than 1.00 to 1.00."
+        }
+      },
+      "testing_frequency": {
+        "value": "monthly",
+        "citation": {
+          "section": "6.12 (Fixed Charge Coverage Ratio)",
+          "quote": "determined as of the last day of each period of twelve consecutive fiscal months of Holdings ending during such FCCR Test Period"
+        }
+      },
+      "springing_trigger": {
+        "value": {
+          "condition_type": "minimum_availability",
+          "threshold": 52500000,
+          "threshold_unit": "currency",
+          "quote": "on or prior to the date Availability is less than the greater of 10% of the Maximum Borrowing Amount and $52,500,000 at any time"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"FCCR Test Period\")",
+          "quote": "on or prior to the date Availability is less than the greater of 10% of the Maximum Borrowing Amount and $52,500,000 at any time"
+        }
+      }
+    }
+  ],
+  "notes": {
+    "hesitations": [
+      "springing_trigger threshold: the trigger is 'the greater of 10% of the Maximum Borrowing Amount and $52,500,000'. schema.md has no rule for a greater-of construction pairing a percentage with a dollar floor. Labeled with the fixed dollar limb (52500000 / currency) because it is the only figure the document itself states; the 10% limb is of the Maximum Borrowing Amount (lesser of Aggregate Commitments and Borrowing Base), which depends on a borrowing base not in the document. Note $52.5M = 7.5% of the $700M Aggregate Commitments, and the 10% limb ($70M at full commitments) is the binding one whenever the Borrowing Base is >= $525M. Proposed rule for schema.md: for greater-of / lesser-of triggers, record the fixed-currency limb as threshold and note the percentage limb in free text. Apply consistently across the corpus.",
+      "testing_frequency: labeled monthly. The FCCR is tested as of the last day of each fiscal month (trailing twelve fiscal months) during an FCCR Test Period, and §5.01 requires monthly financial statements during a Cash Dominion Period. This is not quarterly; springing is not a frequency, so conditionality lives in springing_trigger."
+    ],
+    "exclusions_applied": [
+      "Springing maturity proviso excluded from maturity_date per rule: Maturity Date limb (c) is 'the date that is ninety-one (91) days prior to the earliest maturity date of the 2025 Senior Notes' unless the notes are repaid to <= $25,000,000, refinanced, or Liquidity >= $100,000,000 on that day. Limb (b) (Commitments reduced to zero or terminated) is the ordinary termination mechanic. Stated date June 4, 2029 recorded; extendable under §2.24.",
+      "Accordion excluded: §2.09(e) permits the Borrowers to 'request an increase of the Aggregate Commitments by an aggregate amount of up to $150,000,000'. Option, not a commitment; no record and not added to the $700M.",
+      "Letter of credit, swingline, Protective Advance and Overadvance capacity are carve-outs of the Commitment (see definition of 'Commitment'); no separate facility records.",
+      "Base Rate (ABR) spread of 0.50% in Category 1 not recorded; it is the benchmark spread minus 100bps, as expected."
+    ],
+    "labeling_observations": [
+      "Commitment Schedule is listed in the SCHEDULES index but not attached to the exhibit; only exhibits A–K are attached. The defined term governs ($700,000,000); the Assignment and Assumption form (Exhibit A) also describes the deal as 'The $700,000,000 Third Amended and Restated Credit Agreement'.",
+      "Margin grid is an availability (utilization-type) grid: three Categories keyed to Availability Percentage (average daily Availability / average daily Aggregate Commitments). Category 1 (> 66.7%): ABR 0.50% / Term Benchmark 1.50% / RFR 1.50%; Category 2 (> 33.3% but < 66.7%): 0.75% / 1.75% / 1.75%; Category 3 (< 33.3%): 1.00% / 2.00% / 2.00%. Opening level expressly Category 1 until the first Borrowing Base Certificate for the first full fiscal quarter ending after the Effective Date (Holdings' fiscal year ends January 31, so the quarter ending July 31, 2024).",
+      "Benchmark chain: 'Term Benchmark' Loans bear interest by reference to the Adjusted Term SOFR Rate = Term SOFR Rate + 0.10% CSA, floored; Term SOFR Rate resolves to the CME Term SOFR Administrator. CSA not part of the field. RFR (Daily Simple SOFR) loans exist in the grid but per §2.13(b) apply 'solely to the extent applicable following a Benchmark Replacement or otherwise pursuant to Section 2.14(f)' — fallback, not primary.",
+      "There is also a commitment fee grid: Commitment Fee Rate is 0.375% until the first Borrowing Base Certificate, then a grid keyed to Average Usage. Irrelevant to has_margin_grid here because the margin itself is on a grid, but noted for the possible v2 has_commitment_fee_grid field.",
+      "§6.12 is the only financial covenant (the agreement defines it as 'the Financial Covenant'). Total Leverage Ratio is defined but used only as an incurrence / Payment Conditions / Unrestricted Subsidiary designation test (3.50:1.00), not as a maintenance covenant. Compliance Certificate reports FCCR 'for informational purposes only if a FCCR Test Period is not then in effect'.",
+      "FCCR Test Period ends the day after Availability has exceeded the greater of 10% of the Maximum Borrowing Amount and $52,500,000 for 30 consecutive days. §6.12 also contains an equity cure (Specified Equity Contribution; max two fiscal months in any twelve).",
+      "Availability for FCCR Test Period purposes is calculated without giving effect to the Unrestricted Cash Cap (definition of 'Availability', proviso (II)(2)). Does not change the threshold."
+    ],
+    "document_file_added": "document_file added on filing so the validator resolves the exhibit explicitly; this accession carries only one. No scored value altered."
+  }
+}
