@@ -662,6 +662,42 @@ deferral nulls, which uses machinery the harness already has.
 
 ---
 
+## `has_margin_grid`: the minority class comes from one document
+
+Nine documents, sixteen facility records, **fourteen `true` and two `false`** —
+and both `false` values are Paya Holdings, whose revolver and TLB share a flat
+3.25% margin.
+
+The two documents selected to supply `false` did not. [corpus.md](corpus.md)
+row 7 chose Lamb Weston for "Lettered TLA with no grid" and row 12 chose G-III
+for "3 covenants with **no** grid". Row 7's accession held two agreements and
+both carry leverage grids; row 12 is an ABL with a three-Category availability
+grid. Both rationales came from `pricing_grid_hint`, whose every measured
+error is a false negative. No unread row was ever selected for this value, so
+the minority class is not going to grow by accident.
+
+**The corpus is not being adjusted.** Swapping a row in now, having seen which
+documents produce which values, would trade the thing that makes this set
+defensible — that selection preceded labeling and was not tuned to the results
+— for a column that looks balanced. That trade is bad at any exchange rate,
+and it is the same posture already recorded for
+[`step_down_schedule`](#step_down_schedule-will-report-over-n1-and-that-has-to-be-said).
+
+**It is reported instead.** Per-field numbers carry their instance count, and
+`has_margin_grid` carries one sentence more: the minority class is 2 of 16 and
+both instances are the same agreement, so the field measures whether a system
+can recognise one flat-margin document rather than whether it can tell flat
+pricing from a grid in general. **A model that answered `true` unconditionally
+and read nothing would score 88% on this field.** That number belongs beside
+the result, because it is the score to beat and it is high.
+
+The underlying cause is not a selection accident but a measurement failure,
+recorded at [Keyword heuristics
+under-detect](#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it):
+the instrument used to pick documents for this field cannot see grids.
+
+---
+
 ## `step_down_schedule` will report over n=1, and that has to be said
 
 Eight documents labeled, twenty covenant records, and **one non-empty
