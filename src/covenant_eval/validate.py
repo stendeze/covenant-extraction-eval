@@ -272,10 +272,46 @@ class Report:
         return sum(1 for d in self.deviations if d.severity == "error")
 
 
-def find_raw(accession: str, raw_dir: Path) -> Path | None:
-    """Raw filings are stored as {accession}_{original filename}."""
+# A label may name its source document under any of these; different documents
+# were labeled at different times and the key was never fixed. Any of them
+# disambiguates an accession that holds more than one agreement.
+DOCUMENT_FILE_KEYS = ("document_file", "file_name", "exhibit_filename", "filename")
+
+
+def find_raw(accession: str, raw_dir: Path, document_file: str | None = None) -> tuple[Path | None, str | None]:
+    """Locate the filing a label was built from. Returns (path, problem).
+
+    One accession can contain several credit agreements — Avaya's 10-K carries
+    four, Lamb Weston's 8-K two — so matching on the accession alone is not
+    enough to identify a document. Picking the first match would check a
+    label's quotes against a different agreement and report the result as if it
+    meant something, which is worse than not checking: on two agreements drawn
+    from the same template, boilerplate quotes pass against either.
+
+    So a filename, where the label gives one, must match exactly; and an
+    ambiguous accession with no filename is reported rather than guessed.
+    """
     matches = sorted(raw_dir.glob(f"{accession}_*"))
-    return matches[0] if matches else None
+    if not matches:
+        return None, None
+    if document_file:
+        named = [m for m in matches if m.name.endswith(document_file)]
+        if len(named) == 1:
+            return named[0], None
+        if not named:
+            return None, (
+                f"no file matching {accession}_*{document_file} in {raw_dir}; "
+                f"{len(matches)} other file(s) share the accession"
+            )
+        return None, f"{document_file} matches {len(named)} files under {accession}"
+    if len(matches) > 1:
+        return None, (
+            f"{len(matches)} documents share accession {accession} "
+            f"({', '.join(m.name.split('_', 1)[1] for m in matches)}); the label names no source "
+            f"file, so quotes cannot be checked against a known document. Add one of "
+            f"{list(DOCUMENT_FILE_KEYS)} to source."
+        )
+    return matches[0], None
 
 
 def _check_citation(
@@ -595,17 +631,23 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
     if not accession:
         report.add("source.accession_number", "missing_field", "no accession number; quotes cannot be checked")
     else:
-        raw = find_raw(accession, raw_dir)
-        if raw is None:
+        named = next((source[k] for k in DOCUMENT_FILE_KEYS if source.get(k)), None)
+        raw, problem = find_raw(accession, raw_dir, named)
+        if raw is not None:
+            report.raw_path = raw
+            document = normalize_for_quote_check(to_text(raw.read_bytes()))
+        elif problem:
+            # An error, not an info: the label points at a document that is not
+            # where it says it is, or at an accession this checker cannot
+            # resolve. Either way no quote in the file has been verified.
+            report.add("source", "source_document_ambiguous", f"{problem}; quotes not checked")
+        else:
             report.add(
                 "source",
                 "raw_document_unavailable",
                 f"no file matching {accession}_* in {raw_dir}; quotes not checked",
                 severity="info",
             )
-        else:
-            report.raw_path = raw
-            document = normalize_for_quote_check(to_text(raw.read_bytes()))
 
     facilities = label.get("facilities")
     if not isinstance(facilities, list) or not facilities:
