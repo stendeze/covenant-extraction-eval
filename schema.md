@@ -583,6 +583,28 @@ standalone "Pricing Grid" schedule.
   first test date only, or an IPO step-down) is `true`. The distinction the
   field draws is fixed-vs-variable pricing, not the number of rows in the
   table.
+- **A margin that changes only with the passage of time is not a grid.**
+  `false`, with the schedule recorded in free text. PureCycle's `Applicable
+  Margin` escalates 5.00% → 10.00% → 12.50% → 15.00% → 17.50% on fixed
+  calendar dates. It is emphatically not flat, and it is still `false`,
+  because the field distinguishes **performance-linked pricing from
+  predetermined pricing** — not varying from unvarying.
+
+  Three things settle it. Every `true` case above turns on a condition that
+  must be *observed* about the borrower — a leverage ratio, a rating, a
+  utilization level — whereas a calendar is fully determined at signing and
+  nothing the borrower does changes it. The one-time step-down that is `true`
+  is triggered by a measured event, not a date. And decisively:
+  `applicable_margin_bps` presupposes a measured grid, since its rules run
+  "the rate in effect from the Closing Date until the first compliance
+  certificate is delivered" and "where the agreement is silent, record the
+  highest level" — PureCycle defines no Compliance Certificate at all, so
+  reading it as a grid would make the two fields incoherent with each other.
+
+  This extends the field to a construction it had not met, rather than
+  arbitrating between readings of one it had, so it does not count against
+  `has_margin_grid` under the [rule-accumulation
+  test](#when-a-field-has-accumulated-too-many-rules).
 - MFN / most-favored-nation provisions and pricing that changes only on
   default are not grids. `false`.
 

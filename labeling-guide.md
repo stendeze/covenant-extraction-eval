@@ -188,6 +188,17 @@ annoying to locate, that is the wrong use.
 margin and a three-level commitment fee grid keyed to leverage. That is
 `has_margin_grid: false`. The field is about the margin only.
 
+**A calendar escalator is not a grid either.** PureCycle's margin runs 5.00%
+→ 10.00% → 12.50% → 15.00% → 17.50% on fixed dates. That is not flat and it is
+still `false`: the field asks whether pricing is **performance-linked**, not
+whether it changes. The quick test is whether something has to be *measured*
+about the borrower for the margin to move. A date is not a measurement. Record
+`false` and put the schedule in free text.
+
+The tell that you are in this case rather than a grid: no Pricing Level, no
+Pricing Grid, and no compliance-certificate reset anywhere in the definition.
+PureCycle defines no Compliance Certificate at all.
+
 ### Step 6 — benchmark
 
 Take the rate name from step 5 and find its definition in Article I. Follow

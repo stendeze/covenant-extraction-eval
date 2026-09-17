@@ -449,6 +449,47 @@ value changed. Amentum is the only document in the corpus so far with a step
 at all, which is worth noticing on its own: the field the schema calls the
 most expensive to label has fired exactly once in five documents.
 
+### `has_margin_grid` — a calendar escalator is not a grid
+
+**Trigger:** PureCycle Technologies, `0001830033-23-000021`.
+
+PureCycle's `Applicable Margin` escalates 5.00% → 10.00% → 12.50% → 15.00% →
+17.50% on fixed calendar dates. Neither existing branch fitted: the margin
+plainly is not "flat for the life of the facility", and it plainly does not
+"vary with a measured condition". The field had met flat pricing and grid
+pricing and never met pricing that moves on a schedule.
+
+Rule: `false`. The field distinguishes **performance-linked from
+predetermined** pricing, not varying from unvarying.
+
+**The argument that decides it is a consistency argument between two fields,
+not an intuition about this one.** `applicable_margin_bps` is defined in terms
+of a measured grid — "the rate in effect from the Closing Date until the first
+compliance certificate is delivered", and "where the agreement is silent,
+record the highest level in the grid". PureCycle **defines no Compliance
+Certificate at all**; the phrase occurs five times and every one is a *U.S.
+Tax* Compliance Certificate. Reading the escalator as a grid would leave
+`has_margin_grid` asserting a grid exists while `applicable_margin_bps` had no
+mechanism to locate an opening level within it. Two fields describing the same
+definition have to agree about what that definition is.
+
+**How the call was made is worth recording too.** The label arrived saying
+`true` in its summary and `false` in the file, with the file carrying a note
+that an audit had corrected it. The resolution was not to pick the more
+plausible one: the document was re-read, `Applicable Margin` was confirmed to
+occur exactly twice, and Pricing Level, Pricing Grid, Leverage Ratio and any
+compliance-certificate reset were confirmed absent — zero occurrences each.
+The artifact was right and the summary was stale.
+
+That is the third time in this project a claim reported from memory has
+diverged from the artifact it described; the other two are the `has_margin_grid`
+degeneracy claim and a facility-record count, both recorded
+[here](#the-same-shape-in-a-claim-about-the-corpus). All three were cheap
+because something checkable existed. The [blind
+relabel](schema.md#annotator-agreement) is where that stops being true —
+reporting from memory is the exact failure it is designed to detect, and there
+the artifact is deliberately not consulted.
+
 ### `springing_trigger` — greater-of triggers record the currency limb
 
 **Trigger:** G-III Apparel, `0001558370-24-008935`.
