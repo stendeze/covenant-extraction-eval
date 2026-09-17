@@ -97,6 +97,34 @@ right call for a set this size, and it narrows what the result generalizes to.
 The honest claim is field-level accuracy on syndicated corporate credit
 agreements, not on credit agreements.
 
+**The frame excludes by sector, not by structure — so asset-based facilities
+are in.** This is a clarification of what the frame already said rather than an
+amendment to it. An ABL revolver sizes availability off a borrowing base and
+typically carries a single fixed-charge covenant springing on availability,
+which looks unlike the leverage-and-coverage packages elsewhere in the corpus.
+It is still a syndicated credit agreement made by a US corporate borrower with
+an agent and a lender schedule, and nothing in the criteria above excludes it.
+G-III Apparel qualifies on every stated test: $700M of commitments, JPMorgan
+as agent, ten-plus lenders, a full amended and restated agreement. Avaya's ABL
+was excluded on **size** — $128,125,000, below the floor — not on being an ABL.
+
+The decisive point is that this schema anticipated these documents.
+`springing_trigger` has defined `minimum_availability` and a `currency`
+`threshold_unit` since before any document was labeled, and those values
+describe an availability-based trigger, which is an ABL construction and
+nothing else. Excluding ABLs would strand two enum values the schema
+deliberately wrote.
+
+> **The reasoning was checked against its own incentive, and a reader should
+> be able to see that.** The question was raised while reading Avaya, where
+> excluding ABLs cost nothing. It was settled while reading G-III, which
+> supplies three enum values the corpus had recorded as never firing —
+> `minimum_availability`, `currency` and `monthly`. Concluding "in frame" at
+> exactly that moment is convenient, and convenience is not an argument. So
+> the argument above rests only on what the frame says and on enum values
+> fixed in advance; it would reach the same answer for an ABL that supplied
+> nothing new. If it is wrong, it is wrong for reasons visible on this page.
+
 ### Class balance
 
 A field whose gold value is constant across the corpus cannot be scored
