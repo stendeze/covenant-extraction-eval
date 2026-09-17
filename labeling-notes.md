@@ -76,12 +76,12 @@ Three independent instances, in the order they surfaced:
    the same pass, so its status is unverified rather than confirmed — the
    check and the thing it was checking failed together.
 3. **Structure and grid signals, measured.** Comparing `screened.jsonl`
-   against the labels, over the six documents read so far: `structure` is
-   correct 3 of 6, and `pricing_grid_hint` is correct 3 of 6 **with every
-   error a false negative**. It scored `false` on Plains and Advance Auto,
-   both of which carry five-level ratings grids, and on Lamb Weston, which
-   carries three tiered grids. `structure` reported `revolver_plus_tla` for a
-   term-only agreement and confused TLA with TLB twice.
+   against the labels: `structure` is correct 3 of 6 and `pricing_grid_hint`
+   3 of 6 over the first six documents read, **with every grid error a false
+   negative**. It scored `false` on Plains and Advance Auto, both of which
+   carry five-level ratings grids, and on Lamb Weston, which carries three
+   tiered grids. `structure` reported `revolver_plus_tla` for a term-only
+   agreement and confused TLA with TLB twice.
 
 4. **Covenant counts, in both directions.** The rationales also quote covenant
    counts, and the signal that produced them matches *defined ratio
@@ -99,10 +99,13 @@ grid presence — fails as a miss, and every `pricing_grid_hint` error measured
 so far is a false negative. But anything asking *how many* over-counts
 instead, because a defined term that looks like a covenant is counted whether
 or not it is one. Both directions produce the same end state: a corpus
-rationale that asserts something the document does not support. [corpus.md](corpus.md) row 7 selected
-Lamb Weston for "Lettered TLA with no grid"; the document has no revolver and
-three grids. Row 12 selected G-III Apparel for "3 covenants with **no** grid"
-from the same signal, and it has not been read.
+rationale that asserts something the document does not support.
+[corpus.md](corpus.md) row 7 selected Lamb Weston for "Lettered TLA with no
+grid"; that accession holds two agreements, neither matching, and both carry
+grids. Row 12 selected G-III Apparel for "3 covenants with **no** grid" from
+the same signal; it has since been read and is a revolver-only ABL with one
+covenant and an availability grid. Both documents chosen to supply
+`has_margin_grid: false` supply `true`.
 
 **Why this belongs with the baseline rather than only in the corpus file.**
 The baseline this project scores against is a keyword/regex extractor. These
