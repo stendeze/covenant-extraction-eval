@@ -1,0 +1,126 @@
+{
+  "source": {
+    "accession_number": "0001193125-22-199694",
+    "exhibit": "EX-10.1",
+    "document_file": "d291205dex101.htm",
+    "borrower": "Roper Technologies, Inc.",
+    "agreement_date": "2022-07-21",
+    "filing_date": "2022-07-22",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "lender_count_on_commitment_schedule": 17,
+    "document_type": "Credit Agreement (refinances the September 2, 2020 Existing Credit Agreement; full agreement, not an amendment)",
+    "structure": "revolver-only"
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Facility\")",
+          "quote": "the Revolving Commitments and the extensions of credit made thereunder"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.3(a)",
+          "quote": "each Revolving Lender severally agrees to make revolving credit loans in Dollars"
+        }
+      },
+      "aggregate_commitment": {
+        "value": { "amount": 3500000000, "currency": "USD" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Commitment\")",
+          "quote": "The original amount of the aggregate Revolving Commitments is $3,500,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": { "value": { "tenor_years": 5, "anchor": "Closing Date" }, "basis": "relative" },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Termination Date\")",
+          "quote": "the later of (a) the fifth anniversary of the Closing Date and (b) for any Lender agreeing to extend its Revolving Termination Date pursuant to Section 2.22, the Extended Termination Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.1 (definition of \"Term SOFR Reference Rate\")",
+          "quote": "the rate per annum published by the CME Term SOFR Administrator and identified by the Administrative Agent as the forward-looking term rate based on SOFR"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.1 (definition of \"Pricing Grid\", text following the table)",
+          "quote": "In the foregoing chart, “Senior Unsecured Long-Term Debt Rating” refers to the rating on the Facilities, or in the absence of such rating, on any other senior unsecured long-term debt of the Parent Borrower."
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Pricing Grid\", text following the table)",
+          "quote": "If the ratings of any of S&P, Moody’s or Fitch changes, the Applicable Margin shall adjust, and such adjustment shall be effective, on the first Business Day following the date on which such change in rating is first publicly announced."
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "debt_to_capitalization",
+        "citation": {
+          "section": "1.1 (definition of \"Total Debt to Total Capital Ratio\")",
+          "quote": "the ratio of (i) Consolidated Total Debt as of such date to (ii) Total Capital as of such date"
+        }
+      },
+      "initial_threshold": {
+        "value": 0.65,
+        "citation": {
+          "section": "7.1",
+          "quote": "Permit the Total Debt to Total Capital Ratio as at the last day of any Test Period to exceed 0.65 to 1.00."
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.1",
+          "quote": "Permit the Total Debt to Total Capital Ratio as at the last day of any Test Period to exceed 0.65 to 1.00."
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.2(b)",
+          "quote": "a Compliance Certificate executed by a Responsible Officer and including all information and calculations necessary for determining compliance by each Group Member with the provisions of Section 7.1 of this Agreement as of the last day of the fiscal quarter or fiscal year of the Parent Borrower"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+  "notes": {
+    "facilities_excluded": [
+      "Term loans exist only as Incremental Term Loans under §2.20 (Incremental Term Loans plus Revolving Commitment Increases capped at $500,000,000 in aggregate). 'Term Loans' is defined as 'the reference to the Incremental Term Loans, if any' and 'Commitment' is defined as a Lender's Revolving Commitment only. No term commitment exists at closing; excluded under the incremental/accordion rule.",
+      "L/C Commitment sublimit of $150,000,000 (Schedule 1.1A; JPMorgan, Bank of America, Wells Fargo at $50,000,000 each) is a carve-out of the Revolving Commitment. Not a facility.",
+      "No swingline facility."
+    ],
+    "aggregate_commitment": "Schedule 1.1A lender-by-lender column sums to $3,500,000,000.00 (3 x $310M + 6 x $235M + 4 x $165M + 4 x $125M), matching the defined term. No discrepancy.",
+    "maturity_date": "Recorded basis=relative because the 'Revolving Termination Date' definition itself states no calendar date. The labeler flagged that 'Closing Date' is defined in-document as 'which date is July 21, 2022', so limb (a) resolves to 2027-07-21 without external information, and asked for the rule to be tightened. It already was: schema.md decides basis by the Maturity Date definition alone, a rule forced by Extreme Networks, so a hard-coded anchor does not change the basis. Value converted to the structured {tenor_years, anchor} form. Other mechanics not affecting the answer: (i) 'later of' construction with limb (b) for lenders that extend — §2.22 permits up to two one-year extension requests; (ii) business-day proviso rolls to the next preceding Business Day. No springing maturity proviso.",
+    "interest_rate_benchmark": "Post-transition agreement. Loans bear interest at Adjusted Term SOFR Rate (Term SOFR + 0.10% CSA) plus Applicable Margin per §2.10(a)(i); CSA mapped to unadjusted enum. Floor applies. Daily Simple SOFR appears only as a post-Benchmark-Replacement fallback (§2.12) — conditional, not operative. ABR is the alternative-rate limb, not the primary benchmark. All Revolving Loans are in Dollars; foreign-currency references relate only to Letters of Credit. No LIBOR/Eurocurrency residue anywhere in the document.",
+    "applicable_margin_bps": "Deferral null. Ratings grid keyed to Senior Unsecured Long-Term Debt Rating (Moody's/S&P/Fitch), five levels for Term Benchmark Loans: 79.5 / 91 / 100 / 110 / 130 bps (A3/A-/A- or better; Baa1/BBB+/BBB+; Baa2/BBB/BBB; Baa3/BBB-/BBB-; below Baa3/BBB-/BBB-). The agreement never states which level applies at the Closing Date; the level is determined by ratings that exist outside the document. Fallbacks are themselves conditional on external facts: if no Senior Unsecured Long-Term Debt Rating from any agency at Closing, use Issuer Rating / Corporate Family Rating / Issuer Default Rating; if fewer than two such ratings three months after Closing, use the lowest level (130 bps) until two are received. Not resolved from external ratings data, per the rule.",
+    "base_rate_margin": "ABR margin (0 / 0 / 0 / 10 / 30 bps) is not the benchmark-minus-100 pattern here — the benchmark margins are below 100 bps at the top levels, so the usual relationship floors out. Deliberately not a field either way; noted because it is the first document in the corpus where the minus-100 convention visibly does not hold.",
+    "has_margin_grid": "true — margin varies with a measured condition (external debt ratings). The same grid also carries a Facility Fee Rate column (8 / 9 / 12.5 / 15 / 20 bps on the Revolving Commitment, §2.5(a)); that fee grid is noted as a candidate for a v2 has_commitment_fee_grid field and does not affect this field. Trap #8 check: the Applicable Margin definition itself points to the Pricing Grid; no template residue asserting leverage-linkage.",
+    "covenant_type": "Total Debt to Total Capital Ratio = Consolidated Total Debt / (Shareholders' Equity + Consolidated Total Debt). A debt-to-capitalization test: debt over capital, not debt over EBITDA, and the 0.65 threshold is below 1.00, which under the denominator-first rule cannot be an EBITDA multiple. Recorded debt_to_capitalization. The label as submitted said 'other' and proposed the value as a v2 candidate; it already exists — it was added to the enum in commit 6620eff, forced by this document, after an earlier session established that Roper is not covenant-free. Consolidated Total Debt is gross (no cash netting; excludes defeased debt and performance LCs, includes standby LCs backstopping other Indebtedness), which is irrelevant to the enum once the ratio is capitalization-based.",
+    "initial_threshold": "'0.65 to 1.00' normalized to 0.65. Maximum (direction determined by type — a capitalization ratio is a maximum). No acquisition holiday or step-up.",
+    "step_down_schedule": "Confirmed flat for the life of the agreement; single level with no period table.",
+    "testing_frequency": "§7.1 tests 'as at the last day of any Test Period', Test Period being any four consecutive fiscal quarters (a balance-sheet ratio measured at each fiscal quarter end). §6.2(b) requires a Compliance Certificate for §7.1 with each delivery of quarterly and annual financial statements under §6.1, as of the last day of the fiscal quarter or fiscal year. Quarterly.",
+    "springing_trigger": "Tested unconditionally every period. No utilization or availability trigger; no revolver-lender-only beneficiary carve-out (the revolver is the only facility).",
+    "other_financial_covenants": "None. §7.1 is the sole Financial Condition Covenant; §7.2(g) and §7.3(j) contain incurrence-style baskets keyed to percentages of Consolidated Total Assets, which are baskets and out of scope.",
+    "not_the_covenant_free_case": "corpus.md row 13 selected this document as the corpus's covenant-free case. It is not: §7.1, headed 'Financial Condition Covenant' inside an article headed NEGATIVE COVENANTS, sets the ratio above. The screening heuristic missed it because it searched for the phrase 'financial covenant'. The corpus still has no empty covenant list.",
+    "field_instance_count": "6 facility + 5 covenant = 11 scored field instances after facility_name was cut; 10 citations (the springing_trigger absence null carries none)."
+  }
+}
