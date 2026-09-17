@@ -453,6 +453,22 @@ Adjudication rules:
   Distinct from the springing-maturity case below, which turns on an
   instrument outside the document rather than on the parties' own termination
   or extension rights.
+- **Business Day conventions are mechanics. Record the date the agreement
+  states, unadjusted.** A definition that adds "if such date is not a Business
+  Day, the Maturity Date shall be the next preceding Business Day" — or the
+  succeeding one — is describing settlement mechanics, not an alternative
+  maturity, and it applies to every facility ever written.
+
+  This has arisen three times and was never written down: Amentum's term
+  maturity resolves to a Saturday, Lamb Weston EX-10.2's Term A to a Sunday,
+  and PureCycle's stated June 30, 2024 to a Sunday, rolling to Friday June 28.
+  In each the stated date is recorded and the convention noted in free text.
+
+  It is stated here because [the basis rule](#3-maturity_date) already relies
+  on it: the argument for deciding `basis` from the Maturity Date definition
+  alone is that resolving an anniversary would force a Business Day choice
+  this schema declines to make. A rule that another rule depends on cannot
+  live only in [labeling-guide.md](labeling-guide.md), which does not govern.
 - **Springing maturity provisos are excluded from this field.** A clause like
   "or, if earlier, the date 91 days prior to the stated maturity of the Senior
   Notes" makes the actual maturity contingent on an instrument outside this
