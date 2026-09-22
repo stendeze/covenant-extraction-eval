@@ -487,6 +487,61 @@ value changed. Amentum is the only document in the corpus so far with a step
 at all, which is worth noticing on its own: the field the schema calls the
 most expensive to label has fired exactly once in five documents.
 
+### `springing_trigger` — a phase-in is not a springing trigger
+
+**Trigger:** MP Materials, `0001193125-25-187776`.
+
+MP Materials' covenant package switches phases. A minimum-liquidity covenant
+applies from the Effective Date **until** the "Covenant Trigger Event"; a
+leverage covenant and a coverage covenant do not apply until it and then apply
+forever. The label arrived recording the two phase-in covenants as
+`condition_type: other`, `threshold: 400000000`, `threshold_unit: currency`,
+which is what the field's literal discriminator implies — they are not "tested
+unconditionally every period".
+
+Rule: `null`, `null_kind` `absence`, phase-in in free text.
+
+**The decisive argument is that the recorded threshold would be false, not
+merely incomplete.** The Covenant Trigger Event is the **earlier** of (a) a
+certificate showing Consolidated EBITDA ≥ $400,000,000 and (b) delivery of the
+financial statements for the quarter ending June 30, 2027. The limbs are not
+commensurable, and limb (b) is a *certainty* — those statements will be
+delivered, so the covenants turn on by mid-2027 whatever EBITDA does.
+Recording `400000000` captures the limb that may never operate and drops the
+one that must.
+
+This is what separates it from the [greater-of
+trigger](#springing_trigger--greater-of-triggers-record-the-currency-limb) at
+G-III, where both limbs measure availability and picking one is a documented
+convention with a stated cost. Here there is nothing to choose between: a
+number and a date are not two readings of the same quantity.
+
+**The second argument is what makes the rule principled rather than
+convenient**, because the first one alone would invite a fix — add a second
+threshold slot, or a date limb — rather than a rule. `springing_trigger` was
+built for conditionality **re-evaluated at every test date**: a covenant that
+bites this quarter because the revolver is drawn and not next quarter because
+it was repaid. A one-time irreversible switch is a different phenomenon. After
+it fires the covenant is tested unconditionally in every period, which is the
+definition of `null`; before it fires the covenant does not exist to be
+triggered. So the field is not being made to decline something it could hold —
+it never held it.
+
+**Precedent for the shape of the answer:** `maturity_date` excludes springing
+maturity provisos and sends them to free text, because the field cannot hold
+that construction faithfully either.
+
+**The cost, stated rather than buried.** `condition_type: other` returns to
+never having fired in this corpus. The phase-in structure — the first here,
+and a real feature of how lenders underwrite a pre-revenue borrower — survives
+only as a note, and the eval will not measure whether a system can find it. A
+field that records a construction falsely is worse than one that declines to
+record it, but the information is lost either way.
+
+**Re-application:** no committed label changes. All five non-null triggers in
+the corpus are per-period conditions — revolver utilization at Paya, Amentum
+and Peloton, minimum availability at G-III — and none is a one-time switch.
+
 ### `has_margin_grid` — a calendar escalator is not a grid
 
 **Trigger:** PureCycle Technologies, `0001830033-23-000021`.

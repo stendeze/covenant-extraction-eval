@@ -400,6 +400,17 @@ quarterly; it is conditional, not infrequent. Conditionality goes in
 
 `null` for an unconditionally tested covenant. This is the majority case.
 
+**Also `null` for a phase-in or a sunset.** If a covenant does not exist until
+some one-time event and then applies forever — or applies until one and then
+falls away — that is not a springing trigger, however conditional it looks.
+The test is whether the condition is re-checked *every* test date. MP
+Materials' covenants switch on at a "Covenant Trigger Event" and stay on:
+record `null`, `null_kind` `absence`, and describe the phase-in in free text.
+
+The tell is a defined term like "Covenant Trigger Event", "Covenant Commencement
+Date" or "Financial Covenant Period", used with *commencing with* or *prior to*
+rather than *solely to the extent*.
+
 The typical trigger is revolver utilization above a threshold, in a proviso
 in the covenant section:
 

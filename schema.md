@@ -942,6 +942,42 @@ Adjudication rules:
 - `null` means the covenant is tested unconditionally every period. This is
   the majority case and it is cheap to label, which is what keeps this field
   affordable.
+- **A one-time, irreversible condition that switches a covenant on — or off —
+  permanently is not a springing trigger.** Record `null`, `null_kind`
+  `absence`, and put the phase-in or sunset in free text.
+
+  This field is for conditionality that is **re-evaluated every test date**: a
+  covenant that bites this quarter because the revolver is drawn and does not
+  bite next quarter because it is repaid. A permanent switch is a different
+  thing. Once it fires the covenant is tested unconditionally in every period
+  thereafter, which is exactly what `null` is defined to mean; before it fires
+  the covenant does not exist to be triggered.
+
+  **And the construction cannot be recorded faithfully anyway.** MP Materials'
+  "Covenant Trigger Event" is the **earlier** of (a) a certificate showing
+  Consolidated EBITDA ≥ $400,000,000 and (b) delivery of the financial
+  statements for the quarter ending June 30, 2027. The limbs are not
+  commensurable — one is an amount, one is a date — and limb (b) is a
+  **certainty**: those statements will be delivered, so the covenants turn on
+  by mid-2027 whatever EBITDA does. A `threshold` of `400000000` would record
+  the limb that may never operate and silently drop the one that must. That is
+  not an incomplete value, it is a false one.
+
+  This is distinct from a [greater-of trigger](#12-springing_trigger), where
+  both limbs measure the same quantity and choosing one is a documented
+  convention. Here there is nothing to choose between.
+
+  **The precedent for the shape of this answer is the springing-maturity
+  exclusion.** `maturity_date` refuses a construction it cannot hold and sends
+  it to free text rather than recording a distorted version. Same move, same
+  reason.
+
+  **The cost, stated:** `condition_type` `other` returns to never having
+  fired, and the phase-in structure — the first in this corpus, and a real
+  feature of a pre-revenue borrower's credit agreement — survives only as a
+  note. A field that records a construction falsely is worse than a field that
+  declines to record it, but the information is lost either way and that
+  should be visible.
 - The typical trigger is revolver utilization above a threshold (commonly 35%
   or 40% of commitments) measured on the last day of a fiscal quarter. Record
   the percentage as a number: 35% → `35`, unit `percent`.
