@@ -1,0 +1,216 @@
+{
+  "source": {
+    "accession_number": "0001193125-25-187776",
+    "exhibit": "EX-10.1",
+    "document_file": "d15553dex101.htm",
+    "borrower": "MP Materials Corp.",
+    "agreement_date": "2025-08-25",
+    "filing_date": "2025-08-25",
+    "filing_date_source": "EDGAR filing index for 0001193125-25-187776 (Form 8-K, filed and accepted 2025-08-25); the agreement and filing dates coincide here rather than one being copied from the other",
+    "sic": "1000 Metal Mining (EDGAR index)",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "lenders_on_signature_pages": [
+      "JPMorgan Chase Bank, N.A.",
+      "Goldman Sachs Bank USA",
+      "Morgan Stanley Senior Funding, Inc.",
+      "Citibank, N.A.",
+      "Bank of America, N.A."
+    ],
+    "structure": "revolver-only",
+    "corpus_row": 9,
+    "corpus_fit": "In frame: syndicated (agent + 5 lenders), $275M, US corporate, post-2021, original credit agreement. Schedules 2.01 / 2.03(a) / 6.12 / 10.02 are not in the filed exhibit, so the lender-by-lender commitment column cannot be summed against the defined term.",
+    "corpus_reconciliation": {
+      "structure_column_said": "revolver + term",
+      "document_says": "revolver only — all 71 'Term Loan' hits are Incremental Term Loan machinery ('Term Loans' means any Incremental Term Loan.); no term commitment at closing",
+      "selected_for_said": "Springing covenant",
+      "document_says_": "no revolver-utilization or availability springing covenant; all 15 'springing' hits are the springing-maturity proviso, which schema.md excludes. The covenants phase in on a Covenant Trigger Event, which cde9dc7 rules is not a springing trigger",
+      "verdict": "rationale fails; structure fails — tenth of ten"
+    }
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Credit Facility",
+        "citation": {
+          "section": "1.01",
+          "quote": "“Revolving Credit Facility” means the Revolving Credit Commitments"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "each Revolving Credit Lender severally agrees to make (or cause its Applicable Lending Office to make) loans denominated in Dollars or any Alternative Revolver Currency (each such loan, a “Revolving Credit Loan”) to the Borrowers from time to time"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 275000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01",
+          "quote": "The aggregate Revolving Credit Commitments of all Revolving Credit Lenders shall be $275,000,000 on the Effective Date"
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 5,
+            "anchor": "Effective Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.01(a)",
+          "quote": "with respect to the Revolving Credit Facility and Letters of Credit (and the related L/C Obligations), the fifth anniversary of the Effective Date"
+        },
+        "notes": "Recorded relative under 070d170: basis is decided by the Maturity Date definition alone, so the fact that 'Effective Date' is hard-coded as August 25, 2025 does not flip it. The labeler flagged this as an open question (HESITATION-1); it had been resolved after this document was labeled. The definition's Business Day proviso is a mechanic under 50aaa62 — resolving would give 2030-08-25, a Sunday, rolling back to 2030-08-23, which is exactly the choice that rule declines to make."
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.08(a)(i)",
+          "quote": "each Term Benchmark Loan shall bear interest on the outstanding principal amount thereof for each Interest Period at a rate per annum equal to Term SOFR for such Interest Period plus the Applicable Rate"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 250,
+        "citation": {
+          "section": "1.01",
+          "quote": "As of the Effective Date and prior to the Covenant Trigger Event, the Applicable Rate for Revolving Credit Loans shall be based upon pricing Level 1."
+        },
+        "notes": "Opening level expressly stated as Level 1, so this is the explicit-opening-level case rather than the silence fallback. Level 1 also happens to be the most expensive level, which is a coincidence and not a flagged fallback."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01",
+          "quote": "“Applicable Rate” means the following percentages per annum, based upon the Total Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 6.02(a)"
+        },
+        "notes": "Four levels on the Total Leverage Ratio (Level 1 >=3.00x 2.50% down to Level 4 <=1.00x 1.75% for Term Benchmark Loans; Base Rate exactly 100 bps lower at each level). The grid is frozen at Level 1 until the Covenant Trigger Event and becomes ratio-driven only afterward; still true, because the margin varies with a measured condition over the life of the facility. Commitment fee steps on the same levels (0.35% to 0.20%) — not a margin grid, second data point after Paya for a possible v2 has_commitment_fee_grid."
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "minimum_liquidity",
+        "citation": {
+          "section": "7.11(a)",
+          "quote": "Minimum Liquidity. Permit the aggregate amount of unrestricted cash and Cash Equivalents of the Parent Borrower and its Restricted Subsidiaries on a consolidated basis, as of the end of any Test Period occurring after the Effective Date and prior to the Covenant Trigger Event, to be less than $500,000,000"
+        }
+      },
+      "initial_threshold": {
+        "value": 500000000,
+        "citation": {
+          "section": "7.11(a)",
+          "quote": "Minimum Liquidity. Permit the aggregate amount of unrestricted cash and Cash Equivalents of the Parent Borrower and its Restricted Subsidiaries on a consolidated basis, as of the end of any Test Period occurring after the Effective Date and prior to the Covenant Trigger Event, to be less than $500,000,000"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.11(a)",
+          "quote": "Minimum Liquidity. Permit the aggregate amount of unrestricted cash and Cash Equivalents of the Parent Borrower and its Restricted Subsidiaries on a consolidated basis, as of the end of any Test Period occurring after the Effective Date and prior to the Covenant Trigger Event, to be less than $500,000,000"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "1.01 Test Period",
+          "quote": "“Test Period” means, at any date of determination, the most recently completed four consecutive fiscal quarters of the Parent Borrower ending on or prior to such date"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null,
+        "notes": "Sunset: tested every Test Period from the Effective Date and falls away at the Covenant Trigger Event. Phase-in/sunset, not a springing trigger, under cde9dc7. The Covenant Trigger Event is the earlier of (a) a Compliance Certificate showing Consolidated EBITDA >= $400,000,000 and (b) delivery of the financial statements for the quarter ending June 30, 2027 — an amount and a date, not commensurable, and limb (b) is a certainty, so the covenants turn on by mid-2027 whatever EBITDA does. Recording 400000000 would capture the limb that may never operate and drop the one that must."
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "total_net_leverage",
+        "citation": {
+          "section": "1.01",
+          "quote": "“Consolidated Net Indebtedness” means, as of any date of determination, (a) Consolidated Total Debt less (b) unrestricted cash and Cash Equivalents of the Parent Borrower and its Restricted Subsidiaries on a consolidated basis"
+        },
+        "notes": "Consolidated Net Indebtedness = Consolidated Total Debt less unrestricted cash and Cash Equivalents (netting capped at the greater of 100% of Consolidated EBITDA at the Covenant Trigger Event and 100% of LTM Consolidated EBITDA for Financial Covenant purposes). Consolidated Total Debt is all borrowed-money debt, capital leases and debt securities plus guarantees, not limited to secured or first-lien. Hence total_net_leverage."
+      },
+      "initial_threshold": {
+        "value": 4.0,
+        "citation": {
+          "section": "7.11(b)",
+          "quote": "Permit the Total Leverage Ratio, as of the end of any Test Period (commencing with the first fiscal quarter to end after the Covenant Trigger Event), to be greater than 4.00:1.00"
+        },
+        "notes": "Holiday: on a Material Acquisition (>= $75,000,000) the 4.00x level steps up by 0.50x for four fiscal quarters, capped at three such periods with a two-quarter cooling-off between them. Non-holiday level 4.00 recorded per rule."
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.11(b)",
+          "quote": "Permit the Total Leverage Ratio, as of the end of any Test Period (commencing with the first fiscal quarter to end after the Covenant Trigger Event), to be greater than 4.00:1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "1.01 Test Period",
+          "quote": "“Test Period” means, at any date of determination, the most recently completed four consecutive fiscal quarters of the Parent Borrower ending on or prior to such date"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null,
+        "notes": "Phase-in: not tested until the Covenant Trigger Event, then tested every Test Period thereafter. Phase-in/sunset, not a springing trigger, under cde9dc7. The Covenant Trigger Event is the earlier of (a) a Compliance Certificate showing Consolidated EBITDA >= $400,000,000 and (b) delivery of the financial statements for the quarter ending June 30, 2027 — an amount and a date, not commensurable, and limb (b) is a certainty, so the covenants turn on by mid-2027 whatever EBITDA does. Recording 400000000 would capture the limb that may never operate and drop the one that must."
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.01",
+          "quote": "“Cash Interest Expense Coverage Ratio” means, with respect to any Test Period, the ratio of (a) Consolidated EBITDA of the Parent Borrower and its Restricted Subsidiaries for such Test Period to (b) Consolidated Cash Interest Expense of the Parent Borrower and its Restricted Subsidiaries for such Test Period."
+        },
+        "notes": "EBITDA over Consolidated Cash Interest Expense — interest coverage on a cash-interest basis. No principal, rent, tax or dividend component in the denominator, so not fixed_charge_coverage under the denominator rule."
+      },
+      "initial_threshold": {
+        "value": 3.0,
+        "citation": {
+          "section": "7.11(c)",
+          "quote": "Permit the Cash Interest Expense Coverage Ratio, as of the end of any Test Period (commencing with the first fiscal quarter to end after the Covenant Trigger Event), to be less than 3.00 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.11(c)",
+          "quote": "Permit the Cash Interest Expense Coverage Ratio, as of the end of any Test Period (commencing with the first fiscal quarter to end after the Covenant Trigger Event), to be less than 3.00 to 1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "1.01 Test Period",
+          "quote": "“Test Period” means, at any date of determination, the most recently completed four consecutive fiscal quarters of the Parent Borrower ending on or prior to such date"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null,
+        "notes": "Phase-in: not tested until the Covenant Trigger Event, then tested every Test Period thereafter. Phase-in/sunset, not a springing trigger, under cde9dc7. The Covenant Trigger Event is the earlier of (a) a Compliance Certificate showing Consolidated EBITDA >= $400,000,000 and (b) delivery of the financial statements for the quarter ending June 30, 2027 — an amount and a date, not commensurable, and limb (b) is a certainty, so the covenants turn on by mid-2027 whatever EBITDA does. Recording 400000000 would capture the limb that may never operate and drop the one that must."
+      }
+    }
+  ],
+  "free_text_notes": [
+    "Single facility. §2.01 has only clause (a), the revolver. 'Term Loans' means any Incremental Term Loan — every term-loan reference in the document is incremental machinery and no term commitment exists at closing.",
+    "Letter of Credit Sublimit ($200,000,000) is a carve-out of the revolver. No swingline facility. §2.14 Incremental Facilities are options, not commitments.",
+    "Springing maturity proviso excluded from maturity_date per schema.md: if Springing Maturity Debt above the greater of 50% of Consolidated EBITDA at the Covenant Trigger Event and 50% of LTM Consolidated EBITDA is outstanding 91 days before its maturity, the Maturity Date springs to 91 days before that maturity, unless liquidity exceeds 125% of that debt or the Total Leverage Ratio is at or below 2.00x.",
+    "Multicurrency: loans may be in Dollars or an Alternative Revolver Currency, approved case-by-case under §1.10, with the aggregate expressed in Dollars and no separate sublimit. RFR Loans (Daily Simple SOFR) are available as a Type, but Term Benchmark is the default Type when the Committed Loan Notice is silent (§2.02(a)) and is the Type the grid is written for, so term_sofr is the primary benchmark.",
+    "Covenants run for the benefit of the Revolving Credit Lenders, the only lenders at closing. No cov-lite carve-out.",
+    "Schedules 2.01, 2.03(a), 6.12 and 10.02 are not reproduced in the filed exhibit. The $275,000,000 aggregate comes from the defined term, which governs; unlike Peloton, the defined term states it, so no deferral null arises."
+  ]
+}
