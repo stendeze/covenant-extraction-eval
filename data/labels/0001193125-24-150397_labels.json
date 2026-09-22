@@ -1,0 +1,231 @@
+{
+  "source": {
+    "accession_number": "0001193125-24-150397",
+    "exhibit": "EX-10.1",
+    "document_file": "d832347dex101.htm",
+    "filing_date": "2024-05-30",
+    "borrower": "Peloton Interactive, Inc.",
+    "document": "Amendment and Restatement Agreement dated May 30, 2024, attaching the Third Amended and Restated Credit Agreement as Exhibit A (full restatement — in scope)",
+    "administrative_agent": "JPMorgan Chase Bank, N.A.",
+    "structure": "revolver + TLB (institutional)",
+    "corpus_row": 10
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "1.01",
+          "quote": "means the Revolving Facility and the Initial Term Facility."
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01(a)",
+          "quote": "each Revolving Lender severally agrees to make Revolving Loans in Dollars"
+        }
+      },
+      "aggregate_commitment": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.01 (definition of \"Revolving Commitment\")",
+          "quote": "expressed as an amount representing the maximum aggregate amount of such Lender's Revolving Credit Exposure hereunder"
+        },
+        "notes": "Deferral null under the rule added in b848204. The definition states no aggregate and allocates per-Lender amounts by reference to Schedule 2.01, which is listed in the schedule index and not attached — the exhibit ends \"[Remainder of page intentionally left blank; signature pages intentionally removed]\". The 8-K body in the same accession states $100,000,000 and the $100,000,000 LC Sublimit is consistent, but neither is inside the four corners, and sourcing a gold value from the 8-K would be a first for this project. Deferred to an unattached exhibit rather than to an external fact."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-30",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01",
+          "quote": "means May 30, 2029."
+        },
+        "notes": "'Maturity Date' definition adds only a Business Day convention, a mechanic per schema.md. No springing maturity proviso."
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01",
+          "quote": "the rate per annum published by the CME Term SOFR Administrator and identified by the Administrative Agent as the forward-looking term rate based on SOFR"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 500,
+        "citation": {
+          "section": "1.01(b)",
+          "quote": "with respect to the Revolving Loans, (i) with respect to any ABR Loan, 4.00% per annum, (ii) with respect to any Term Benchmark Loan, 5.00% per annum and (iii) with respect to the Commitment Fee, 0.50% per annum"
+        }
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "1.01 Applicable Rate proviso",
+          "quote": "with respect to clauses (a) and (b)(iii) only, from and after the delivery of the financial statements and related Compliance Certificate for the first full fiscal quarter of the Borrower completed after the Third Restatement Effective Date pursuant to Section 5.01, the Applicable Rate for ABR Loans and Term Benchmark Loans and the Commitment Fee shall be based on the First Lien Net Leverage Ratio set forth in the most recent Compliance Certificate in accordance with the below pricing grid"
+        },
+        "notes": "The Applicable Rate proviso applies the First Lien Net Leverage grid to clauses (a) and (b)(iii) ONLY — the Initial Term Loan margin and the revolver Commitment Fee. The revolver interest margin in (b)(i)-(ii) sits outside the proviso and is flat for life. A commitment-fee grid is not a margin grid. AUDIT 2026-09-11 confirmed false by a check independent of the word 'only': the revolver's stated margins (Term Benchmark 5.00%, ABR 4.00%) appear in neither grid column (5.500/6.000 and 4.500/5.000), so the grid cannot govern them, while the term loan's 6.00%/5.00% and the fee's 0.50% each equal the >= 5.00x row."
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Initial Term Facility",
+        "citation": {
+          "section": "1.01",
+          "quote": "means the Revolving Facility and the Initial Term Facility."
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_b",
+        "citation": {
+          "section": "2.07(a)",
+          "quote": "an aggregate principal amount of Initial Term Loans incurred on the Third Restatement Effective Date equal to 0.25% of the aggregate principal amount of all Initial Term Loans outstanding on the Third Restatement Effective Date"
+        },
+        "notes": "No A/B letter; 0.25% quarterly = 1.00%/yr -> term_loan_b per the amortization rule."
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 1000000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01",
+          "quote": "On the Third Restatement Effective Date, the aggregate amount of Initial Term Commitments is $1,000,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-30",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01",
+          "quote": "means May 30, 2029."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01",
+          "quote": "are bearing interest at a rate determined by reference to the Term SOFR Rate"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 600,
+        "citation": {
+          "section": "1.01(a)",
+          "quote": "with respect to the Initial Term Loans, for any day, (i) with respect to any ABR Loan, 5.00% per annum, and (ii) with respect to any Term Benchmark Loan, 6.00% per annum"
+        },
+        "notes": "Opening margin stated for the period from the Third Restatement Effective Date until the first Compliance Certificate; equals the >= 5.00x grid level."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 Applicable Rate proviso",
+          "quote": "with respect to clauses (a) and (b)(iii) only, from and after the delivery of the financial statements and related Compliance Certificate for the first full fiscal quarter of the Borrower completed after the Third Restatement Effective Date pursuant to Section 5.01, the Applicable Rate for ABR Loans and Term Benchmark Loans and the Commitment Fee shall be based on the First Lien Net Leverage Ratio set forth in the most recent Compliance Certificate in accordance with the below pricing grid"
+        },
+        "notes": "Two-level leverage grid on the term margin: Term Benchmark 5.500% / ABR 4.500% below 5.00:1.00; 6.000% / 5.000% at or above. Resets the third Business Day after each Compliance Certificate."
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "minimum_liquidity",
+        "citation": {
+          "section": "6.10(a)",
+          "quote": "permit Total Liquidity, to be less than $250,000,000 on such Business Day"
+        }
+      },
+      "initial_threshold": {
+        "value": 250000000,
+        "citation": {
+          "section": "6.10(a)",
+          "quote": "permit Total Liquidity, to be less than $250,000,000 on such Business Day"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "6.10(a)",
+          "quote": "permit Total Liquidity, to be less than $250,000,000 on such Business Day"
+        }
+      },
+      "testing_frequency": {
+        "value": "weekly",
+        "citation": {
+          "section": "6.10(a)",
+          "quote": "as of the last Business Day of any week"
+        },
+        "notes": "Tested as of the last Business Day of every week whenever a Revolving Loan is outstanding. 'weekly' added to the enum in b848204, forced by this document; periodic rather than conditional, so event_driven would have been wrong."
+      },
+      "springing_trigger": {
+        "value": {
+          "condition_type": "revolver_utilization",
+          "threshold": 0,
+          "threshold_unit": "currency",
+          "quote": "solely to the extent any Revolving Loan is borrowed or outstanding as of the last Business Day of any week"
+        },
+        "citation": {
+          "section": "6.10(a)",
+          "quote": "solely to the extent any Revolving Loan is borrowed or outstanding as of the last Business Day of any week"
+        },
+        "notes": "Trigger is ANY Revolving Loan outstanding — threshold 0, unit currency per b848204. LC Exposure excluded (the trigger reads 'Revolving Loan', not 'Revolving Credit Exposure'). Covenant runs 'Solely for the benefit of the Revolving Facility'; a s.6.10 default is a Financial Covenant Event of Default that is not an Event of Default for the Term Facility."
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "other",
+        "citation": {
+          "section": "6.10(b)",
+          "quote": "permit “Subscription” revenue of the Borrower and its Subsidiaries (as shown on the income statement of the Borrower and determined on a consolidated basis in accordance with GAAP), to be less than $1,200,000,000 for the most recently completed Measurement Period"
+        },
+        "notes": "Minimum trailing-four-quarter consolidated Subscription revenue. No enum value exists for a revenue floor, so 'other' is the correct label rather than a gap."
+      },
+      "initial_threshold": {
+        "value": 1200000000,
+        "citation": {
+          "section": "6.10(b)",
+          "quote": "to be less than $1,200,000,000 for the most recently completed Measurement Period"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "6.10(b)",
+          "quote": "to be less than $1,200,000,000 for the most recently completed Measurement Period"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "6.10(b)",
+          "quote": "as of the last day of any fiscal quarter"
+        }
+      },
+      "springing_trigger": {
+        "value": {
+          "condition_type": "revolver_utilization",
+          "threshold": 0,
+          "threshold_unit": "currency",
+          "quote": "solely to the extent any Revolving Loan is borrowed or outstanding as of the last day of any fiscal quarter"
+        },
+        "citation": {
+          "section": "6.10(b)",
+          "quote": "solely to the extent any Revolving Loan is borrowed or outstanding as of the last day of any fiscal quarter"
+        },
+        "notes": "Same any-utilization trigger, threshold 0 currency. s.6.10(c) grants a cure: on delivering non-compliant financials the Borrower may repay all Revolving Loans within 5 Business Days and the breach is deemed cured. Cure rights are not a field."
+      }
+    }
+  ],
+  "free_text_notes": [
+    "Excluded from facilities: LC Sublimit ($100,000,000) and swingline are carve-outs; s.2.18 Incremental Facilities, s.2.22 Specified Refinancing Debt and s.2.23 Incremental Equivalent Debt are options, not commitments.",
+    "Both covenants exist solely for the benefit of the Revolving Facility (s.6.10 lead-in). The Term Facility is effectively cov-lite; the covenants are recorded at agreement level per schema.",
+    "Reverse of the modal pattern: the TLB carries the leverage grid and the revolver margin is flat, with the revolver's only grid on the Commitment Fee. Recorded in labeling-notes as a baseline trap.",
+    "Frame check: Schedule 2.01 is not attached and the restated agreement's signature pages were removed, so the '>= 3 lenders on the commitment schedule' test cannot be run from this exhibit. The Amendment and Restatement Agreement shows JPMorgan Chase Bank, N.A. (Administrative Agent, a Revolving Lender, sole Initial Term Lender, an Issuing Bank) and Goldman Sachs Lending Partners LLC (a Revolving Lender, an Issuing Bank). Same limitation as PureCycle; recorded rather than waived.",
+    "Peloton's fiscal year ends June 30, so the first full fiscal quarter after the May 30, 2024 Third Restatement Effective Date ends September 30, 2024, and the term-loan grid first resets after that Compliance Certificate.",
+    "CORPUS ROW 10 CHECK. Rationale said 'Grid; 3 covenants; step-down candidate'. Document has a grid on the TLB margin only, 2 covenants, and no step-down anywhere. screen.py's covenant regexes score 31/0/4/0 across the text and 0/0/0/0 inside s.6.10: every hit is a basket or a pricing-grid ratio definition, and neither actual covenant matches any pattern. The 'at least one financial covenant detected' funnel stage passed this document for the wrong reason."
+  ]
+}

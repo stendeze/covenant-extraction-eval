@@ -49,6 +49,44 @@ requires reading the definition that governs, not matching a pattern near it.
 That is the gap the extraction system is supposed to close, and this is a
 measured instance of it rather than an assertion.
 
+### One agreement, two facilities, and both grid heuristics wrong at once
+
+**Found in:** Peloton Interactive, 2024-05-30 (`0001193125-24-150397`)
+**Affects:** `has_margin_grid`
+**Correct verdict:** `false` on the revolver, `true` on the term loan
+
+Paya taught that a pricing-grid table can exist without the *margin* being
+gridded. Peloton is the harder case: the grid is real, it governs one facility,
+and it does not govern the other. The `Applicable Rate` proviso reads
+
+> with respect to clauses (a) and (b)(iii) **only** … the Applicable Rate for
+> ABR Loans and Term Benchmark Loans and the Commitment Fee shall be based on
+> the First Lien Net Leverage Ratio
+
+Clause (a) is the Initial Term Loan margin; clause (b)(iii) is the revolver's
+*Commitment Fee*. The revolver's own interest margin, in (b)(i)–(ii), sits
+outside the proviso and is flat for the life of the facility.
+
+**Both obvious heuristics fail, in opposite directions, on the same document.**
+A rule keyed to the defined term `Applicable Margin` reads this agreement as
+having no grid at all — the phrase is not a defined term here and appears only
+as the grid table's two column headers. A rule keyed to the presence of a
+pricing-grid table reads it as fully gridded. One is wrong about the term loan,
+the other about the revolver, and no single facility-blind answer is right.
+
+**And there is a check that does not depend on parsing the word "only".** The
+revolver's stated margins are 5.00% Term Benchmark and 4.00% ABR. The grid's
+columns are 5.500/6.000 and 4.500/5.000. The revolver's numbers appear in
+neither column, so the grid cannot be governing them. Meanwhile the term
+loan's 6.00%/5.00% and the fee's 0.50% each equal the ≥ 5.00x row exactly —
+the set the proviso names. Arithmetic confirms what the cross-reference says,
+which is the kind of independent confirmation worth having when the deciding
+word is a single "only" buried in a 92,000-word definition.
+
+This is also the modal pattern inverted: the institutional TLB carries the
+leverage grid and the revolver is flat-priced, where
+[schema.md](schema.md#class-balance) assumes the reverse.
+
 ### Keyword heuristics under-detect, and the corpus rationales inherited it
 
 **Affects:** the baseline, and `corpus.md`'s selection rationales.
@@ -798,9 +836,10 @@ the instrument used to pick documents for this field cannot see grids.
 
 ## `step_down_schedule` will report over n=1, and that has to be said
 
-Eight documents labeled, twenty covenant records, and **one non-empty
-`step_down_schedule`** — Amentum's single step from 5.25x to 5.00x. Lamb
-Weston EX-10.1 has a second. Every other covenant in the corpus is flat.
+Twelve documents labeled, seventeen covenant records, and **two non-empty
+`step_down_schedule` arrays** — Amentum's single step from 5.25x to 5.00x and
+Lamb Weston EX-10.1's from 5.00x to 4.75x. Every other covenant is flat, and
+neither non-empty array has more than one element.
 
 That is a problem for the field the schema calls the most expensive to label
 and the most interesting to measure, "where regex baselines fail hardest". A
@@ -809,11 +848,29 @@ per-field F1 computed over one or two instances is not a measurement, and
 only compares when an array holds two or more elements and no array in the
 corpus does.
 
-**The two documents that were supposed to supply this came from the signal
-that has now failed seven of seven.** Rows 10 and 11 are both labeled
-"step-down candidate" in [corpus.md](corpus.md); ANI is row 11 and has none.
-Peloton is row 10 and is unread. If Peloton also has none, the field ends the
-corpus at n=1.
+**Both documents that were supposed to supply this are now read, and neither
+has a step-down.** Rows 10 and 11 were both labeled "step-down candidate" in
+[corpus.md](corpus.md). ANI, row 11, has none. Peloton, row 10, has none — two
+covenants, both flat. Both rationales came from a screen now **0 for 9** on
+every rationale checked against its document.
+
+**Final state: 17 covenant records across 12 documents, 15 flat and 2 with a
+single step.** Amentum and Lamb Weston EX-10.1, one step each. No covenant in
+the corpus has two.
+
+#### The scorer's ordering comparison ships untested
+
+This follows directly and should not be left for a reader to deduce.
+`step_down_schedule` is compared as an ordered sequence, and the validator only
+compares ordering between steps expressed the same way **and only when an array
+holds two or more elements**. No array in this corpus holds two. That code path
+has therefore never executed against real data, and a passing test suite does
+not mean otherwise — the suite exercises it with constructed fixtures, which is
+not the same as a document having forced it.
+
+Anything that reads as coverage here is coverage of the one-step case. The
+two-step case is unexercised, and the first agreement to carry one will be
+running that comparison for the first time.
 
 **This is not a reason to reselect now.** Swapping documents to make a field
 look scoreable, after seeing which documents produce which values, is the
