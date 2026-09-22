@@ -326,6 +326,18 @@ final level and not the "thereafter" row.
 
 Normalize "6.50 to 1.00" and "6.50:1.00" to `6.50`.
 
+**A percentage level is a ratio too.** "more than 60% of Total Capital" is
+`0.60`, not `60`. This differs from `springing_trigger`, where 35% is recorded
+as `35` — that field has a `threshold_unit` to say which, and this one does
+not, so a bare `60` would be unreadable next to Roper's `0.65` for the same
+covenant type.
+
+**"At any time" is a frequency, and it is `continuous`.** If the covenant has
+no period-end lead-in — no "as of the last day of each fiscal quarter" — do
+not fall back on the compliance-certificate cadence. Boeing's covenant is
+breached the moment the ratio is exceeded; the annual certificate only
+evidences it.
+
 Where a covenant holiday or acquisition step-up provides a temporarily higher
 level, record the **non-holiday** level.
 

@@ -802,6 +802,22 @@ rules:
   step-down table — not the final level, and not the level "thereafter".
 - Where the agreement expresses the ratio as "4.00:1.00" or "4.00 to 1.00",
   normalize to `4.00`.
+- **Where the agreement expresses the level as a percentage, record the
+  ratio, not the percentage number.** Boeing's "Consolidated Debt … more than
+  60% of Total Capital" is `0.60`, not `60`.
+
+  This is not the convention `springing_trigger` uses, and the difference is
+  structural rather than arbitrary: that field carries a `threshold_unit`, so
+  `35 / percent` says what it is, while `initial_threshold` carries no unit and
+  a bare `60` is indistinguishable from a ratio of sixty times. The two
+  documents that force this are the same covenant type — Roper's
+  `debt_to_capitalization` at "0.65 to 1.00" and Boeing's at "60% of Total
+  Capital" — and covenants align on `covenant_type`, so the records are meant
+  to be directly comparable. Recorded either way, one of them would be wrong by
+  a factor of a hundred.
+
+  Two careful labelers did split on this, which is the condition this document
+  exists to remove.
 - Where there is a separate, higher level for an acquisition holiday
   (a "Covenant Holiday" or leverage step-up following a material acquisition),
   record the **non-holiday** level. The holiday is a conditional override, not
@@ -904,13 +920,22 @@ because the target is fidelity to what the agreement says, in both directions.
 
 ### 10. `testing_frequency`
 
-**Type:** enum — `weekly`, `quarterly`, `monthly`, `semiannual`, `annual`,
-`event_driven`.
+**Type:** enum — `continuous`, `weekly`, `quarterly`, `monthly`, `semiannual`,
+`annual`, `event_driven`.
 
 **Where it lives:** the lead-in to the covenants section — "as of the last day
 of each fiscal quarter of the Borrower".
 
 **Correct when:** the enum matches exactly.
+
+`continuous` was added under Boeing, whose §4.2(b) covenant forbids the
+borrower to "permit its Consolidated Debt … to be **at any time** more than
+60% of Total Capital". There is no period-end lead-in anywhere in the section:
+breach occurs the moment the ratio is exceeded, not at a quarter end. `annual`
+was the nearest existing value and is wrong — it would record the §4.1(a)(2)
+reporting cadence, and **this field is defined off the test date, not the
+reporting date**. Common in investment-grade revolvers, where the covenant is
+a continuous maintenance test and the certificate merely evidences it.
 
 `weekly` was added under Peloton, whose minimum-liquidity covenant is tested
 "as of the last Business Day of any week" whenever a Revolving Loan is
@@ -1231,7 +1256,7 @@ full set — not by quietly picking whichever label looks better.
 |------|------|
 | Currency amounts | integer, whole units, no separators |
 | Percentages | basis points as integer where the field says bps; otherwise number |
-| Ratios | two decimals, `4.00:1.00` → `4.00` |
+| Ratios | two decimals, `4.00:1.00` → `4.00`; a percentage level is a ratio, `60% of Total Capital` → `0.60` |
 | Dates | ISO-8601 `YYYY-MM-DD` |
 | Enums | exact match against the stated value set |
 | Free strings | lowercase, strip articles and punctuation, collapse whitespace |
