@@ -1,0 +1,137 @@
+{
+  "source": {
+    "borrower": "The Boeing Company",
+    "accession_number": "0000012927-24-000037",
+    "exhibit": "EX-10.1",
+    "document_file": "a202405may15ex101.htm",
+    "agreement_date": "2024-05-15",
+    "filing_date": "2024-05-17",
+    "title": "Five-Year Credit Agreement",
+    "administrative_agent": "Citibank, N.A.",
+    "lender_count_at_closing": 26,
+    "corpus_row": 14,
+    "corpus_check": {
+      "document_type": "full credit agreement (Article 1 definitions + §2.1 commitments; not an amendment)",
+      "commitments_in_frame": "USD 4,000,000,000 (within $150M-$5B)",
+      "syndicated": "Administrative Agent + 26 lenders on Schedule I",
+      "borrower": "US corporate (Delaware), US law, single currency",
+      "sector": "aerospace/defense — not bank/insurer/REIT",
+      "structure_stratum": "revolver-only",
+      "included": true
+    },
+    "row_14_rationale": "Replacement for the vacated row 14 (Lithia). The original rationale was 'revolver only | Grid; leverage + fixed charge'. Verified by reading BEFORE inclusion rather than after: revolver-only confirmed (§2.1(c) borrow/prepay/reborrow, no term tranche, §2.6 and §2.7 reserved), and the grid confirmed (five-level ratings grid on the margin itself). The covenant type differs from the original rationale — debt_to_capitalization rather than leverage plus fixed charge — and that difference is recorded rather than smoothed over."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Five-Year Credit Agreement",
+        "citation": {
+          "section": "Cover page",
+          "quote": "Five-Year Credit Agreement"
+        },
+        "notes": "Field cut at Kontoor; retained as a record. The agreement never labels the tranche — it defines per-lender 'Commitment' by reference to Schedule I and 'Advances' in §2.1, with no 'Revolving Credit Facility' defined term. The only label is the agreement title on the cover page and running footer."
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.1(c)",
+          "quote": "the Borrowers may from time to time borrow, prepay pursuant to Section 2.13, and reborrow under this Section 2.1 and Section 2.2"
+        },
+        "notes": "Single revolving facility. No term tranche and no amortization section (§2.6, §2.7 reserved). The single occurrence of 'Revolving Credit Commitments' in §2.24(b) is an undefined term — template residue."
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 4000000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "Schedule I",
+          "quote": "Total of Commitments: $4,000,000,000.00"
+        },
+        "notes": "No defined 'Aggregate Commitments' term; 'Commitment' is per-lender by reference to Schedule I, which IS attached and whose 26 lines sum to the stated total. Single-currency facility (§2.1(a), 'Advances in U.S. dollars'). §2.20(c) accordion to $5,000,000,000 is an option, not netted in."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-15",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.1 Termination Date",
+          "quote": "“Termination Date” means the earlier to occur of (i) May 15, 2029, as such date may be extended from time to time pursuant to Section 2.22"
+        },
+        "notes": "Ordinary 'earlier of': limb (i) the stated May 15, 2029, limb (ii) termination in whole. §2.22 gives an annual extension option, a mechanic like the accordion. No springing-maturity proviso."
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "2.5(ii)",
+          "quote": "to Adjusted Term SOFR for such Interest Period plus the Applicable Margin"
+        },
+        "notes": "Adjusted Term SOFR = Term SOFR + 0.10% CSA, floor 0.00%; CSA excluded from the margin per rule. §2.25 Benchmark Replacement is conditional and ignored."
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.1 Applicable Margin",
+          "quote": "“Applicable Margin” means, for any date, a fluctuating per annum rate equal to the then-applicable rate set forth in the pricing grid below, depending upon the Debt Rating then in effect"
+        },
+        "notes": "Deferral null to an external fact, the Advance Auto shape rather than the Plains shape: the margin depends on 'the Debt Rating then in effect' and no provision states an opening level or requires a closing ratings certificate (§5.1 has none). Five-level ratings grid, SOFR margin 120/130/140/145/165 bps. The 'Debt Rating' definition's no-rating fallback — hold the prior level 30 days, then Level V — is a rule for having no rating, not a statement of the opening level, so the silence fallback is expressly not applied. The +1.0% default-rate increase is pricing-on-default, not a grid row."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 Applicable Margin",
+          "quote": "the then-applicable rate set forth in the pricing grid below"
+        },
+        "notes": "Five-level ratings grid on the margin itself. Facility-fee 'Applicable Percentage' grid (17.5-35 bps) and L/C commission grid (120-165 bps) are keyed to the same Debt Rating and do not drive this field."
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "debt_to_capitalization",
+        "citation": {
+          "section": "4.2(b)",
+          "quote": "Permit its Consolidated Debt (subject to Section 4.3) to be at any time more than 60% of Total Capital"
+        },
+        "notes": "§4.2(b): Consolidated Debt / Total Capital at or below 60% at any time, where Total Capital is shareholders' equity plus Consolidated Debt. Debt over capital, not debt over EBITDA, and a threshold below 1.00 cannot be an EBITDA multiple — the denominator-first tell. The label as submitted recorded 'other' and proposed the value as a v2 candidate; it was added to the enum in 6620eff under Roper, whose covenant is the same construction. Second instance of this staleness after Roper's own label. §4.3 excludes Boeing Capital Corporation and Boeing Financial Corporation from the computation; Total Capital excludes McDonnell Douglas merger accounting adjustments. Beneficiary is all Lenders."
+      },
+      "initial_threshold": {
+        "value": 0.6,
+        "citation": {
+          "section": "4.2(b)",
+          "quote": "more than 60% of Total Capital"
+        },
+        "notes": "Recorded as a ratio under 6bede69, not as the percentage number 60. The agreement states '60% of Total Capital'; Roper's equivalent covenant states '0.65 to 1.00' and records 0.65, and the two align on covenant_type, so they must be on the same scale. initial_threshold carries no threshold_unit, unlike springing_trigger, so a bare 60 would be unreadable."
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "4.2(b)",
+          "quote": "Permit its Consolidated Debt (subject to Section 4.3) to be at any time more than 60% of Total Capital"
+        }
+      },
+      "testing_frequency": {
+        "value": "continuous",
+        "citation": {
+          "section": "4.2(b)",
+          "quote": "to be at any time more than 60% of Total Capital"
+        },
+        "notes": "'at any time' with no period-end lead-in anywhere in §4.2(b): breach occurs when the ratio is exceeded, not at a quarter end. 'continuous' added to the enum in 6bede69, forced by this document. annual would have recorded the §4.1(a)(2) certificate cadence rather than the test."
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null,
+        "notes": "Tested unconditionally; no utilization or availability proviso and no Covenant Trigger Event term. Absence null."
+      }
+    }
+  ],
+  "free_text_notes": [
+    "Not facilities: the Letter of Credit sublimit (lesser of $2,000,000,000 and the aggregate Commitments; L/Cs consume Commitments) and the §2.20(c) accordion to a $5,000,000,000 maximum, conditioned on two of three ratings at BBB-/Baa3/BBB- or better.",
+    "§4.2(a)(12) general lien basket at 15% of Consolidated Net Tangible Assets is a basket, out of scope. Subsidiary Borrowers may borrow under §2.23 with the parent's guaranty.",
+    "Schedule I IS attached and its 26 lender lines sum to $4,000,000,000, matching the stated total — the first document in several where the lender-by-lender cross-check could actually be performed."
+  ]
+}

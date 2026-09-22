@@ -331,7 +331,7 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 | 11 | ANI Pharmaceuticals | — | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 12 | G-III Apparel | — | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
 | 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
-| 14 | *vacated* | — | — | revolver only | **Replacement pending** — Lithia dropped, see [Vacated rows](#vacated-rows-8-and-14) |
+| 14 | The Boeing Company | `0000012927-24-000037` **EX-10.1** | 2024-05-17 | revolver only | Grid (ratings); debt-to-capitalization — **replacement, rationale verified by reading**; see [Vacated rows](#vacated-rows-8-and-14) |
 | 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
 | 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list**; escalator, no grid — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
 
@@ -367,11 +367,46 @@ positions as distributions under a plan of reorganization rather than through
 syndication. EX-10.12 is an amendment. The label produced for EX-10.7 is
 retained in `data/discarded/`.
 
+**Row 14 — filled by The Boeing Company.** Lithia was dropped (below); the
+replacement was chosen against the original rationale, "revolver only | Grid;
+leverage + fixed charge", and **verified by reading before inclusion rather
+than after**. Revolver-only confirmed: §2.1(c) borrow/prepay/reborrow, no term
+tranche, §2.6 and §2.7 reserved. Grid confirmed: a five-level ratings grid on
+the margin itself, 120–165 bps. In frame on every mechanical test — $4B of
+commitments, Citibank as agent, 26 lenders on an **attached** Schedule I that
+sums to the stated total, US corporate under US law.
+
+**The covenant type differs from the original rationale and that is recorded
+rather than smoothed over.** The row was selected expecting leverage plus
+fixed charge; Boeing carries a single debt-to-capitalization test at 60% of
+Total Capital. The replacement discipline was to match the *stratification*
+rationale — structure and grid — not to reproduce every clause of a
+prediction that came from an instrument now 0 for 10.
+
 **Row 14 — Lithia Motors, dropped.** Canadian borrower under Ontario law in
 CAD, outside the frame as [clarified](schema.md#sampling-frame); a dealer
 floorplan structure outside all three strata; and the entire §4.3 pricing grid
 redacted, making `applicable_margin_bps` unlabelable across all five
 facilities. Label retained in `data/discarded/`.
+
+#### Mattel is the last unread candidate for `has_margin_grid: false`
+
+Row 15 was selected as "Flat-margin revolver, no grid" and has not been read.
+It is the **only** remaining row that could supply a second source of
+`has_margin_grid: false`. The other candidate, row 12 G-III, was read and has
+an availability grid; row 7 Lamb Weston was read and both its exhibits have
+grids.
+
+Boeing was placed in row 14 rather than row 15 for that reason — it has a
+ratings grid, and putting it in Mattel's slot would have spent the last unread
+chance at the minority class.
+
+**If Mattel also has a grid, Paya remains the sole source at 2 of 19 facility
+records, and that is reported rather than fixed.** No document will be
+selected to supply the value: choosing after seeing which values the corpus
+produced is the move this file prohibits, and the count is published beside
+the field as recorded for
+[`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-comes-from-one-document).
 
 #### How the replacements will be chosen, and how they will not
 
