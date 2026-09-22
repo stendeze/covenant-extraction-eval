@@ -273,20 +273,23 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 > | 6 Extreme | revolver + TLA + **TLB**; **lettered tranches** | revolver + TLA; tranche is "Initial Term Loans" | ❌ |
 > | 7 Lamb Weston | revolver + TLA; **no grid** | neither exhibit matches; both have grids | ❌ |
 > | 8 Avaya | revolver + term; springing; **3 covenants** | no exhibit in the filing matches; DIP is revolver-only with 1 liquidity covenant | ❌ |
+> | 9 MP Materials | **revolver + term**; **springing covenant** | revolver only — all term-loan language is incremental machinery; no utilization springing covenant | ❌ |
+> | 10 Peloton | grid; **3 covenants**; **step-down candidate** | grid on the TLB only, revolver flat; 2 covenants; **no step-downs** | ❌ |
 > | 11 ANI Pharma | grid; **3 covenants**; **step-down candidate** | grid holds; 2 covenants; **no step-downs** | ❌ |
 > | 12 G-III Apparel | revolver + term; **3 covenants with no grid** | revolver-only ABL; 1 covenant; **has a grid** | ❌ |
 > | 13 Roper | **covenant-free** | §7.1 Total Debt to Total Capital at 0.65:1.00 | ❌ |
 >
-> **Three hold, eight fail — and the split is not random.** Rows 1–3 are
+> **Three hold, ten fail — and the split is not random.** Rows 1–3 are
 > precisely the three that the screen did not select; they were labeled or
 > benchmark-confirmed by hand during schema development. **Every
-> screen-derived rationale that has been checked has failed: eight of eight.**
+> screen-derived rationale that has been checked has failed: ten of ten.**
 >
-> That count has gone five, six, seven, eight on consecutive documents. It is
-> not drifting toward a rate — it has not yet produced a single success. The
-> rationales are not partially reliable; they are unreliable, with a measured
-> failure rate of 100% over eight trials, and the only rationales that hold
-> describe the three documents the instrument never touched.
+> That count has gone five, six, seven, eight, nine, ten on consecutive
+> documents. It is not drifting toward a rate — it has not yet produced a
+> single success. The rationales are not partially reliable; they are
+> unreliable, with a measured failure rate of 100% over ten trials, and the
+> only rationales that hold describe the three documents the instrument
+> never touched.
 >
 > **The rows that got corrected are the rows that happened to be read, not the
 > rows that happened to be wrong.** Nothing about labeling order was chosen to
