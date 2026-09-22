@@ -322,13 +322,13 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 | 5 | Amentum Holdings | — | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
 | 6 | Extreme Networks | — | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
 | 7 | Lamb Weston Holdings | `0001679273-24-000026` **EX-10.1** | 2024-05-08 | 2 revolvers + EUR term | Non-USD commitment currency; EURIBOR — see [amendment](#row-7-amended-the-wrong-exhibit-and-a-false-rationale) |
-| 8 | Avaya Holdings | — | 2023-09-08 | revolver + term | Springing covenant; 3 covenants; post-restructuring credit |
+| 8 | *vacated* | — | — | revolver + term | **Replacement pending** — Avaya dropped, see [Vacated rows](#vacated-rows-8-and-14) |
 | 9 | MP Materials | — | 2025-08-25 | revolver + term | Springing covenant |
 | 10 | Peloton Interactive | — | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 11 | ANI Pharmaceuticals | — | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 12 | G-III Apparel | — | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
 | 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
-| 14 | Lithia Motors | — | 2022-06-08 | revolver only | Grid; leverage + fixed charge |
+| 14 | *vacated* | — | — | revolver only | **Replacement pending** — Lithia dropped, see [Vacated rows](#vacated-rows-8-and-14) |
 | 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
 | 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list**; escalator, no grid — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
 
@@ -350,6 +350,51 @@ one exercises the `facility_type` rule that classifies by amortization rather
 than by name — a 1%/yr institutional tranche is a TLB whatever the agreement
 calls it — which is among the more fragile adjudications in the schema and
 would go untested by a corpus of neatly labeled Term A and Term B facilities.
+
+### Vacated rows 8 and 14
+
+Both rows are empty and both documents were read before being removed.
+
+**Row 8 — Avaya Holdings, dropped.** The accession holds four credit
+agreements and none qualifies. EX-10.4 and EX-10.7 are both $128,125,000,
+below the floor; EX-10.7 is additionally a debtor-in-possession facility,
+which is bankruptcy financing rather than syndicated corporate credit.
+EX-10.5 is an $810,000,000 term-only exit loan whose lenders received their
+positions as distributions under a plan of reorganization rather than through
+syndication. EX-10.12 is an amendment. The label produced for EX-10.7 is
+retained in `data/discarded/`.
+
+**Row 14 — Lithia Motors, dropped.** Canadian borrower under Ontario law in
+CAD, outside the frame as [clarified](schema.md#sampling-frame); a dealer
+floorplan structure outside all three strata; and the entire §4.3 pricing grid
+redacted, making `applicable_margin_bps` unlabelable across all five
+facilities. Label retained in `data/discarded/`.
+
+#### How the replacements will be chosen, and how they will not
+
+**Against the original rationales.** Row 8 was selected as revolver + term,
+post-restructuring credit; row 14 as revolver-only with a grid. Those
+rationales predate any labeling, so replacing against them is frame
+maintenance — restoring a slot to the specification it was drawn under.
+
+**Not against anything labeling has revealed.** No replacement is selected to
+supply a multi-step `step_down_schedule`, a `has_margin_grid: false`, a
+`minimum_liquidity` covenant, or any other column this corpus has discovered
+to be thin. Choosing documents after seeing which values the set produced is
+precisely what the frozen-corpus discipline prohibits, and it would trade the
+project's strongest claim — that selection preceded labeling and was not tuned
+to results — for columns that look better. The thin columns are reported with
+their instance counts instead, as recorded for
+[`step_down_schedule`](labeling-notes.md#step_down_schedule-will-report-over-n1-and-that-has-to-be-said)
+and [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-comes-from-one-document).
+
+**Rationale verified by reading, before inclusion rather than after.** Both
+original rationales came from the screen, which is **0 for 8** on every
+rationale checked. A replacement selected on an unread screen signal would
+carry the same defect into a slot that exists because of it. So each
+replacement's structure, covenant count and pricing are confirmed against the
+document first, and the row records what was read rather than what was
+predicted.
 
 ### Document 16: PureCycle, a documented exception
 

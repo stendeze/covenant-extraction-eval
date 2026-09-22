@@ -97,6 +97,29 @@ right call for a set this size, and it narrows what the result generalizes to.
 The honest claim is field-level accuracy on syndicated corporate credit
 agreements, not on credit agreements.
 
+**"US corporate" means the borrower's domicile and the governing law — not the
+currency.** The corpus has applied this test in both directions and the
+distinction needs stating, because the two cases look similar from a distance.
+
+- **Lamb Weston EX-10.1 is in**, and carries a €200,000,000 term loan to
+  Lamb-Weston/Meijer v.o.f., a Dutch borrower. The agreement is a US
+  agreement: US company, US law, Bank of America as agent, with one
+  euro-denominated tranche to a foreign subsidiary. Foreign currency and a
+  foreign co-borrower do not put a US agreement out of frame — and the schema
+  expects them, since `aggregate_commitment` carries an ISO 4217 code and
+  `interest_rate_benchmark` includes `euribor` and `cdor`.
+- **Lithia Motors EX-10.2 is out.** The borrower is Lithia Master LP Company,
+  LP, an Alberta limited partnership; the agreement is governed by the laws of
+  Ontario, denominated in Canadian dollars, and priced off CDOR and Canadian
+  Prime with no SOFR or LIBOR anywhere. A Canadian agreement with a Canadian
+  borrower does not enter the frame because its parent files with the SEC.
+
+The line is the **agreement's** nationality, not the registrant's and not the
+tranche's. A US agreement may lend in any currency to a subsidiary anywhere; a
+foreign-law agreement to a foreign borrower is out however familiar the parent
+name on the 8-K. Stated because one corpus now contains both and a reader
+comparing them would otherwise infer an inconsistency.
+
 **The frame excludes by sector, not by structure — so asset-based facilities
 are in.** This is a clarification of what the frame already said rather than an
 amendment to it. An ABL revolver sizes availability off a borrowing base and
@@ -984,6 +1007,23 @@ accuracy number is not reproducible.
   `(facility_type, aggregate_commitment.currency)`, then on commitment amount
   descending.
 - **Covenants** align on `covenant_type`.
+> **Known limitation: all three facility tiebreakers can be exhausted.** Type,
+> then `(type, currency)`, then commitment descending — an agreement with two
+> facilities of the same type, in the same currency, at the same amount
+> defeats every one of them, and the alignment becomes arbitrary. Lithia
+> Motors is the demonstrated case: its Revolving Facility and Used Vehicle
+> Flooring Facility are both CAD $100,000,000, so classifying both as
+> `revolver` would have left no rule to align them by. That document was
+> excluded for unrelated reasons, which means **this hole is unpatched and
+> undemonstrated in the corpus** rather than fixed.
+>
+> It is recorded because it is a defect in the rule, not a fact about one
+> document, and the next agreement with mirrored tranches will hit it. The
+> obvious next tiebreaker is order of appearance in the commitment sections,
+> which is mechanical and reproducible; it is deliberately **not** adopted
+> here, because no document in the corpus forces it and a rule written against
+> a hypothetical is the thing this schema keeps refusing to do.
+
 - A predicted item with no gold match is a **spurious record** — every one of
   its fields counts against precision.
 - A gold item with no predicted match is a **missed record** — every one of
