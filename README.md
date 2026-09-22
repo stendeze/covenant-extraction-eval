@@ -12,11 +12,13 @@ This is worth stating plainly rather than leaving as a silent diff. A benchmark'
 
 ## Fields that test hallucination directly
 
-Two fields are legitimately `null` on some agreements — `applicable_margin_bps` and `springing_trigger` — and both are scored on null-vs-non-null before anything else.
+Three fields are legitimately `null` on some agreements — `applicable_margin_bps`, `springing_trigger` and `aggregate_commitment` — and each is scored on null-vs-non-null before anything else.
 
 This is deliberate, and it measures the failure mode that matters most for LLM extraction. Some credit agreements expressly defer a term to a document outside themselves: a ratings-based pricing grid whose opening level is set by a closing certificate not included in the exhibit states that the answer exists and declines to give it. The correct extraction is "the agreement does not state this." A model that confidently returns a plausible number is wrong, and wrong in the specific way that makes document AI dangerous in credit work — not by failing to find something, but by producing something that reads correctly and isn't.
 
 Most extraction benchmarks score only whether the right value was found. This one also scores whether the system knows when there is no value to find. The guard is written into [schema.md](schema.md): `null` applies only where the agreement defers, never where the answer is merely buried or tedious to assemble — otherwise the field becomes an escape hatch and stops measuring anything.
+
+**Deferral comes in two shapes, and they are not the same test.** One defers to an external *fact*: a ratings grid whose opening level depends on a credit rating that exists in the world and not in the document. The other defers to an *unattached exhibit*: a commitment amount that the agreement says is set out on a schedule the filer did not attach. Plains, Advance Auto and Roper are the first kind; Peloton is the second. A model declining on Peloton has noticed that a referenced part of the document is missing; a model declining on Advance Auto has recognised that the answer was never in the document at all. Both are correct and they are different capabilities, so they are reported separately rather than pooled into one null-detection number.
 
 A `null` returned for a deferral must cite the deferral language itself. The value alone cannot distinguish a system that read the clause from one that declined out of vagueness; the citation can, and it does so through the citation check the harness already performs. Declining is only correct when the system can point at the sentence that made it decline.
 

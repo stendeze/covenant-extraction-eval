@@ -382,6 +382,30 @@ size.
 
 - Record the commitment **at closing**, as stated in the document under
   review. Not as later amended, not net of any incremental capacity.
+- **`null` where the exhibit defers the amount to a schedule it does not
+  attach.** Peloton's `Revolving Commitment` definition gives no aggregate; it
+  points to "the amount set forth opposite such Lender's name on Schedule
+  2.01", and the exhibit ends "[Remainder of page intentionally left blank;
+  signature pages intentionally removed]" with no schedules. The figure exists
+  in the executed agreement and is absent from the filed document.
+
+  This is the deferral rule already written for `applicable_margin_bps`,
+  applied to a second field: the agreement states that the answer exists,
+  names where it lives, and that place is outside the four corners. The
+  citation is the pointer — the definition's reference to the unattached
+  schedule — so the null stays falsifiable in the same way.
+
+  The alternative was to take $100,000,000 from the 8-K body in the same
+  accession. That would have been the first time this project sourced a gold
+  value from outside the agreement, against [the four corners
+  rule](#the-four-corners-rule), and it is the worse trade: a third nullable
+  field costs less than a precedent for reading values off a press narrative.
+
+  **Not to be confused with a schedule that is merely absent.** Six other
+  documents in this corpus omit their commitment schedules and none produces a
+  null, because in each the defined term states the aggregate itself and the
+  schedule is only corroboration. The null applies where the amount appears
+  nowhere in the exhibit.
 - **Loans converted, rolled or assumed from another instrument at closing are
   not commitments under this agreement.** A tranche can be larger than its
   commitment: Amentum's `Initial Term Loans` are defined as the loans made
@@ -880,13 +904,19 @@ because the target is fidelity to what the agreement says, in both directions.
 
 ### 10. `testing_frequency`
 
-**Type:** enum — `quarterly`, `monthly`, `semiannual`, `annual`,
+**Type:** enum — `weekly`, `quarterly`, `monthly`, `semiannual`, `annual`,
 `event_driven`.
 
 **Where it lives:** the lead-in to the covenants section — "as of the last day
 of each fiscal quarter of the Borrower".
 
 **Correct when:** the enum matches exactly.
+
+`weekly` was added under Peloton, whose minimum-liquidity covenant is tested
+"as of the last Business Day of any week" whenever a Revolving Loan is
+outstanding. That is periodic, not conditional, so `event_driven` would have
+been wrong — the conditionality belongs in `springing_trigger`, which is
+exactly the split the rule below insists on.
 
 **Adjudication rule that matters:** `springing` is not a frequency. A springing
 covenant is still tested quarterly; it is *conditional*, not *infrequent*.
@@ -918,6 +948,13 @@ Adjudication rules:
 - Where the trigger is expressed as minimum availability in dollars rather
   than utilization as a percentage, `condition_type` is `minimum_availability`
   and the unit is `currency`.
+- **A trigger on *any* drawn revolver is `threshold: 0`, unit `currency`.**
+  Peloton's covenants apply "solely to the extent any Revolving Loan is
+  borrowed or outstanding". That is a threshold of zero dollars, not of zero
+  percent: the document never expresses it as a proportion of commitments, and
+  recording `percent` would invent a denominator it does not use. The same
+  preference as the greater-of rule below — where the document fixes an
+  amount, the currency limb is the one recorded.
 - Where letters of credit are excluded from the utilization calculation (very
   common — undrawn LCs up to some amount do not count toward the trigger),
   that exclusion is noted in free text and does not change the threshold.
