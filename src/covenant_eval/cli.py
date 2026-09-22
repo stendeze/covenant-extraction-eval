@@ -10,6 +10,7 @@ from pathlib import Path
 from .edgar import MissingUserAgent
 from .screen import run_screen
 from .search import run_census
+from .coverage import run_coverage
 from .validate import SCHEMA_PATH, SchemaParseError, run_validate
 
 
@@ -34,6 +35,12 @@ def main(argv: list[str] | None = None) -> int:
     validate.add_argument("--raw", type=Path, default=Path("data/raw"))
     validate.add_argument("--schema", type=Path, default=SCHEMA_PATH)
 
+    coverage = sub.add_parser(
+        "coverage", help="what the gold set exercises, with instance counts and naive baselines"
+    )
+    coverage.add_argument("--labels", type=Path, default=Path("data/labels"))
+    coverage.add_argument("--schema", type=Path, default=SCHEMA_PATH)
+
     args = parser.parse_args(argv)
 
     try:
@@ -44,6 +51,9 @@ def main(argv: list[str] | None = None) -> int:
                 args.candidates, args.out, limit=args.limit,
                 seed=args.seed, raw_dir=args.raw,
             )
+        elif args.command == "coverage":
+            print(run_coverage(args.labels, args.schema))
+            return 0
         elif args.command == "validate":
             paths = args.paths or [Path("data/labels")]
             result = run_validate(paths, args.raw, args.schema)

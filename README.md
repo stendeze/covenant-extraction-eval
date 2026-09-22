@@ -24,6 +24,14 @@ A `null` returned for a deferral must cite the deferral language itself. The val
 
 **On few-shot examples:** any drawn for prompting come from documents outside the fifteen, and that is stated with the results. Examples taken from the held-out set would leak the answers the set exists to measure.
 
+## Reporting
+
+[results.md](results.md) fixes the shape results will be reported in, committed before any model was run. Every per-field number carries its instance count and its **naive baseline** — what a system scores by always answering the most common value and reading nothing, which is 82% on `has_margin_grid` and 86% on `testing_frequency`. A result that does not clear its own majority-class guess is not a result, and a reader should not have to work that out.
+
+Every enum value appears in the table with `n = 0` where nothing fired, and the three values [schema.md](schema.md) pre-registered as possibly never firing are marked as such rather than pooled with the ones that simply did not come up. Pre-registered-and-empty and unexpectedly-empty are different claims.
+
+The table is generated from the label files by `covenant-eval coverage`, not transcribed.
+
 ## Out of scope
 
 **Baskets and mandatory prepayment triggers are deliberately excluded.** Both are real credit work — a covenant package without them is not a complete picture of a borrower's flexibility. Both are also miserable to label consistently: a basket is a network of cross-referenced defined terms, and two careful people reading the same restricted payments basket will disagree on what the right answer is. Ambiguous ground truth poisons a field-level accuracy metric, and that metric is this project's deliverable. Excluding them costs coverage and buys a number that means something.
