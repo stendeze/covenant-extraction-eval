@@ -21,10 +21,35 @@ one or two instances is not measured. `n` is what lets a reader see that
 rather than take an F1 on trust, and it is printed beside the number, not in a
 footnote.
 
-**2. Every skewed field carries its naive baseline.** The majority-class
-guess — always answer the most common value, read nothing — scores high on a
-skewed field, and a result that does not clear it is not a result. From the
-gold set as it stands:
+**2. Every skewed field carries *two* baselines, and they test different
+things.**
+
+- **Naive (majority class)** — always answer the most common value, read
+  nothing. This asks *does reading the document help at all?* It needs no
+  implementation; it is a property of the gold set, computable today, and it
+  is printed in the coverage table below.
+- **Regex (keyword extraction)** — the cheap method someone would actually
+  build instead of an LLM. This asks *does the expensive method beat the
+  obvious one?* It has to be run, and it is the headline comparison this
+  project was designed around.
+
+**A system can clear one and fail the other, and neither substitutes for the
+other.** Beating the majority class on `has_margin_grid` proves only that the
+system is reading something; beating a keyword extractor proves the reading is
+worth paying for. Failing the naive baseline while beating regex would mean
+both methods are worse than a constant.
+
+The regex baseline is the more interesting of the two here because of what is
+already known about it. The same class of tool was used to help select this
+corpus, and **ten of ten of its selection rationales failed when checked
+against their documents**. Its failure modes are documented from real
+agreements in
+[labeling-notes.md](labeling-notes.md#baseline-false-positive-mechanisms) — in
+both directions, since existence questions under-report and counting questions
+over-report — which is what makes the comparison fair rather than a strawman.
+Report both baselines in the same table as the system score, on every field.
+
+The naive figures, from the gold set as it stands:
 
 | Field | Naive strategy | Scores |
 |---|---|---|
@@ -37,8 +62,9 @@ gold set as it stands:
 | `facility_type` | always `revolver` | **68%** |
 
 A system reporting 84% on `has_margin_grid` has beaten reading-nothing by two
-points. The reader should see both numbers side by side without doing
-arithmetic, and on every skewed field rather than only the worst one.
+points. The reader should see all three numbers side by side — system, naive,
+regex — without doing arithmetic, and on every skewed field rather than only
+the worst one.
 
 **3. Every enum value appears, including the ones nothing produced.** A field's
 table lists its whole value space with `n = 0` where nothing fired. Showing
@@ -56,6 +82,35 @@ in the first category:
 | `delayed_draw_term_loan` | [schema.md](schema.md#1-facility_type) — the rule added under ANI requires the agreement to say so, and "it may not fire at all. That is the accepted outcome" |
 
 Everything else that comes out empty is an unexercised case and says so.
+
+---
+
+## Lead with `covenant_type`
+
+**A reader skimming should land on `covenant_type` first**, and the table
+should be ordered so they do.
+
+It is the one field where a number means something without a caveat attached.
+Eight of eleven enum values have fired, no value dominates, and the naive
+baseline is **24%** — so a system scoring 70% there has demonstrated something,
+and the figure can be read at face value.
+
+Compare the fields where that is not true. On `has_margin_grid` the floor is
+82%, on `testing_frequency` 86%, on `step_down_schedule` 90%. A high number on
+those is mostly the skew, and every one of them needs its baseline printed
+beside it to be read correctly at all.
+
+This is also the field the project is actually about. `covenant_type` is what
+[README.md](README.md) means by "there is no public benchmark for the financial
+terms of credit agreements" — CUAD and ContractEval classify legal clause
+types, and none of their categories is a leverage ratio. It is the hardest
+field to label, it is where the adjudication rules did the most work, and it is
+the only one whose distribution can carry a result on its own.
+
+Leading with it is not cherry-picking, because the weak fields are in the same
+table with their baselines and their instance counts. It is putting the
+interpretable number where a reader will see it instead of burying it under
+four fields whose floors are above 80%.
 
 ---
 

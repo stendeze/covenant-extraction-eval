@@ -26,7 +26,9 @@ A `null` returned for a deferral must cite the deferral language itself. The val
 
 ## Reporting
 
-[results.md](results.md) fixes the shape results will be reported in, committed before any model was run. Every per-field number carries its instance count and its **naive baseline** — what a system scores by always answering the most common value and reading nothing, which is 82% on `has_margin_grid` and 86% on `testing_frequency`. A result that does not clear its own majority-class guess is not a result, and a reader should not have to work that out.
+[results.md](results.md) fixes the shape results will be reported in, committed before any model was run. Every per-field number carries its instance count and **two baselines, which test different things**. The naive baseline is the majority-class guess — always answer the most common value, read nothing — and it asks whether reading the document helps at all; it is 82% on `has_margin_grid` and 86% on `testing_frequency`. The regex baseline is the keyword extractor someone would build instead of an LLM, and it asks whether the expensive method beats the obvious one. A system can clear one and fail the other, so both appear beside every field score.
+
+Results lead with `covenant_type`, because it is the field where a number means something without a caveat: eight of eleven enum values fired, no value dominates, and the naive baseline is 24%. On the skewed fields a high score is mostly the skew, which is why their baselines are printed next to them.
 
 Every enum value appears in the table with `n = 0` where nothing fired, and the three values [schema.md](schema.md) pre-registered as possibly never firing are marked as such rather than pooled with the ones that simply did not come up. Pre-registered-and-empty and unexpectedly-empty are different claims.
 
