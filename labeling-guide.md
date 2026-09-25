@@ -151,7 +151,8 @@ to, which you need for step 6.
 - Record the margin for benchmark loans, not Base Rate loans. Every agreement
   quotes both. The Base Rate margin is the benchmark margin minus 100bps in
   nearly every case.
-- Convert percentages to bps: 3.25% → 325.
+- Convert percentages to bps: 3.25% → 325. **Keep half points:** 1.125% → 112.5,
+  not 113. Investment-grade grids step in eighths.
 - Flat definition with no table → `has_margin_grid: false`.
 - Table with pricing levels → `has_margin_grid: true`, and record the opening
   level.
@@ -340,6 +341,13 @@ evidences it.
 
 Where a covenant holiday or acquisition step-up provides a temporarily higher
 level, record the **non-holiday** level.
+
+**Same for any alternative level or schedule that switches in on a future
+event — including tighter ones.** Mattel has one leverage table "Prior to the
+Fall-Away Date" and a stricter one "On and following" it, where the Fall-Away
+Date is an investment-grade ratings upgrade. Record the table in effect at
+closing, for both `initial_threshold` and `step_down_schedule`, and put the
+other in free text. Ask what applies on the day the agreement is signed.
 
 ### `step_down_schedule`
 

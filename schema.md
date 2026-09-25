@@ -277,7 +277,7 @@ field.
 | 2 | `aggregate_commitment` | facility | {amount: integer, currency: ISO 4217} |
 | 3 | `maturity_date` | facility | {value: date \| string, basis: enum} |
 | 4 | `interest_rate_benchmark` | facility | enum |
-| 5 | `applicable_margin_bps` | facility | integer |
+| 5 | `applicable_margin_bps` | facility | number |
 | 6 | `has_margin_grid` | facility | boolean |
 | 7 | `covenant_type` | covenant | enum |
 | 8 | `initial_threshold` | covenant | number |
@@ -556,12 +556,14 @@ II.
 
 ### 5. `applicable_margin_bps`
 
-**Type:** integer or `null` — basis points over the benchmark.
+**Type:** number or `null` — basis points over the benchmark. Not an integer:
+investment-grade grids routinely step in eighths of a percent, and 1.125% is
+112.5 bps.
 
 **Where it lives:** the Article I definition of "Applicable Margin" or
 "Applicable Rate", which very often contains the pricing grid table inline.
 
-**Correct when:** the integer matches exactly, or `null` matches `null`.
+**Correct when:** the number matches exactly, or `null` matches `null`.
 Adjudication rules:
 
 - Record the **opening margin**: the rate in effect from the Closing Date
@@ -624,6 +626,19 @@ Adjudication rules:
   zero information. Deliberately not a field.
 - Where the agreement expresses the margin as a percentage (2.25%), convert to
   bps (225).
+- **Half basis points are kept, not rounded.** The field was typed as an
+  integer until Mattel, whose ratings grid steps 1.125% / 1.250% / 1.375% /
+  1.500% / 2.000% — 112.5 and 137.5 bps at Levels I and III. The same eighth-of-
+  a-percent steps are printed in three other grids in this corpus: Advance
+  Auto and Roper at 0.795%, Lamb Weston EX-10.1 at 1.125% and 1.375%. None
+  happened to be an opening level, which is the only reason nothing had broken.
+
+  This is different in kind from the [record-alignment
+  defect](#record-alignment) that was deliberately left open. That construction
+  appears nowhere in the corpus, so a rule for it would be written against a
+  hypothetical. These values are printed in four of the corpus's own documents;
+  the type was simply too narrow for the value space. Widening a type cannot
+  change how anything is adjudicated, and no recorded value changes.
 
 ### 6. `has_margin_grid`
 
@@ -822,6 +837,32 @@ rules:
   (a "Covenant Holiday" or leverage step-up following a material acquisition),
   record the **non-holiday** level. The holiday is a conditional override, not
   the covenant level.
+- **Any alternative level or schedule that applies only on a future condition
+  is a conditional override. Record the level and schedule in effect at
+  closing.** The acquisition holiday is one instance; it is not the only one,
+  and it is not always looser.
+
+  Mattel §7.05(b) carries two leverage schedules: (A) "Prior to the Fall-Away
+  Date" and (B) "On and following the Fall-Away Date", where the Fall-Away Date
+  is the first day the borrower holds BBB-/Baa3/BBB- ratings from two of three
+  agencies with no Event of Default and has certified it. Schedule (B) is
+  **tighter** — 4.00/3.75 against (A)'s 4.50/4.25/4.00. Schedule (A) is in
+  effect at closing; it is the one recorded, as `initial_threshold` and as
+  `step_down_schedule` both. Lamb Weston EX-10.1 had already met the same
+  construction in a single level — a tighter 3.50x during an elective
+  Collateral and Guarantee Suspension Period — and recorded the 5.00x in effect
+  at closing *by analogy* to this rule. Mattel is the second document leaning
+  on that analogy, which is the point at which it stops being an analogy and
+  becomes the rule.
+
+  The test is the one the benchmark field already uses: record what is in
+  effect, not its successor. Whether the alternative is triggered by an
+  acquisition, a ratings upgrade or an election, and whether it loosens or
+  tightens, does not change the answer.
+
+  Re-applied across all seven documents that carry a conditional override —
+  Plains, Advance Auto, Kontoor, Extreme, ANI, MP Materials, Lamb Weston EX-10.1
+  — and every one records the level in effect at closing. No label changes.
 
 ### 9. `step_down_schedule`
 
@@ -1255,7 +1296,7 @@ full set — not by quietly picking whichever label looks better.
 | Kind | Rule |
 |------|------|
 | Currency amounts | integer, whole units, no separators |
-| Percentages | basis points as integer where the field says bps; otherwise number |
+| Percentages | basis points where the field says bps, keeping half points (`1.125%` → `112.5`); otherwise number |
 | Ratios | two decimals, `4.00:1.00` → `4.00`; a percentage level is a ratio, `60% of Total Capital` → `0.60` |
 | Dates | ISO-8601 `YYYY-MM-DD` |
 | Enums | exact match against the stated value set |

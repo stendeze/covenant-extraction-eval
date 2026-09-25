@@ -619,9 +619,13 @@ def _check_field(
     ):
         report.add(path, "malformed_field", f"expected a number, found {value!r}")
     elif name == "applicable_margin_bps" and (
-        not isinstance(value, int) or isinstance(value, bool)
+        not isinstance(value, (int, float)) or isinstance(value, bool)
     ):
-        report.add(path, "malformed_field", f"expected an integer in basis points, found {value!r}")
+        # A number, not an integer: investment-grade grids step in eighths of a
+        # percent, so 1.125% is 112.5 bps. Four grids in this corpus print such
+        # levels; none happened to open on one, which is why the old int check
+        # never fired.
+        report.add(path, "malformed_field", f"expected a number of basis points, found {value!r}")
 
 
 def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
