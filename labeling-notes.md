@@ -953,6 +953,36 @@ source. A claim that arrives as an instruction still has to be recomputed
 against the artifact before it is written down, because being told a number by
 the person who owns the project feels like verification and is not.
 
+#### A sixth, and the first caught before it was written anywhere
+
+Re-applying the conditional-override rule added under Mattel meant finding every
+label that records a covenant holiday or other alternative level. The first
+scan searched each covenant object's notes and reported **three** documents —
+Plains, Advance Auto, MP Materials — with the same confidence a correct answer
+would have had.
+
+It was wrong. Four more labels — Kontoor, Extreme, ANI and Lamb Weston EX-10.1 —
+keep their holiday notes at *document* level rather than inside the covenant, so
+a scan scoped to covenant objects could not see them. The full scan found seven.
+
+**The scope of a scan is itself a claim, and it was not checked.** A count from a
+partial search is the same failure as a count from memory: a confident number
+that describes the part of the evidence that happened to be looked at. Nothing
+about the output signalled that it was partial.
+
+What caught it was, for once, the other direction. The answer "three" disagreed
+with a recollection that Kontoor and ANI both had acquisition holidays, and the
+disagreement was treated as a reason to re-run rather than a reason to trust the
+tool. In the previous five instances the artifact corrected memory; here memory
+flagged the artifact, and the artifact — scanned properly — settled it. The
+useful signal in both directions was the same: **two sources that should agree,
+and don't.**
+
+This one never reached a file. The wrong figure was caught before any commit
+message, note or schema text stated it, which is why it is worth recording
+separately from the other five: it shows the check working at the point it is
+cheapest, rather than after the fact.
+
 The underlying cause of the thin column is a measurement failure rather than a
 selection accident, recorded at [Keyword heuristics
 under-detect](#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it):
