@@ -840,105 +840,147 @@ worth recording rather than the two incidents separately.
 
 ---
 
-## `has_margin_grid`: the minority class comes from one document
+## `has_margin_grid`: the minority class, three documents and two constructions
 
-Eleven documents, eighteen facility records, **fifteen `true` and three
-`false`** — from **two** documents, and the two are not the same kind of
-`false`.
+Fourteen documents, twenty-three facility records, **nineteen `true` and four
+`false`**, from three documents. The three are different kinds of credit and
+the four values are two different kinds of `false`:
 
-- **Paya Holdings** supplies two: a revolver and a TLB both priced at a flat
-  3.25% over LIBOR for the life of the facility. Genuinely fixed pricing.
-- **PureCycle** supplies one: a margin that escalates 5.00% → 10.00% → 12.50%
-  → 15.00% → 17.50% on fixed dates. Not fixed at all — `false` because the
-  escalation is predetermined rather than performance-linked.
+| Source | Credit | Construction |
+|---|---|---|
+| **Paya Holdings** — revolver and TLB | an ordinary sponsor LBO | flat 3.25% over LIBOR on both tranches, for life |
+| **Peloton** — revolver only | a stressed refinancing | flat 5.00% revolver margin, beside a TLB that *is* gridded |
+| **PureCycle** — revolver | a distressed bridge | escalates 5.00% → 17.50% on fixed calendar dates |
 
-**A reader comparing them should see that rather than infer a homogeneous
-minority class.** "No grid" covers two structurally different things here, and
-a system that learned `false` from flat pricing has learned only half of what
-the label means. The corpus table records PureCycle as "escalator, no grid"
-for that reason.
+**Two constructions, not one.** Paya and Peloton's revolver are genuinely flat.
+PureCycle is not flat at all — it is `false` because its escalation is
+predetermined rather than performance-linked. A system that learned `false`
+from flat pricing has learned part of what the label means.
 
-The two documents selected to supply `false` did not. [corpus.md](corpus.md)
-row 7 chose Lamb Weston for "Lettered TLA with no grid" and row 12 chose G-III
-for "3 covenants with **no** grid". Row 7's accession held two agreements and
-both carry leverage grids; row 12 is an ABL with a three-Category availability
-grid. Both rationales came from `pricing_grid_hint`, whose every measured
-error is a false negative. No unread row was ever selected for this value, so
-the minority class is not going to grow by accident.
+**And not all from unusual documents.** Two of the three are stressed or
+distressed credits, which invites the reading that `false` is a marker of
+trouble. Paya is the counterexample: a healthy, ordinary sponsor deal, flat
+because that is how its lenders chose to price it. The minority class spans a
+healthy sponsor deal, a stressed refinancing and a distressed bridge.
 
-**The corpus is not being adjusted.** Swapping a row in now, having seen which
-documents produce which values, would trade the thing that makes this set
-defensible — that selection preceded labeling and was not tuned to the results
-— for a column that looks balanced. That trade is bad at any exchange rate,
-and it is the same posture already recorded for
-[`step_down_schedule`](#step_down_schedule-will-report-over-n1-and-that-has-to-be-said).
+**Every row selected to supply `false` supplied `true`.** Row 7 chose Lamb
+Weston for "no grid" — both exhibits in that accession carry leverage grids.
+Row 12 chose G-III for "no grid" — an availability grid. Row 15 chose Mattel for
+"flat-margin revolver, no grid" — a five-level ratings grid. All three
+rationales came from `pricing_grid_hint`, whose every measured error is a false
+negative. None of the four `false` values came from a row selected for it.
 
-**It is reported instead.** Per-field numbers carry their instance count, and
-`has_margin_grid` carries one sentence more: the minority class is 3 of 18
-across two documents, one flat and one an escalator, so the field measures
-whether a system can recognise two specific non-grid documents rather than
-whether it can tell flat pricing from a grid in general. **A model that
-answered `true` unconditionally and read nothing would score 83% on this
-field.** That number belongs beside the result, because it is the score to
-beat and it is high.
+**The corpus is not being adjusted, and it is reported instead.** Swapping a
+row in to balance the column, having seen which documents produce which values,
+would trade the thing that makes this set defensible for a column that looks
+better. The field carries its instance count and one sentence more: the
+minority class is 4 of 23 across three documents and two constructions, and **a
+model that answered `true` unconditionally and read nothing would score 83%**.
+That is the score to beat.
 
-The underlying cause is not a selection accident but a measurement failure,
-recorded at [Keyword heuristics
+#### A wrong claim about this field reached the repo through an instruction
+
+The line *"If Mattel also has a grid, Paya remains the sole source at 2 of 19
+facility records"* was written into [corpus.md](corpus.md) when Boeing was
+placed in row 14. **It was false when it was written.** PureCycle's `false`
+had been committed five days earlier, and Peloton's revolver **ten minutes**
+earlier, in the commit immediately preceding it. At that commit the label files
+held 22 facility records and 4 `false` values from 3 documents — checked
+against the tree as it stood then, not reconstructed.
+
+It originated in an instruction given from memory in conversation, and it was
+written into the file from that instruction without being recomputed. Neither
+party checked it against the label files, both of which were sitting in the
+repository and would have contradicted it in one command. It then propagated a
+second time: the Mattel label arrived repeating "Paya is still the only
+confirmed source".
+
+This is the fifth instance in this project of a claim reported from memory
+diverging from the artifact it describes, and the sharpest. The previous four
+were caught before they were committed or were confined to one document. This
+one **crossed from a conversation into the repo** — an error in a spoken
+instruction became a sentence in a file that looks authoritative precisely
+because it is committed. [results.md](results.md) had the figure right the
+whole time; the files disagreed with each other, which is how it surfaced.
+
+The lesson is narrower than "check your numbers". An instruction is not a
+source. A claim that arrives as an instruction still has to be recomputed
+against the artifact before it is written down, because being told a number by
+the person who owns the project feels like verification and is not.
+
+The underlying cause of the thin column is a measurement failure rather than a
+selection accident, recorded at [Keyword heuristics
 under-detect](#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it):
 the instrument used to pick documents for this field cannot see grids.
 
 ---
 
-## `step_down_schedule` will report over n=1, and that has to be said
+## `step_down_schedule`: one multi-step schedule, and it was not selected for
 
-Twelve documents labeled, seventeen covenant records, and **two non-empty
-`step_down_schedule` arrays** — Amentum's single step from 5.25x to 5.00x and
-Lamb Weston EX-10.1's from 5.00x to 4.75x. Every other covenant is flat, and
-neither non-empty array has more than one element.
+Fourteen documents labeled, twenty-three covenant records, **three non-empty
+`step_down_schedule` arrays** — Amentum's single step (5.25x → 5.00x), Lamb
+Weston EX-10.1's single step (5.00x → 4.75x), and **Mattel's two steps**
+(4.50x → 4.25x at the quarter ending 2023-03-31 → 4.00x at 2023-09-30). Every
+other covenant is flat. Multi-step arrays are **n = 1**.
 
-That is a problem for the field the schema calls the most expensive to label
-and the most interesting to measure, "where regex baselines fail hardest". A
-per-field F1 computed over one or two instances is not a measurement, and
-**the scorer's ordering comparison has never run on real data**, because it
-only compares when an array holds two or more elements and no array in the
-corpus does.
+That is still a thin field and it is still reported with its count. But it is
+no longer the field this note used to describe.
 
-**Both documents that were supposed to supply this are now read, and neither
-has a step-down.** Rows 10 and 11 were both labeled "step-down candidate" in
-[corpus.md](corpus.md). ANI, row 11, has none. Peloton, row 10, has none — two
-covenants, both flat. Both rationales came from a screen now **0 for 9** on
-every rationale checked against its document.
+#### What this note said before Mattel, kept because it was true then
 
-**Final state: 17 covenant records across 12 documents, 15 flat and 2 with a
-single step.** Amentum and Lamb Weston EX-10.1, one step each. No covenant in
-the corpus has two.
+Through thirteen documents the field held two one-element arrays and nothing
+longer. The note said the ordering comparison "ships untested", because it
+only compares when an array holds two or more elements, and that no document in
+the corpus had forced it. Both documents selected as step-down candidates —
+ANI, row 11, and Peloton, row 10 — had been read, and neither had a step-down.
+The field was recorded as ending at n = 2.
 
-#### The scorer's ordering comparison ships untested
+#### What Mattel changed
 
-This follows directly and should not be left for a reader to deduce.
-`step_down_schedule` is compared as an ordered sequence, and the validator only
-compares ordering between steps expressed the same way **and only when an array
-holds two or more elements**. No array in this corpus holds two. That code path
-has therefore never executed against real data, and a passing test suite does
-not mean otherwise — the suite exercises it with constructed fixtures, which is
-not the same as a document having forced it.
+**The ordering check has now executed against a real document.** Reversing
+Mattel's two steps in a scratch copy makes the validator report
+`step_downs_out_of_order`; in their true order they pass. That is the path this
+note said had never run on real data, and it has now run.
 
-Anything that reads as coverage here is coverage of the one-step case. The
-two-step case is unexercised, and the first agreement to carry one will be
-running that comparison for the first time.
+A correction to the wording the note used, found while fixing it: it said
+"the scorer's ordering comparison", but there is no scorer yet. What ran is the
+**validator's** check. The accurate claim is narrower and better: when a scorer
+is built, its sequence comparison will have one real multi-step gold array to
+be tested against, where before it had none.
 
-**This is not a reason to reselect now.** Swapping documents to make a field
-look scoreable, after seeing which documents produce which values, is the
-precise move the frozen-corpus discipline exists to prevent — and it would
-poison a set whose whole claim is that selection preceded labeling. The honest
-handling is to report it: state the instance count alongside the F1, and say
-that `step_down_schedule` is not measurable at this corpus size rather than
-publishing a number computed over one array.
+#### Why this is the best evidence in the corpus that selection preceded labeling
 
-Where they live, for whatever selection happens after this corpus is frozen:
-time-based step-down tables are a sponsor-deal convention, clustering in
-leverage-grid LBO credits. Two unread rows might qualify. That is an
-observation for a v2 frame, not a licence to swap a row now.
+Mattel is row 15. It was drawn as "flat-margin revolver, **no grid**" — the
+last unread candidate for `has_margin_grid: false`. It has a ratings grid, so
+that rationale failed, the eleventh screen-derived rationale in eleven to do
+so. And instead of the value it was selected for, it supplied the one value the
+corpus had formally given up on, in the one field this note had declared
+unmeasurable.
+
+Nothing about that was arranged. The document was chosen before labeling, for
+a different reason, from a signal already known to be unreliable; the rows
+selected *as* step-down candidates produced none, and the row selected for
+something else produced the only multi-step schedule. A corpus tuned to its
+results would look the other way round. This is recorded as a finding in its
+own right because it is the cleanest single demonstration that the thin columns
+here are properties of the documents, not of the choices.
+
+**It is not a reason to add more.** A second multi-step schedule would still be
+worth having, but finding one by searching for it now would be the move the
+frozen-corpus discipline prohibits. If one arrives, it arrives the way this one
+did.
+
+#### And the prediction about where step-downs live was wrong
+
+This note used to say time-based step-down tables are "a sponsor-deal
+convention, clustering in leverage-grid LBO credits", and
+[corpus.md](corpus.md#two-drafting-traditions-and-what-that-predicts) predicts
+that "leverage-based step-downs … are sponsor conventions that will not appear
+in the IG deals." Mattel is neither a sponsor deal nor an LBO. It is a public
+company's secured revolver on a ratings grid, with a schedule that tightens on
+the way to investment grade — a crossover credit. The step-downs came from the
+tradition predicted not to have them. One document does not overturn a
+tendency, but it is enough to stop the prediction being stated as a rule.
 
 ---
 

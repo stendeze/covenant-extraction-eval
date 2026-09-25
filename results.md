@@ -49,20 +49,26 @@ both directions, since existence questions under-report and counting questions
 over-report — which is what makes the comparison fair rather than a strawman.
 Report both baselines in the same table as the system score, on every field.
 
-The naive figures, from the gold set as it stands:
+The naive figures, generated from the gold set — never retyped, since this is
+exactly the kind of table that goes stale when a label lands:
 
-| Field | Naive strategy | Scores |
-|---|---|---|
-| `has_margin_grid` | always `true` | **82%** |
-| `testing_frequency` | always `quarterly` | **86%** |
-| `springing_trigger` | always `null` | **76%** |
-| `step_down_schedule` | always `[]` | **90%** |
-| `aggregate_commitment` | always non-null | **95%** |
-| `interest_rate_benchmark` | always `term_sofr` | **68%** |
-| `facility_type` | always `revolver` | **68%** |
+<!-- BEGIN BASELINE TABLE -->
+| Field | Naive strategy | Scores | n |
+|---|---|---:|---:|
+| `aggregate_commitment` | always non-null | **91%** | 21/23 |
+| `step_down_schedule` | always `[]` | **87%** | 20/23 |
+| `testing_frequency` | always `quarterly` | **87%** | 20/23 |
+| `has_margin_grid` | always `true` | **83%** | 19/23 |
+| `applicable_margin_bps` | always non-null | **78%** | 18/23 |
+| `springing_trigger` | always `null` | **78%** | 18/23 |
+| `interest_rate_benchmark` | always `term_sofr` | **70%** | 16/23 |
+| `facility_type` | always `revolver` | **70%** | 16/23 |
+| `covenant_type` | always `interest_coverage` | **26%** | 6/23 ← lead with this one |
+<!-- END BASELINE TABLE -->
 
-A system reporting 84% on `has_margin_grid` has beaten reading-nothing by two
-points. The reader should see all three numbers side by side — system, naive,
+A system scoring a couple of points above the naive figure on
+`has_margin_grid` has beaten reading-nothing by a couple of points, however
+good the headline looks. The reader should see all three numbers side by side — system, naive,
 regex — without doing arithmetic, and on every skewed field rather than only
 the worst one.
 
@@ -92,11 +98,12 @@ should be ordered so they do.
 
 It is the one field where a number means something without a caveat attached.
 Eight of eleven enum values have fired, no value dominates, and the naive
-baseline is **24%** — so a system scoring 70% there has demonstrated something,
+baseline is **roughly a quarter** — so a system scoring 70% there has demonstrated something,
 and the figure can be read at face value.
 
-Compare the fields where that is not true. On `has_margin_grid` the floor is
-82%, on `testing_frequency` 86%, on `step_down_schedule` 90%. A high number on
+Compare the fields where that is not true. On `has_margin_grid`,
+`testing_frequency`, `step_down_schedule` and `aggregate_commitment` the floor
+is above 80% — the exact figures are in the generated table above. A high number on
 those is mostly the skew, and every one of them needs its baseline printed
 beside it to be read correctly at all.
 
@@ -119,22 +126,33 @@ four fields whose floors are above 80%.
 These are properties of the corpus, not of a system, and they do not change
 when results arrive.
 
-**`step_down_schedule` is not measurable at this corpus size.** Two non-empty
-arrays across 21 covenant records, neither with more than one element. Both
-documents selected as step-down candidates were read and neither had one.
-**The scorer's ordering comparison has therefore never executed against real
-data** — it only compares when an array holds two or more elements. A passing
-test suite does not imply otherwise; it exercises that path with constructed
-fixtures.
+**`step_down_schedule` is thin, and multi-step schedules are n = 1.** Three
+non-empty arrays across 23 covenant records: two with a single step (Amentum,
+Lamb Weston EX-10.1) and one with two (Mattel). Report the field's count beside
+its score, and report the multi-step subset separately — a sequence comparison
+scored over one real two-element array is a demonstration, not a measurement.
 
-**`has_margin_grid`'s minority class comes from three documents and two
-different constructions.** Paya is genuinely flat pricing; PureCycle is a
-predetermined calendar escalator; Peloton's revolver is flat while its term
-loan is gridded. A system that learned `false` from flat pricing has learned
-part of what the label means.
+Until Mattel this finding said the ordering comparison had never executed
+against real data. It now has: the validator's ordering check runs on Mattel's
+two steps and catches them when reversed. When a scorer is built, its sequence
+comparison will have one real multi-step instance to be tested against rather
+than none. And Mattel was drawn as "flat-margin revolver, no grid", not as a
+step-down candidate — the two rows selected *as* candidates had none — which is
+the clearest evidence in the corpus that its thin columns are properties of the
+documents rather than of the selection. See
+[labeling-notes.md](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for).
 
-**`testing_frequency` is 18 of 21 quarterly**, with `continuous`, `monthly` and
-`weekly` at one instance each.
+**`has_margin_grid`'s minority class is three documents, two constructions
+and three kinds of credit.** Paya is genuinely flat pricing on an ordinary
+sponsor LBO; Peloton's revolver is flat, on a stressed refinancing, beside a
+term loan that *is* gridded; PureCycle is a predetermined calendar escalator on
+a distressed bridge. So `false` is neither one construction nor a marker of
+unusual documents — Paya is the counterexample to both. All three rows selected
+to supply `false` turned out to have grids, Mattel included.
+
+**`testing_frequency` is overwhelmingly quarterly**, with `continuous`, `monthly` and
+`weekly` each rare — the generated table below carries the exact counts, so this
+sentence does not have to.
 
 **The empty covenant list is n = 1**, and that document — PureCycle — is a
 fifteen-month distressed bridge admitted as a
@@ -188,29 +206,29 @@ A snapshot as of the current gold set is below. It is **not** a result; it is
 the shape a result will be reported in, filled with instance counts.
 
 <!-- BEGIN COVERAGE SNAPSHOT -->
-**14 documents · 22 facility records · 21 covenant records · 1 with an empty covenant list**
+**15 documents · 23 facility records · 23 covenant records · 1 with an empty covenant list**
 
 ## Facility fields
 
-### `facility_type`  ·  n = 22
-*Naive baseline: always answer `revolver` → 15/22 = 68%*
+### `facility_type`  ·  n = 23
+*Naive baseline: always answer `revolver` → 16/23 = 70%*
 
 | Value | n | Status |
 |---|---:|---|
-| `revolver` | 15 | — |
+| `revolver` | 16 | — |
 | `term_loan_b` | 4 | — |
 | `term_loan_a` | 3 | — |
 | `bridge` | 0 | **not exercised** |
 | `delayed_draw_term_loan` | 0 | **pre-registered as possibly never firing** |
 | `other` | 0 | **not exercised** |
 
-### `aggregate_commitment`  ·  n = 22
-*Naive baseline: always answer `(non-null)` → 21/22 = 95%*
+### `aggregate_commitment`  ·  n = 23
+*Naive baseline: always answer `(non-null)` → 21/23 = 91%*
 
 | Value | n | Status |
 |---|---:|---|
 | `(non-null)` | 21 | — |
-| `(null)` | 1 | — |
+| `(null)` | 2 | — |
 
 ### `aggregate_commitment.currency`  ·  n = 21
 *Naive baseline: always answer `USD` → 20/21 = 95%*
@@ -220,27 +238,27 @@ the shape a result will be reported in, filled with instance counts.
 | `USD` | 20 | — |
 | `EUR` | 1 | — |
 
-### `maturity_date`  ·  n = 22
-*Naive baseline: always answer `(non-null)` → 22/22 = 100%*
+### `maturity_date`  ·  n = 23
+*Naive baseline: always answer `(non-null)` → 23/23 = 100%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 22 | — |
+| `(non-null)` | 23 | — |
 
-### `maturity_date.basis`  ·  n = 22
-*Naive baseline: always answer `relative` → 12/22 = 55%*
+### `maturity_date.basis`  ·  n = 23
+*Naive baseline: always answer `relative` → 12/23 = 52%*
 
 | Value | n | Status |
 |---|---:|---|
 | `relative` | 12 | — |
-| `stated` | 10 | — |
+| `stated` | 11 | — |
 
-### `interest_rate_benchmark`  ·  n = 22
-*Naive baseline: always answer `term_sofr` → 15/22 = 68%*
+### `interest_rate_benchmark`  ·  n = 23
+*Naive baseline: always answer `term_sofr` → 16/23 = 70%*
 
 | Value | n | Status |
 |---|---:|---|
-| `term_sofr` | 15 | — |
+| `term_sofr` | 16 | — |
 | `libor` | 6 | — |
 | `euribor` | 1 | — |
 | `base_rate` | 0 | **not exercised** |
@@ -249,70 +267,71 @@ the shape a result will be reported in, filled with instance counts.
 | `other` | 0 | **not exercised** |
 | `prime` | 0 | **not exercised** |
 
-### `applicable_margin_bps`  ·  n = 22
-*Naive baseline: always answer `(non-null)` → 18/22 = 82%*
+### `applicable_margin_bps`  ·  n = 23
+*Naive baseline: always answer `(non-null)` → 18/23 = 78%*
 
 | Value | n | Status |
 |---|---:|---|
 | `(non-null)` | 18 | — |
-| `(null)` | 4 | — |
+| `(null)` | 5 | — |
 
-### `has_margin_grid`  ·  n = 22
-*Naive baseline: always answer `true` → 18/22 = 82%*
+### `has_margin_grid`  ·  n = 23
+*Naive baseline: always answer `true` → 19/23 = 83%*
 
 | Value | n | Status |
 |---|---:|---|
-| `true` | 18 | — |
+| `true` | 19 | — |
 | `false` | 4 | — |
 
 ## Covenant fields
 
-### `covenant_type`  ·  n = 21
-*Naive baseline: always answer `interest_coverage` → 5/21 = 24%*
+### `covenant_type`  ·  n = 23
+*Naive baseline: always answer `interest_coverage` → 6/23 = 26%*
 
 | Value | n | Status |
 |---|---:|---|
-| `interest_coverage` | 5 | — |
+| `interest_coverage` | 6 | — |
 | `total_net_leverage` | 4 | — |
 | `first_lien_net_leverage` | 3 | — |
+| `total_leverage_gross` | 3 | — |
 | `debt_to_capitalization` | 2 | — |
 | `fixed_charge_coverage` | 2 | — |
 | `minimum_liquidity` | 2 | — |
-| `total_leverage_gross` | 2 | — |
 | `other` | 1 | — |
 | `capex_limit` | 0 | **not exercised** |
 | `debt_service_coverage` | 0 | **pre-registered as possibly never firing** |
 | `secured_net_leverage` | 0 | **not exercised** |
 
-### `initial_threshold`  ·  n = 21
-*Naive baseline: always answer `(non-null)` → 21/21 = 100%*
+### `initial_threshold`  ·  n = 23
+*Naive baseline: always answer `(non-null)` → 23/23 = 100%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 21 | — |
+| `(non-null)` | 23 | — |
 
-### `step_down_schedule`  ·  n = 21
-*Naive baseline: always answer `[]` → 19/21 = 90%*
-
-| Value | n | Status |
-|---|---:|---|
-| `[]` | 19 | — |
-| `(non-empty)` | 2 | — |
-
-### `step_down_schedule.length (diagnostic)`  ·  n = 21
-*Naive baseline: always answer `0 step(s)` → 19/21 = 90%*
+### `step_down_schedule`  ·  n = 23
+*Naive baseline: always answer `[]` → 20/23 = 87%*
 
 | Value | n | Status |
 |---|---:|---|
-| `0 step(s)` | 19 | — |
+| `[]` | 20 | — |
+| `(non-empty)` | 3 | — |
+
+### `step_down_schedule.length (diagnostic)`  ·  n = 23
+*Naive baseline: always answer `0 step(s)` → 20/23 = 87%*
+
+| Value | n | Status |
+|---|---:|---|
+| `0 step(s)` | 20 | — |
 | `1 step(s)` | 2 | — |
+| `2 step(s)` | 1 | — |
 
-### `testing_frequency`  ·  n = 21
-*Naive baseline: always answer `quarterly` → 18/21 = 86%*
+### `testing_frequency`  ·  n = 23
+*Naive baseline: always answer `quarterly` → 20/23 = 87%*
 
 | Value | n | Status |
 |---|---:|---|
-| `quarterly` | 18 | — |
+| `quarterly` | 20 | — |
 | `continuous` | 1 | — |
 | `monthly` | 1 | — |
 | `weekly` | 1 | — |
@@ -320,12 +339,12 @@ the shape a result will be reported in, filled with instance counts.
 | `event_driven` | 0 | **not exercised** |
 | `semiannual` | 0 | **not exercised** |
 
-### `springing_trigger`  ·  n = 21
-*Naive baseline: always answer `(null)` → 16/21 = 76%*
+### `springing_trigger`  ·  n = 23
+*Naive baseline: always answer `(null)` → 18/23 = 78%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(null)` | 16 | — |
+| `(null)` | 18 | — |
 | `(non-null)` | 5 | — |
 
 ### `springing_trigger.condition_type`  ·  n = 5

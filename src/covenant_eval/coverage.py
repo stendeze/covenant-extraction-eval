@@ -196,6 +196,63 @@ def render(tallies: dict[str, Any], sets: SchemaSets) -> str:
     return "\n".join(lines) + "\n"
 
 
+# The fields whose naive baseline is worth printing in results.md's rules
+# section, with how the naive guess reads in prose. Fields whose baseline is
+# 100% by construction (every maturity and every threshold is non-null) are
+# omitted: they carry no information about skew.
+BASELINE_FIELDS: list[tuple[str, str, str]] = [
+    ("facility", "aggregate_commitment", "non-null"),
+    ("covenant", "step_down_schedule", "`[]`"),
+    ("covenant", "testing_frequency", None),
+    ("facility", "has_margin_grid", None),
+    ("facility", "applicable_margin_bps", "non-null"),
+    ("covenant", "springing_trigger", "`null`"),
+    ("facility", "interest_rate_benchmark", None),
+    ("facility", "facility_type", None),
+    ("covenant", "covenant_type", None),
+]
+
+
+def render_baselines(tallies: dict[str, Any]) -> str:
+    """The naive-baseline table for results.md, highest floor first."""
+    rows = []
+    for level, name, phrasing in BASELINE_FIELDS:
+        counts = tallies[level][name]
+        value, hits, share = naive_baseline(counts)
+        total = sum(counts.values())
+        guess = phrasing or f"`{value}`"
+        rows.append((share, name, guess, hits, total))
+    rows.sort(key=lambda r: -r[0])
+    out = ["| Field | Naive strategy | Scores | n |", "|---|---|---:|---:|"]
+    for share, name, guess, hits, total in rows:
+        lead = " ← lead with this one" if name == "covenant_type" else ""
+        out.append(f"| `{name}` | always {guess} | **{share:.0%}** | {hits}/{total}{lead} |")
+    return "\n".join(out)
+
+
+def _replace_block(text: str, tag: str, body: str) -> str:
+    begin, end = f"<!-- BEGIN {tag} -->", f"<!-- END {tag} -->"
+    if begin not in text or end not in text:
+        raise ValueError(f"results file has no {tag} markers")
+    head, rest = text.split(begin, 1)
+    _, tail = rest.split(end, 1)
+    return f"{head}{begin}\n{body.rstrip()}\n{end}{tail}"
+
+
+def write_results(results_path: Path, labels_dir: Path, schema_path: Path = SCHEMA_PATH) -> None:
+    """Regenerate every generated block in results.md in one pass.
+
+    Both the baseline table and the coverage snapshot derive from the same
+    tally, so they cannot disagree with each other or with the label files.
+    """
+    sets = load_schema_sets(schema_path)
+    tallies = tally(_load(labels_dir), sets)
+    text = results_path.read_text()
+    text = _replace_block(text, "BASELINE TABLE", render_baselines(tallies))
+    text = _replace_block(text, "COVERAGE SNAPSHOT", render(tallies, sets))
+    results_path.write_text(text)
+
+
 def run_coverage(labels_dir: Path, schema_path: Path = SCHEMA_PATH) -> str:
     sets = load_schema_sets(schema_path)
     return render(tally(_load(labels_dir), sets), sets)

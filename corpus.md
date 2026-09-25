@@ -277,19 +277,19 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 > | 10 Peloton | grid; **3 covenants**; **step-down candidate** | grid on the TLB only, revolver flat; 2 covenants; **no step-downs** | ❌ |
 > | 11 ANI Pharma | grid; **3 covenants**; **step-down candidate** | grid holds; 2 covenants; **no step-downs** | ❌ |
 > | 12 G-III Apparel | revolver + term; **3 covenants with no grid** | revolver-only ABL; 1 covenant; **has a grid** | ❌ |
+> | 15 Mattel | revolver only; **flat margin, no grid** | revolver only holds; **five-level ratings grid** | ❌ |
 > | 13 Roper | **covenant-free** | §7.1 Total Debt to Total Capital at 0.65:1.00 | ❌ |
 >
-> **Three hold, ten fail — and the split is not random.** Rows 1–3 are
+> **Three hold, eleven fail — and the split is not random.** Rows 1–3 are
 > precisely the three that the screen did not select; they were labeled or
 > benchmark-confirmed by hand during schema development. **Every
-> screen-derived rationale that has been checked has failed: ten of ten.**
+> screen-derived rationale that has been checked has failed: eleven of eleven.**
 >
-> That count has gone five, six, seven, eight, nine, ten on consecutive
-> documents. It is not drifting toward a rate — it has not yet produced a
-> single success. The rationales are not partially reliable; they are
-> unreliable, with a measured failure rate of 100% over ten trials, and the
-> only rationales that hold describe the three documents the instrument
-> never touched.
+> That count has gone five through eleven on consecutive documents. It is not
+> drifting toward a rate — it has not yet produced a single success. The
+> rationales are not partially reliable; they are unreliable, with a measured
+> failure rate of 100% over eleven trials, and the only rationales that hold
+> describe the three documents the instrument never touched.
 >
 > **The rows that got corrected are the rows that happened to be read, not the
 > rows that happened to be wrong.** Nothing about labeling order was chosen to
@@ -332,7 +332,7 @@ than a draw from it; see [Document 16](#document-16-purecycle-a-documented-excep
 | 12 | G-III Apparel | — | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
 | 13 | Roper Technologies | — | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
 | 14 | The Boeing Company | `0000012927-24-000037` **EX-10.1** | 2024-05-17 | revolver only | Grid (ratings); debt-to-capitalization — **replacement, rationale verified by reading**; see [Vacated rows](#vacated-rows-8-and-14) |
-| 15 | Mattel | — | 2022-09-19 | revolver only | Flat-margin revolver, no grid |
+| 15 | Mattel | `0001193125-22-246779` **EX-10.1** | 2022-09-19 | revolver only | ~~Flat-margin, no grid~~ — **read: ratings grid; two-step leverage schedule** |
 | 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2** | 2023-03-15 | revolver only | **Empty covenant list**; escalator, no grid — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
 
 Accession numbers for 4–15 are to be filled from `data/screen/shortlist.jsonl`
@@ -401,12 +401,30 @@ Boeing was placed in row 14 rather than row 15 for that reason — it has a
 ratings grid, and putting it in Mattel's slot would have spent the last unread
 chance at the minority class.
 
-**If Mattel also has a grid, Paya remains the sole source at 2 of 19 facility
-records, and that is reported rather than fixed.** No document will be
-selected to supply the value: choosing after seeing which values the corpus
-produced is the move this file prohibits, and the count is published beside
-the field as recorded for
-[`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-comes-from-one-document).
+**Mattel has been read, and it has a grid** — a five-level ratings grid, so row
+15's rationale failed like the other two rows selected for `has_margin_grid:
+false`. The minority class ends at **4 of 23 facility records, from three
+documents**: Paya (flat, an ordinary sponsor LBO), Peloton's revolver (flat, a
+stressed refinancing) and PureCycle (a calendar escalator, a distressed
+bridge). None came from a row selected for it. Reported with its count, not
+fixed by reselection, per
+[`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
+
+> **Correction.** This paragraph previously said *"If Mattel also has a grid,
+> Paya remains the sole source at 2 of 19 facility records."* That was false
+> when it was committed: PureCycle and Peloton had already supplied `false`
+> values, the latter ten minutes before. It came from an instruction given from
+> memory and was written down without being recomputed. The account of how it
+> happened is in
+> [labeling-notes.md](labeling-notes.md#a-wrong-claim-about-this-field-reached-the-repo-through-an-instruction).
+
+**Mattel instead supplied the corpus's only multi-step `step_down_schedule`**
+— the value the two rows selected *as* step-down candidates did not produce,
+in the field that had been recorded as unmeasurable. That is the clearest
+single piece of evidence here that selection preceded labeling: the document
+was drawn, before labeling and for a different reason, from a signal already
+known to be unreliable, and supplied something nobody had selected for. See
+[labeling-notes.md](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for).
 
 #### How the replacements will be chosen, and how they will not
 
@@ -423,8 +441,8 @@ precisely what the frozen-corpus discipline prohibits, and it would trade the
 project's strongest claim — that selection preceded labeling and was not tuned
 to results — for columns that look better. The thin columns are reported with
 their instance counts instead, as recorded for
-[`step_down_schedule`](labeling-notes.md#step_down_schedule-will-report-over-n1-and-that-has-to-be-said)
-and [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-comes-from-one-document).
+[`step_down_schedule`](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for)
+and [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
 
 **Rationale verified by reading, before inclusion rather than after.** Both
 original rationales came from the screen, which is **0 for 8** on every

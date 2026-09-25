@@ -10,7 +10,7 @@ from pathlib import Path
 from .edgar import MissingUserAgent
 from .screen import run_screen
 from .search import run_census
-from .coverage import run_coverage
+from .coverage import run_coverage, write_results
 from .validate import SCHEMA_PATH, SchemaParseError, run_validate
 
 
@@ -40,6 +40,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     coverage.add_argument("--labels", type=Path, default=Path("data/labels"))
     coverage.add_argument("--schema", type=Path, default=SCHEMA_PATH)
+    coverage.add_argument(
+        "--write", type=Path, metavar="RESULTS_MD",
+        help="regenerate the baseline table and coverage snapshot in place",
+    )
 
     args = parser.parse_args(argv)
 
@@ -52,7 +56,11 @@ def main(argv: list[str] | None = None) -> int:
                 seed=args.seed, raw_dir=args.raw,
             )
         elif args.command == "coverage":
-            print(run_coverage(args.labels, args.schema))
+            if args.write:
+                write_results(args.write, args.labels, args.schema)
+                print(f"regenerated {args.write}")
+            else:
+                print(run_coverage(args.labels, args.schema))
             return 0
         elif args.command == "validate":
             paths = args.paths or [Path("data/labels")]

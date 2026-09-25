@@ -1228,11 +1228,12 @@ by a few points.
 **Report the instance count next to every per-field number.** Some fields will
 not have enough instances to score at all, and the count is what lets a reader
 see it rather than take an F1 on trust. `step_down_schedule` is the live case:
-eight documents in, one covenant record in the corpus carries a non-empty
-array, so the field's score would be computed over a single instance and the
-record-ordering comparison would never have executed. A number reported
-without its n invites exactly the reading it cannot support. See
-[labeling-notes.md](labeling-notes.md#step_down_schedule-will-report-over-n1-and-that-has-to-be-said).
+only a handful of covenant records carry a non-empty array, and just one —
+Mattel's — has more than one step, so the multi-step sequence comparison rests
+on a single real instance. For most of labeling it rested on none. A number
+reported without its n invites exactly the reading it cannot support; the
+generated table in [results.md](results.md) carries the current count. See
+[labeling-notes.md](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for).
 
 And when a gap is small, the finding is **"no measurable difference at this
 sample size."** That sentence is stronger than a four-point improvement the

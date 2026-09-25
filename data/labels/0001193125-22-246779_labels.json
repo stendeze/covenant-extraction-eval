@@ -1,0 +1,180 @@
+{
+  "source": {
+    "accession_number": "0001193125-22-246779",
+    "exhibit": "EX-10.1",
+    "document_file": "d252167dex101.htm",
+    "filing_date": "2022-09-19",
+    "agreement_date": "2022-09-15",
+    "document_title": "Revolving Credit Agreement",
+    "borrower": "Mattel, Inc.",
+    "administrative_agent": "Bank of America, N.A.",
+    "corpus_row": 15,
+    "corpus_check": {
+      "rationale_said": "revolver only; flat-margin revolver, no grid",
+      "document_says": "revolver only; five-level ratings grid; deferral null (certificate); two-step leverage schedule",
+      "verdict": "structure holds, rationale fails — eleventh of eleven",
+      "inclusion": "Syndication confirmed from the signature pages: Bank of America as Administrative Agent and, with 11 others, as a Lender (12 lenders). Size band confirmed only from the 8-K cover document ($1.4B), because the commitment schedule was not filed; see aggregate_commitment. Not an amendment; Article I definitions and §2.01 present."
+    }
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Committed Loan",
+        "citation": {
+          "section": "2.01",
+          "quote": "Committed Loan"
+        },
+        "notes": "Field cut at Kontoor; retained as a record. No facility-level defined term exists; the only quoted tranche term in §2.01 is the singular 'Committed Loan', the heading the plural."
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.01",
+          "quote": "and reborrow under this"
+        },
+        "notes": "§2.01 borrow/prepay/reborrow; §2.08(a) repays at maturity. No term tranche. L/C Sublimit ($75,000,000) and Swing Line Sublimit (lesser of $50,000,000 and the Aggregate Commitments) are each 'part of, and not in addition to, the Aggregate Commitments'. §2.16 accordion to $500,000,000 is an option."
+      },
+      "aggregate_commitment": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.01 Commitment",
+          "quote": "not to exceed the Dollar amount set forth opposite such Lender’s name on Schedule 2.01A"
+        },
+        "notes": "Deferral null to an unattached exhibit under b848204 — the Peloton rule. The Commitment definition gives no aggregate and allocates per-Lender amounts 'opposite such Lender's name on Schedule 2.01A'; the filed exhibit ends at the signature pages with no schedules. The labeler checked §2.01, the Article I commitment definitions, the recitals, §2.16 and the signature pages and enumerated every dollar figure; none states the aggregate. Recorded by the labeler as {amount: null, currency: USD} with a provisional flag asking for a rule; the rule already existed, and the shape is converted to match it. The 8-K cover document in the same accession states $1,400,000,000 — external, not citable from this exhibit, not recorded."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2025-09-15",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 Maturity Date",
+          "quote": "the later to occur of (a) September 15, 2025"
+        },
+        "notes": "Stated date. September 15, 2025 is a Monday, so the Business Day proviso does not move it. Limb (b) is the §2.20 extension option — up to two one-year extensions at each Lender's discretion — a mechanic. No springing maturity proviso."
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 Term SOFR Screen Rate",
+          "quote": "the forward-looking SOFR term rate administered by CME"
+        },
+        "notes": "Term SOFR resolves to the Term SOFR Screen Rate administered by CME, with a 0.10% SOFR Adjustment excluded under the CSA rule. Alternative-currency limbs (SONIA, EURIBOR, CDOR, TIBOR) are not the primary benchmark. No LIBOR references in the document."
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "null_kind": "deferral",
+        "citation": {
+          "section": "1.01 Applicable Rate",
+          "quote": "Initially, the Applicable Rate shall be determined based upon the Debt Rating specified in the certificate delivered pursuant to Section 4.01(a)(v)"
+        },
+        "notes": "Deferral null to an external fact via a closing certificate — the Plains shape, in near-identical language. Five-level S&P/Moody's/Fitch grid, Term SOFR margin 1.125% / 1.250% / 1.375% / 1.500% / 2.000%. Levels I and III are 112.5 and 137.5 bps, which the field could not store until d7451af widened it to a number. Drafting error noted: the definition cites §4.01(a)(v), which is the resolutions and incumbency certificate; the Debt Ratings are certified under §4.01(a)(vii)(C). Either way the opening level lives in a certificate outside the agreement. Overuse guard: every rating symbol and every 'Pricing Level' occurrence was enumerated and none states the opening level."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 Applicable Rate",
+          "quote": "the following percentages per annum, based upon the Debt Rating as set forth below"
+        },
+        "notes": "The margin itself varies with Debt Rating. Verified in the Applicable Rate definition, not through a cross-reference."
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.01",
+          "quote": "the ratio of (a) Consolidated EBITDA to (b) Consolidated Total Interest Expense"
+        },
+        "notes": "EBITDA over Consolidated Total Interest Expense; no rent, capex or dividend component, so interest_coverage under the denominator rule. Tested unconditionally every quarter, flat at 2.75x."
+      },
+      "initial_threshold": {
+        "value": 2.75,
+        "citation": {
+          "section": "7.05(a)",
+          "quote": "The Borrower shall not permit the Consolidated Interest Coverage Ratio as of the end of any fiscal quarter of the Borrower to be less than 2.75:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "7.05(a)",
+          "quote": "to be less than 2.75:1.00"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.05(a)",
+          "quote": "as of the end of any fiscal quarter of the Borrower"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "total_leverage_gross",
+        "citation": {
+          "section": "1.01",
+          "quote": "the ratio of Consolidated Total Funded Debt as of such day to Consolidated EBITDA for the Measurement Period then ended"
+        },
+        "notes": "Gross: Consolidated Total Funded Debt nets no cash, and nor does the 'amount' sentence of Indebtedness."
+      },
+      "initial_threshold": {
+        "value": 4.5,
+        "citation": {
+          "section": "7.05(b)(A)",
+          "quote": "4.50:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [
+          {
+            "effective_from": {
+              "value": "2023-03-31",
+              "basis": "stated"
+            },
+            "threshold": 4.25
+          },
+          {
+            "effective_from": {
+              "value": "2023-09-30",
+              "basis": "stated"
+            },
+            "threshold": 4.0
+          }
+        ],
+        "citation": {
+          "section": "7.05(b)(A)",
+          "quote": "Prior to the Fall-Away Date, the Borrower shall not permit the Consolidated Total Leverage Ratio on the last day of each fiscal quarter ended on each date set forth in the table below to exceed the applicable ratio set forth opposite such date"
+        },
+        "notes": "THE FIRST MULTI-STEP SCHEDULE IN THE CORPUS. Schedule (A), in effect at closing: 4.50 for quarters ending 9/30/22 and 12/31/22, 4.25 for 3/31/23 and 6/30/23, 4.00 from 9/30/23. effective_from is the end of the first quarter at each new level. Schedule (B), 'On and following the Fall-Away Date' (investment-grade ratings from two of three agencies, no Event of Default, certified): 4.00 / 4.00 / 3.75 thereafter — tighter, and not recorded, under the conditional-override rule added in d7451af. Not selected for: row 15 was drawn as 'flat-margin revolver, no grid' and supplied this instead. Wrapped in the {value, basis} form on filing."
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "7.05(b)(A)",
+          "quote": "on the last day of each fiscal quarter ended on each date set forth in the table below"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null,
+        "notes": "The Fall-Away Date changes the level, not whether the test runs, so this is not a springing trigger. The separately defined Covenant Fall-Away Date (later of the Fall-Away Date and 3/31/2023) switches off §§7.09-7.12 and does not affect §7.05. No equity cure, no acquisition holiday. Consolidated Net Worth appears only in lien and debt baskets."
+      }
+    }
+  ],
+  "free_text_notes": [
+    "REVOLVING CREDIT AGREEMENT dated as of September 15, 2022. Single multicurrency revolver (Dollars plus Canadian Dollars, Euro, Yen, Sterling). Secured until the Fall-Away Date. Refinances the December 20, 2017 Syndicated Facility Agreement. Schedules and exhibit forms are listed in the TOC but not included in the filing.",
+    "Labeler's facility_name flag on singular/plural folding is moot — the field was cut, and the normalization gap is already recorded in schema.md as a v2 issue.",
+    "Labeler's NBSP flag: three quotes contain a non-breaking space in the source. The extractor folds NBSP to a space before comparison, and all 14 citations verify."
+  ]
+}
