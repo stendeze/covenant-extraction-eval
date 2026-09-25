@@ -444,6 +444,50 @@ Worth flagging for anyone reading the label: a reviewer keying off economic
 tranche size will expect US$3.75B and should not conclude the label is wrong.
 The note in the label file says so.
 
+### Corpus selection — the prohibition was drawn at the wrong line
+
+**Trigger:** PureCycle Technologies, `0001830033-23-000021`, recognised in
+retrospect.
+
+The corpus was declared frozen "before labeling begins", and the working rule
+that followed was that no document could be chosen for anything labeling had
+revealed. That rule was stated in schema.md, corpus.md and this file, and
+applied repeatedly — most recently to refuse selecting for a second multi-step
+schedule.
+
+**PureCycle had already broken it, correctly.** The corpus had no empty
+covenant list, which is the case README builds its central hallucination
+argument on. PureCycle was found after labeling had begun and added purely to
+supply it. That was plainly the right call, and under the rule it could only be
+admitted as a "documented exception". A rule that can only accommodate the case
+it most obviously ought to permit is a wrong rule, not a right one with an
+exception.
+
+**The line belongs at model output.** The reason a held-out set must be frozen
+is that a corpus chosen after seeing which documents a system handles well
+encodes the system's performance. A corpus chosen for what its documents
+contain encodes nothing about any system — that is stratified sampling, which
+is how the first fifteen were chosen too. The corrected rule: until the first
+extraction run, documents may be chosen for structural coverage, each disclosed
+with what it was selected to exercise; at the first run the corpus freezes, and
+after that nothing is added or removed for any reason connected to how it
+scored.
+
+corpus.md's own opening sentence already gave the model-output reason. "Before
+labeling" had been layered on top of it as extra caution, and the extra caution
+was the part that was wrong.
+
+**Changed as a rule, not excepted around.** The correction was concluded in
+conversation two turns before it reached the repo, and in between the committed
+text went on stating the old line — including in the note refusing a second
+multi-step schedule. It is rewritten in all five files that stated it, in one
+commit, rather than annotated with a carve-out.
+
+**What it does not change.** No extraction has been run, so no document in this
+corpus was chosen, kept or dropped with any knowledge of model output. The
+held-out guarantee is intact. Rows 8 and 14 are still matched to their original
+rationales — a choice, and stricter than the rule now requires.
+
 ### `step_down_schedule` — `effective_from` gets the two-basis treatment
 
 **Trigger:** Amentum Holdings, `0000950157-24-001363`.
@@ -870,10 +914,11 @@ Row 12 chose G-III for "no grid" — an availability grid. Row 15 chose Mattel f
 rationales came from `pricing_grid_hint`, whose every measured error is a false
 negative. None of the four `false` values came from a row selected for it.
 
-**The corpus is not being adjusted, and it is reported instead.** Swapping a
-row in to balance the column, having seen which documents produce which values,
-would trade the thing that makes this set defensible for a column that looks
-better. The field carries its instance count and one sentence more: the
+**It is reported with its count.** Under the [corrected selection
+rule](schema.md#freezing) a document could still be added for this value before
+the first extraction run — that is stratified sampling, disclosed per document —
+and none has been. The field carries its instance count and one sentence more:
+the
 minority class is 4 of 23 across three documents and two constructions, and **a
 model that answered `true` unconditionally and read nothing would score 83%**.
 That is the score to beat.
@@ -948,7 +993,7 @@ A correction to the wording the note used, found while fixing it: it said
 is built, its sequence comparison will have one real multi-step gold array to
 be tested against, where before it had none.
 
-#### Why this is the best evidence in the corpus that selection preceded labeling
+#### What it shows about how the corpus was drawn
 
 Mattel is row 15. It was drawn as "flat-margin revolver, **no grid**" — the
 last unread candidate for `has_margin_grid: false`. It has a ratings grid, so
@@ -957,18 +1002,27 @@ so. And instead of the value it was selected for, it supplied the one value the
 corpus had formally given up on, in the one field this note had declared
 unmeasurable.
 
-Nothing about that was arranged. The document was chosen before labeling, for
-a different reason, from a signal already known to be unreliable; the rows
-selected *as* step-down candidates produced none, and the row selected for
-something else produced the only multi-step schedule. A corpus tuned to its
-results would look the other way round. This is recorded as a finding in its
-own right because it is the cleanest single demonstration that the thin columns
-here are properties of the documents, not of the choices.
+Nothing about that was arranged. The document was chosen for a different
+reason, from a signal already known to be unreliable; the rows selected *as*
+step-down candidates produced none, and the row selected for something else
+produced the only multi-step schedule. A draw curated around its contents would
+look the other way round. This is recorded as a finding in its own right because
+it is the cleanest demonstration that the original draw was blind to what the
+documents contain — so the thin columns here are properties of the documents,
+not of the choices.
 
-**It is not a reason to add more.** A second multi-step schedule would still be
-worth having, but finding one by searching for it now would be the move the
-frozen-corpus discipline prohibits. If one arrives, it arrives the way this one
-did.
+That blindness is stricter than the [freezing rule](schema.md#freezing)
+requires. The rule forbids selection on model output, not on contents; what
+Mattel shows is a property of how the first fifteen were drawn, not a condition
+the corpus has to keep meeting.
+
+**A second multi-step schedule is not being sought, and the reason is not a
+prohibition.** Searching on document contents before the first extraction run
+is permitted. It is not worth it: n = 1 is enough to show the path runs, and
+`step_down_schedule` is not load-bearing for any claim the project makes. The
+empty covenant list is the contrast — it carries the central hallucination
+argument, and its one instance is a distressed bridge rather than the cov-lite
+syndicated deal the corpus was expected to supply it from.
 
 #### And the prediction about where step-downs live was wrong
 

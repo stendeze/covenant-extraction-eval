@@ -47,8 +47,9 @@ Where the honest answer genuinely lives outside the document, the field says so
 ## Corpus selection
 
 "20 credit agreements" is not a reproducible test set. This section is the
-inclusion rule and the sampling frame, and it is frozen before labeling
-begins.
+inclusion rule and the sampling frame. The corpus it produces freezes at the
+first extraction run — see [Freezing](#freezing) for why that, and not the
+start of labeling, is where the line belongs.
 
 ### What counts as a credit agreement
 
@@ -170,12 +171,37 @@ than they are.
 
 ### Freezing
 
-The accession numbers are selected, listed, and committed **before** labeling
-starts and before any model output is looked at. A corpus chosen after seeing
-which documents the system handles well is not a held-out set. If a document
-turns out to be unlabelable — truncated exhibit, scanned image, wrong document
-type that passed the filter — it is replaced and the replacement is recorded
-in the corpus file with the reason.
+**The prohibited move is selecting on model output. Selecting on document
+contents is not.** A corpus chosen after seeing which documents a system
+handles well is not a held-out set, because its composition encodes the
+system's performance. A corpus chosen for what the documents *contain* — which
+covenant types, which pricing structures, which constructions — encodes
+nothing about any system, and choosing that way is stratified sampling.
+
+So the rule has two phases:
+
+- **Until the first extraction run**, documents may be added or replaced for
+  structural coverage. Every such choice is disclosed per document in
+  [corpus.md](corpus.md), with what it was selected to exercise.
+- **At the first extraction run the corpus freezes.** After that no document is
+  added, removed or replaced for any reason connected to how it scored. The
+  one exception is a document that turns out to be unlabelable — truncated
+  exhibit, scanned image, wrong document type that passed the filter — which is
+  replaced, with the replacement and its reason recorded.
+
+> **This line was originally drawn at the start of labeling, and that was the
+> wrong place.** PureCycle showed it. The corpus had no empty covenant list —
+> the case [README.md](README.md) builds its central hallucination argument on
+> — and PureCycle was added after labeling had begun, purely to supply it. That
+> was the right decision, and it was selection on document contents. Under the
+> old line it could only be admitted as an exception, and a rule that can only
+> accommodate the case it most obviously should permit is a wrong rule, not a
+> right rule with one exception. The line now sits where the contamination
+> risk actually is: at model output.
+>
+> Nothing about the held-out guarantee weakens. No extraction has been run, so
+> no document in this corpus was chosen, kept or removed with any knowledge of
+> how a system performs on it.
 
 ### Changing a rule
 

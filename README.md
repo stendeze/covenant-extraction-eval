@@ -22,7 +22,7 @@ Most extraction benchmarks score only whether the right value was found. This on
 
 A `null` returned for a deferral must cite the deferral language itself. The value alone cannot distinguish a system that read the clause from one that declined out of vagueness; the citation can, and it does so through the citation check the harness already performs. Declining is only correct when the system can point at the sentence that made it decline.
 
-**On few-shot examples:** any drawn for prompting come from documents outside the fifteen, and that is stated with the results. Examples taken from the held-out set would leak the answers the set exists to measure.
+**On few-shot examples:** any drawn for prompting come from documents outside the corpus, and that is stated with the results. Examples taken from the held-out set would leak the answers the set exists to measure.
 
 ## Reporting
 
@@ -56,7 +56,7 @@ That matters twice over, and the second time is uncomfortable: **this project us
 
 The hand-labeled set is committed to this repo. It is the part of the project that does not exist publicly, and a benchmark without its benchmark is not one.
 
-The corpus is 15 syndicated credit agreements, $150M–$5B. Amendments are excluded — "Amendment No. 3 to Credit Agreement" is filed as EX-10.1 and contains none of these fields; amended and restated agreements are included and are the cleanest documents in the set. Accession numbers and the exact selection query are frozen in [corpus.md](corpus.md) before labeling begins, so the set is reconstructible rather than a pile of documents that happened to get picked. Full inclusion rule and sampling frame in [schema.md](schema.md).
+The corpus is sixteen syndicated credit agreements, $150M–$5B. Amendments are excluded — "Amendment No. 3 to Credit Agreement" is filed as EX-10.1 and contains none of these fields; amended and restated agreements are included and are the cleanest documents in the set. Accession numbers and the exact selection query are recorded in [corpus.md](corpus.md), so the set is reconstructible rather than a pile of documents that happened to get picked, and the set **freezes at the first extraction run**. Until then documents may be chosen for what they contain — stratified sampling, disclosed per document — but never for how a system scored on them; the line sits at model output, for the reason set out under [Freezing](schema.md#freezing). Full inclusion rule and sampling frame in [schema.md](schema.md).
 
 **The corpus is stratified deliberately, not sampled at random.** A field whose gold value is constant across the set reports 100% accuracy and means nothing. Two fields were at risk, and the frame is built to prevent it: the date range straddles the LIBOR→SOFR transition so `interest_rate_benchmark` is a real classification rather than a constant, and the sample is stratified across revolver-only, revolver + TLA, and revolver + TLB structures so that `has_margin_grid` takes both values — institutional term loans are typically flat-priced, revolvers and pro rata tranches typically carry a grid — and so that cov-lite structures supply the empty-covenant-list case. Fifteen randomly drawn 2024 deals would be near-uniformly Term SOFR and would make the covenant fields look easier than they are.
 

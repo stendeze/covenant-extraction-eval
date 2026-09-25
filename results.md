@@ -4,8 +4,8 @@
 will be reported, and it is committed before any output exists to be tempted
 by.
 
-That is the same move as freezing the corpus before labeling, for the same
-reason. A table designed after seeing the numbers is a table designed around
+That is the same move as freezing the corpus before the first extraction run,
+for the same reason. A table designed after seeing the numbers is a table designed around
 them — fields quietly dropped because they came out badly, baselines omitted
 because the headline looks better without them, enum values shown only where
 something fired. None of those requires bad faith; each is what a person does

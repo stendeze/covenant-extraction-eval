@@ -2,17 +2,16 @@
 
 The held-out set: which documents are in it, and the query that produced them.
 
-This file is **frozen before labeling begins and before any model output is
-looked at**. A test set chosen after seeing which documents the system handles
-well is not held out. The inclusion rule and sampling frame are in
-[schema.md](schema.md#corpus-selection); this file is the record of what that
-rule actually selected.
+This file **freezes at the first extraction run**, before any model output is
+looked at. A test set chosen after seeing which documents a system handles well
+is not held out; a test set chosen for what its documents contain is stratified,
+and every such choice is disclosed row by row below. The rule, and why the line
+sits at model output rather than at the start of labeling, is in
+[schema.md](schema.md#freezing); the inclusion rule and sampling frame are in
+[schema.md](schema.md#corpus-selection).
 
-**Status: pull run 2026-09-04, corpus not yet frozen.** The census and the
-document screen have been run and their funnels are recorded below. The final
-fifteen have not been selected — that is a hand pick from the shortlist, and
-the one open question is recorded under [Benchmark
-balance](#benchmark-balance-finding).
+**Status: fifteen of sixteen slots labeled; row 8 vacant pending replacement.
+Not yet frozen — no extraction has been run.**
 
 Accession numbers are entered only from an actual EDGAR query — never
 reconstructed from memory, because an accession number that looks plausible
@@ -254,6 +253,10 @@ described above (rows 4–15). **One** — row 16, PureCycle — was added
 purposively, after selection, to supply the empty-covenant case that nothing
 else in the slate supplies. It is a documented exception to the frame rather
 than a draw from it; see [Document 16](#document-16-purecycle-a-documented-exception).
+The exception is to the frame's *criteria* — lender composition, commitment
+schedule, size at the floor. Adding a document after labeling had begun, for
+what it contains, was never an exception to anything; it is what the [freezing
+rule](schema.md#freezing) permits until the first extraction run.
 
 > ## ⚠ The "Selected for" column is unverified, and is wrong wherever it has been checked
 >
@@ -406,8 +409,7 @@ chance at the minority class.
 false`. The minority class ends at **4 of 23 facility records, from three
 documents**: Paya (flat, an ordinary sponsor LBO), Peloton's revolver (flat, a
 stressed refinancing) and PureCycle (a calendar escalator, a distressed
-bridge). None came from a row selected for it. Reported with its count, not
-fixed by reselection, per
+bridge). None came from a row selected for it. Reported with its count, per
 [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
 
 > **Correction.** This paragraph previously said *"If Mattel also has a grid,
@@ -421,9 +423,12 @@ fixed by reselection, per
 **Mattel instead supplied the corpus's only multi-step `step_down_schedule`**
 — the value the two rows selected *as* step-down candidates did not produce,
 in the field that had been recorded as unmeasurable. That is the clearest
-single piece of evidence here that selection preceded labeling: the document
-was drawn, before labeling and for a different reason, from a signal already
-known to be unreliable, and supplied something nobody had selected for. See
+evidence here that the original draw was blind to document contents: the
+document was drawn for a different reason, from a signal already known to be
+unreliable, and supplied something nobody had selected for. Blindness to
+contents is stricter than the [freezing rule](schema.md#freezing) requires — it
+forbids only selection on model output — but it means the thin columns here are
+properties of the documents rather than of curation. See
 [labeling-notes.md](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for).
 
 #### How the replacements will be chosen, and how they will not
@@ -433,19 +438,21 @@ post-restructuring credit; row 14 as revolver-only with a grid. Those
 rationales predate any labeling, so replacing against them is frame
 maintenance — restoring a slot to the specification it was drawn under.
 
-**Not against anything labeling has revealed.** No replacement is selected to
-supply a multi-step `step_down_schedule`, a `has_margin_grid: false`, a
-`minimum_liquidity` covenant, or any other column this corpus has discovered
-to be thin. Choosing documents after seeing which values the set produced is
-precisely what the frozen-corpus discipline prohibits, and it would trade the
-project's strongest claim — that selection preceded labeling and was not tuned
-to results — for columns that look better. The thin columns are reported with
-their instance counts instead, as recorded for
+**That is a choice, and a stricter one than the rule requires.** This section
+originally said that choosing a document to supply a thin column was prohibited.
+It is not: the prohibited move is selecting on model output, and until the first
+extraction run, choosing documents for structural coverage is stratified
+sampling — permitted, and disclosed per document with what it was selected to
+exercise. PureCycle, row 16, is that move made openly, and it is what showed the
+old line was drawn in the wrong place; see [Freezing](schema.md#freezing).
+Rows 8 and 14 are nonetheless matched to their original rationales, as frame
+maintenance. Where a column stays thin, it is reported with its instance count,
+as recorded for
 [`step_down_schedule`](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for)
 and [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
 
 **Rationale verified by reading, before inclusion rather than after.** Both
-original rationales came from the screen, which is **0 for 8** on every
+original rationales came from the screen, which is **0 for 11** on every
 rationale checked. A replacement selected on an unread screen signal would
 carry the same defect into a slot that exists because of it. So each
 replacement's structure, covenant count and pricing are confirmed against the
@@ -647,9 +654,11 @@ The sector rule excludes SIC 6798 (REITs) and 6000–6499 (financials), but:
   catches.
 
 All four were excluded by hand during selection. The filter itself is not
-amended retroactively — that would change the frozen frame after seeing the
-data — but the gap is recorded here, and anyone rerunning the pull should
-widen the sector rule and treat a blank SIC as requiring manual review.
+amended retroactively, because re-running the pull under a different filter
+would change the candidate pool the recorded funnel describes, and the funnel's
+value is that it can be reproduced exactly. The gap is recorded here instead,
+and anyone rerunning the pull should widen the sector rule and treat a blank
+SIC as requiring manual review.
 
 ---
 
