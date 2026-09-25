@@ -451,13 +451,24 @@ as recorded for
 [`step_down_schedule`](labeling-notes.md#step_down_schedule-one-multi-step-schedule-and-it-was-not-selected-for)
 and [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
 
-**Rationale verified by reading, before inclusion rather than after.** Both
-original rationales came from the screen, which is **0 for 11** on every
-rationale checked. A replacement selected on an unread screen signal would
-carry the same defect into a slot that exists because of it. So each
-replacement's structure, covenant count and pricing are confirmed against the
-document first, and the row records what was read rather than what was
-predicted.
+**Rationale verified by reading, before inclusion rather than after — on the
+stratum, not on the prediction.** Both original rationales came from the
+screen, which is **0 for 11** on every rationale checked. A replacement
+selected on an unread screen signal would carry the same defect into a slot
+that exists because of it. So each replacement is confirmed against the
+document first on its row's **stratification elements**, and the row records
+what was read rather than what was predicted. For row 14 those elements were
+structure and grid; for row 8 they are structure and category — revolver +
+term, post-restructuring. The covenant count and springing covenant in the
+original row 8 entry were the screen's predictions about Avaya, not the
+stratum, and the screen is 0 for 11. This is the reasoning already applied at
+row 14, where the discipline was to match structure and grid rather than
+reproduce every clause of a failed prediction. What lies outside the stratum —
+for row 8, covenants and pricing — is read during labeling, not selection.
+
+This paragraph previously said that each replacement's "structure, covenant
+count and pricing are confirmed against the document first". It was narrowed
+at the row 8 replacement, whose stratum names neither covenants nor pricing.
 
 ### Document 16: PureCycle, a documented exception
 
