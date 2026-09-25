@@ -620,8 +620,9 @@ The artifact was right and the summary was stale.
 
 That is the third time in this project a claim reported from memory has
 diverged from the artifact it described; the other two are the `has_margin_grid`
-degeneracy claim and a facility-record count, both recorded
-[here](#the-same-shape-in-a-claim-about-the-corpus). All three were cheap
+degeneracy claim and a facility-record count. All six instances, and what they
+add up to, are consolidated at [The finding, across all
+six](#the-finding-across-all-six). All three were cheap
 because something checkable existed. The [blind
 relabel](schema.md#annotator-agreement) is where that stops being true —
 reporting from memory is the exact failure it is designed to detect, and there
@@ -982,6 +983,40 @@ This one never reached a file. The wrong figure was caught before any commit
 message, note or schema text stated it, which is why it is worth recording
 separately from the other five: it shows the check working at the point it is
 cheapest, rather than after the fact.
+
+#### The finding, across all six
+
+| # | Claim | Diverged from | Which was right | Recorded |
+|---|---|---|---|---|
+| 1 | `has_margin_grid` is degenerate | corpus row 1, Paya, already labeled | the files | [here](#the-same-shape-in-a-claim-about-the-corpus) |
+| 2 | "fifteen records, thirteen `true`" | the label files: 16 and 14 | the files | commit `a7fccfb` |
+| 3 | PureCycle summary: `has_margin_grid` `true` | the label file: `false`, post-audit | the file | [here](#has_margin_grid--a-calendar-escalator-is-not-a-grid) |
+| 4 | "17 records, 14 `true`, 82%" | the label files: 18, 15, 83% | the files | commit `009cb65` |
+| 5 | "Paya remains the sole source at 2 of 19" | the label files: 4 from 3 documents, of 22 | the files | [here](#a-wrong-claim-about-this-field-reached-the-repo-through-an-instruction) |
+| 6 | "three documents carry an override" | a recollection of Kontoor's and ANI's holidays | **the recollection** | [here](#a-sixth-and-the-first-caught-before-it-was-written-anywhere) |
+
+The first five all resolved the same way, and the notes written about them drew
+the lesson that fits: check the claim against the artifact — "an instruction is
+not a source", "enumerate the corpus, not the artifacts in hand". Taken alone,
+five out of five support *trust the files over memory*.
+
+**The sixth breaks that, and the rule that survives all six is different.** In
+the sixth the tool was wrong and memory was right. So the finding is not that
+one kind of source is reliable. It is that **disagreement between two sources
+that should agree is the signal — regardless of which one turns out to be
+correct.** The right response is the same every time: stop, recompute from the
+evidence, and let the recomputation decide. Neither side gets the benefit of
+the doubt in advance. The earlier notes were right about their cases and drew
+too narrow a conclusion from them.
+
+This is a stronger claim than the first five could support, and it explains
+something the narrower version could not: **why the blind relabel works.** The
+[intra-annotator check](schema.md#annotator-agreement) deliberately removes the
+artifact — the original labels are not consulted. Under "trust the files" it
+would have nothing to trust. Under this rule it is a machine for manufacturing
+a second source, and the disagreements between the blind pass and the original
+are exactly the signal it exists to produce. Every instance above was that
+check happening by accident; the relabel is it happening on purpose.
 
 The underlying cause of the thin column is a measurement failure rather than a
 selection accident, recorded at [Keyword heuristics

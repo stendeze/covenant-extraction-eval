@@ -180,6 +180,16 @@ intuition. Two are nominated in advance. A reversal there is a finding about
 the schema, not about a document, and is reported separately from the headline
 agreement rate.
 
+**Disagreement between sources as the check on the process.** Six times during
+labeling, a claim stated from one source — memory, an instruction, a partial
+scan, a label's own summary — diverged from another that should have agreed
+with it. Five times the artifact was right; once the recollection was, and the
+tool was wrong. The finding that survives all six is that disagreement is the
+signal regardless of which side is correct, and the response is to recompute
+rather than to trust either. It is also why the blind relabel is expected to
+be informative: it manufactures a second source on purpose. See
+[labeling-notes.md](labeling-notes.md#the-finding-across-all-six).
+
 **The selection-rationale failure rate.** Ten of ten screen-derived rationales
 checked against their documents have failed. That is a measured property of the
 instrument this project used to help choose its own test set, and it belongs
