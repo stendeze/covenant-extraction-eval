@@ -10,8 +10,8 @@ sits at model output rather than at the start of labeling, is in
 [schema.md](schema.md#freezing); the inclusion rule and sampling frame are in
 [schema.md](schema.md#corpus-selection).
 
-**Status: fifteen of sixteen slots labeled; row 8 vacant pending replacement.
-Not yet frozen — no extraction has been run.**
+**Status: sixteen of sixteen slots filled; fifteen labeled — row 8 (Hertz)
+selected, label pending. Not yet frozen — no extraction has been run.**
 
 Accession numbers are entered only from an actual EDGAR query — never
 reconstructed from memory, because an accession number that looks plausible
@@ -249,7 +249,11 @@ from reading the documents, never from these signals.
 Sixteen documents, selected three ways. **Three** were labeled or
 benchmark-confirmed by hand during schema development (rows 1–3). **Twelve**
 were selected from the qualified pool afterward by the stratification
-described above (rows 4–15). **One** — row 16, PureCycle — was added
+described above (rows 4–15); two of those rows now hold documents from outside
+the screened sample but inside the recorded query's candidate pool — row 7,
+amended to the other exhibit in the accession first drawn, and row 8, whose
+replacement had to come from the pool (see [Vacated
+rows](#vacated-rows-8-and-14)). **One** — row 16, PureCycle — was added
 purposively, after selection, to supply the empty-covenant case that nothing
 else in the slate supplies. It is a documented exception to the frame rather
 than a draw from it; see [Document 16](#document-16-purecycle-a-documented-exception).
@@ -328,7 +332,7 @@ rule](schema.md#freezing) permits until the first extraction run.
 | 5 | Amentum Holdings | — | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
 | 6 | Extreme Networks | — | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
 | 7 | Lamb Weston Holdings | `0001679273-24-000026` **EX-10.1** | 2024-05-08 | 2 revolvers + EUR term | Non-USD commitment currency; EURIBOR — see [amendment](#row-7-amended-the-wrong-exhibit-and-a-false-rationale) |
-| 8 | *vacated* | — | — | revolver + term | **Replacement pending** — Avaya dropped, see [Vacated rows](#vacated-rows-8-and-14) |
+| 8 | The Hertz Corporation | `0001104659-21-089858` **EX-10.3** | 2021-07-07 | revolver + term (named Term B, Term C) | Post-restructuring: Chapter 11 exit facility — **replacement, rationale verified by reading**; Avaya dropped, see [Vacated rows](#vacated-rows-8-and-14) |
 | 9 | MP Materials | — | 2025-08-25 | revolver + term | Springing covenant |
 | 10 | Peloton Interactive | — | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 11 | ANI Pharmaceuticals | — | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
@@ -359,7 +363,8 @@ would go untested by a corpus of neatly labeled Term A and Term B facilities.
 
 ### Vacated rows 8 and 14
 
-Both rows are empty and both documents were read before being removed.
+Both documents were read before being removed, and both rows have since been
+refilled by reading.
 
 **Row 8 — Avaya Holdings, dropped.** The accession holds four credit
 agreements and none qualifies. EX-10.4 and EX-10.7 are both $128,125,000,
@@ -369,6 +374,79 @@ EX-10.5 is an $810,000,000 term-only exit loan whose lenders received their
 positions as distributions under a plan of reorganization rather than through
 syndication. EX-10.12 is an amendment. The label produced for EX-10.7 is
 retained in `data/discarded/`.
+
+**Row 8 — filled by The Hertz Corporation.** The replacement was chosen against
+the original rationale, "revolver + term, post-restructuring credit", and
+verified by reading before inclusion, on those two elements only. It is
+Hertz's exit facility from Chapter 11 (D. Del., Case No. 20-11218; plan
+confirmed June 10, 2021): the Credit Agreement dated June 30, 2021, filed as
+EX-10.3 (`tm2121430d1_ex10-3.htm`) to Hertz Global Holdings' 8-K of 2021-07-07.
+It is the accession's only credit agreement; the other nine EX-10 exhibits are
+warrant and registration-rights agreements, vehicle-ABS documents and an
+indemnification form.
+
+- **Revolver + term:** a $1,255,000,000 revolver, $1,300,000,000 of Term B
+  loans and $245,000,000 of Term C loans in one agreement, $2,800,000,000 in
+  all.
+- **Post-restructuring, and neither a DIP nor plan-allocated debt:** the
+  lenders fund cash at closing — each "severally agrees to make, in Dollars,
+  in a single draw on the Closing Date" (§2.1) — and the proceeds repay the DIP
+  facility, among other debt, and fund the plan's distributions. The lenders
+  funded it in cash; it was not distributed to them.
+- **In frame:** Barclays Bank PLC as administrative agent; The Hertz
+  Corporation, a Delaware corporation, as borrower, under New York law; a full
+  agreement, not an amendment. Schedule A-3 is attached and lists 11 revolving
+  lenders summing to $1,255,000,000, exactly the stated total.
+
+**The term side at signing is one lender.** Schedules A-1 and A-2 put Barclays
+at 100% of both term tranches: the arranger funding at signing and syndicating
+afterward. The three-lender test passes on the revolver schedule, so this is a
+clean draw, but the term-side composition at signing is recorded here: one
+lender.
+
+**The Term C construction is new to the corpus, and is left unresolved.** The
+Term C is a funded term loan whose proceeds sit in cash collateral backing
+letters of credit (§3.11). No labeled document has one. How it is labeled is
+decided against the text when row 8 is labeled, not at selection.
+
+**It comes from outside the screened sample.** The 400-document sample holds no
+eligible post-restructuring agreement. Every document in it whose text refers
+to a bankruptcy plan, an exit facility or a restructuring support agreement was
+read, including the 288 the screen rejected. None qualified: the hits were
+Avaya, DIP facilities, amendments, passing references (standard clauses on how
+lenders vote in a bankruptcy, a counterparty's restructuring), and two
+agreements made under transaction support agreements whose term loans were
+exchanged or held by an affiliate — E.W. Scripps (2025) and New Fortress Energy
+(2024). The search therefore went outside the sample: EDGAR full-text search
+on 2026-09-25 for exit-facility language — `"Confirmation Order"`, `"Chapter 11
+Plan"`, `"Chapter 11 Cases"`, `"Exit Facility"`, `"Plan Effective Date"`,
+`"Reorganized Debtors"` and similar, crossed with margin and
+revolving-commitment terms — over 8-K, 10-Q and 10-K filed from 2021-06-01,
+with about 200 exhibits checked at the cover, and at the commitment section
+wherever the cover left a document in contention. Hertz is in
+`data/search/candidates.jsonl`, the recorded query's metadata-filtered pool:
+the position Lamb Weston EX-10.1 already occupies at row 7.
+
+**The rejected alternative: Talen Energy Supply.** Exactly two candidates
+passed. The other was Talen's exit facility from Chapter 11 (S.D. Tex., Case
+No. 22-90054): the Credit Agreement dated May 17, 2023, `exhibit101-sx1.htm` in
+accession `0001628280-24-029107` — a $700,000,000 revolver, $580,000,000 of
+Term B and $470,000,000 of Term C, Citibank, N.A. as agent, eight lenders on
+the signature pages, a Delaware borrower under New York law. It passes the
+frame. It was rejected on reproducibility: it was filed only as an exhibit to a
+Form S-1, and the recorded query covers 8-K, 10-Q and 10-K, so it would have
+been the first document in the corpus that rerunning the selection cannot
+reach. Every earlier exception broke a frame criterion; this one would have
+broken the census. Hertz sits in the query's pool, and its commitment schedule
+reconciles exactly.
+
+Everything else found failed the frame or one of the rationale's two
+exclusions: term loans deemed made rather than funded (Cano Health and WW
+International; Audacy in part) or exchanged for DIP loans (Diebold); revolver
+and term in separate agreements (JOANN, The Container Store, QVC, XBP Global,
+Mallinckrodt); exits that reached EDGAR within the date frame only as
+amendments (Frontier, Endo); later refinancings rather than exits; and DIP
+facilities, amendments and support agreements.
 
 **Row 14 — filled by The Boeing Company.** Lithia was dropped (below); the
 replacement was chosen against the original rationale, "revolver only | Grid;
