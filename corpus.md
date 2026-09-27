@@ -326,7 +326,7 @@ rule](schema.md#freezing) permits until the first extraction run.
 | # | Borrower | Accession · exhibit · file | Filed | Structure | Selected for |
 |---|---|---|---|---|---|
 | 1 | Paya Holdings III | `0001213900-21-034493` **EX-10.1**<br>`ea143383ex10-1_payaholdings.htm` | 2021-06-28 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |
-| 2 | Plains GP Holdings | `0001104659-21-109833` **EX-10.1**<br>`tm2125730d3_ex10-1.htm` | 2021-08-26 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
+| 2 | Plains All American Pipeline, L.P. | `0001104659-21-109833` **EX-10.1**<br>`tm2125730d3_ex10-1.htm` | 2021-08-26 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
 | 3 | Advance Auto Parts | `0001158449-21-000208` **EX-10.1**<br>`aap_exhibit101x10092021.htm` | 2021-11-15 | revolver only | LIBOR; ratings grid; deferral null (external fact) |
 | 4 | Kontoor Brands | `0001760965-21-000058` **EX-10.1**<br>`exhibit101creditagreemen.htm` | 2021-11-19 | revolver + TLA + TLB | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
 | 5 | Amentum Holdings | `0000950157-24-001363` **EX-10.1**<br>`ex10-1.htm` | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
@@ -336,7 +336,7 @@ rule](schema.md#freezing) permits until the first extraction run.
 | 9 | MP Materials | `0001193125-25-187776` **EX-10.1**<br>`d15553dex101.htm` | 2025-08-25 | revolver + term | Springing covenant |
 | 10 | Peloton Interactive | `0001193125-24-150397` **EX-10.1**<br>`d832347dex101.htm` | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 11 | ANI Pharmaceuticals | `0000950103-24-012144` **EX-10.2**<br>`dp216536_ex1002.htm` | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
-| 12 | G-III Apparel | `0001558370-24-008935` **EX-10.1**<br>`giii-20240604xex10d1.htm` | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
+| 12 | G-III Leather Fashions, Inc. | `0001558370-24-008935` **EX-10.1**<br>`giii-20240604xex10d1.htm` | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
 | 13 | Roper Technologies | `0001193125-22-199694` **EX-10.1**<br>`d291205dex101.htm` | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
 | 14 | The Boeing Company | `0000012927-24-000037` **EX-10.1**<br>`a202405may15ex101.htm` | 2024-05-17 | revolver only | Grid (ratings); debt-to-capitalization — **replacement, rationale verified by reading**; see [Vacated rows](#vacated-rows-8-and-14) |
 | 15 | Mattel | `0001193125-22-246779` **EX-10.1**<br>`d252167dex101.htm` | 2022-09-19 | revolver only | ~~Flat-margin, no grid~~ — **read: ratings grid; two-step leverage schedule** |
@@ -354,8 +354,12 @@ The exhibit and the file are recorded, not just the accession, because an
 accession number does not identify a document. **Two rows' accessions hold a
 second credit agreement:** row 2's also contains EX-10.2,
 `tm2125730d3_ex10-2.htm`, a Fourth Amended and Restated Credit Agreement of the
-same date with Plains Marketing, L.P. and Plains Midstream Canada ULC as
-borrowers; row 7's also contains the AgWest facility described
+same date and with the same agent, whose borrowers are Plains Marketing, L.P.
+and Plains Midstream Canada ULC, with Plains All American Pipeline, L.P. — row
+2's borrower — as guarantor. The Borrower column names the actual borrower for
+that reason: it is what tells the two agreements apart, where the filer, Plains
+GP Holdings, is the same for both. Row 7's accession also contains the AgWest
+facility described
 [below](#row-7-amended-the-wrong-exhibit-and-a-false-rationale). Avaya's
 accession, before the row was vacated, held four. Every other EX-10 in a corpus
 accession was checked at its cover and is not a credit agreement. Any row's
