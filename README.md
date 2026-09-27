@@ -64,7 +64,7 @@ Known limitation: banks, insurers, and REITs are excluded. Their covenant packag
 
 Sole annotator is the obvious objection. It is answered with a number rather than an assurance: five agreements are relabeled blind two weeks after the first pass, and intra-annotator agreement is reported per field.
 
-Raw filings are not committed — they are large and re-downloadable from EDGAR full-text search, which covers every filing since 2001 including exhibits. Credit agreements are filed as EX-10 (Material Contracts) exhibits. Each label file records the accession number it was built from, so the corpus is reproducible from a clean checkout once the fetch script lands.
+Raw filings are not committed — they are large and re-downloadable from EDGAR full-text search, which covers every filing since 2001 including exhibits. Credit agreements are filed as EX-10 (Material Contracts) exhibits. Each label file records the accession number it was built from, so the corpus is reproducible from a clean checkout once the fetch script lands. An accession number alone does not identify a document, though: three accessions this corpus has drawn on hold more than one credit agreement — Plains (row 2), Lamb Weston (row 7) and Avaya (the dropped row 8) — so every label also names its exhibit file, and the validator matches that file exactly rather than guessing among the documents in an accession.
 
 ---
 
