@@ -654,9 +654,9 @@ The artifact was right and the summary was stale.
 
 That is the third time in this project a claim reported from memory has
 diverged from the artifact it described; the other two are the `has_margin_grid`
-degeneracy claim and a facility-record count. All six instances, and what they
+degeneracy claim and a facility-record count. All seven instances, and what they
 add up to, are consolidated at [The finding, across all
-six](#the-finding-across-all-six). All three were cheap
+seven](#the-finding-across-all-seven). All three were cheap
 because something checkable existed. The [blind
 relabel](schema.md#annotator-agreement) is where that stops being true —
 reporting from memory is the exact failure it is designed to detect, and there
@@ -1018,7 +1018,26 @@ message, note or schema text stated it, which is why it is worth recording
 separately from the other five: it shows the check working at the point it is
 cheapest, rather than after the fact.
 
-#### The finding, across all six
+#### A seventh, computed rather than recalled
+
+Filing Hertz, the report back described its gridded Term B as "a second
+exception, after Peloton" to [schema.md](schema.md#class-balance)'s assumption
+that institutional TLBs are flat-priced. That was stated from memory — Peloton's
+gridded TLB is the one these notes discuss — and not computed. When the figure
+was computed from the label files, before being written into schema.md, it came
+out differently: **four of the five `term_loan_b` records carry a margin grid**
+— Amentum, Peloton, Hertz and Lamb Weston's euro bullet — and only Paya's is
+flat. Hertz was the fourth, not the second.
+
+It never reached a file. schema.md carries the computed count, and the claim
+survives only in the conversation where it was made. It is the same class as
+the fifth — a number stated confidently from what was in mind rather than from
+the evidence — and it was caught the way the fifth's lesson says it should be:
+the figure was generated from the labels rather than recalled, and the
+disagreement between the two was the signal. That is the fix working, at the
+point it is cheapest.
+
+#### The finding, across all seven
 
 | # | Claim | Diverged from | Which was right | Recorded |
 |---|---|---|---|---|
@@ -1028,6 +1047,7 @@ cheapest, rather than after the fact.
 | 4 | "17 records, 14 `true`, 82%" | the label files: 18, 15, 83% | the files | commit `009cb65` |
 | 5 | "Paya remains the sole source at 2 of 19" | the label files: 4 from 3 documents, of 22 | the files | [here](#a-wrong-claim-about-this-field-reached-the-repo-through-an-instruction) |
 | 6 | "three documents carry an override" | a recollection of Kontoor's and ANI's holidays | **the recollection** | [here](#a-sixth-and-the-first-caught-before-it-was-written-anywhere) |
+| 7 | Hertz's gridded Term B is "a second exception, after Peloton" | the label files: four of five Term B records carry grids | the files | [here](#a-seventh-computed-rather-than-recalled) |
 
 The first five all resolved the same way, and the notes written about them drew
 the lesson that fits: check the claim against the artifact — "an instruction is
@@ -1041,7 +1061,9 @@ that should agree is the signal — regardless of which one turns out to be
 correct.** The right response is the same every time: stop, recompute from the
 evidence, and let the recomputation decide. Neither side gets the benefit of
 the doubt in advance. The earlier notes were right about their cases and drew
-too narrow a conclusion from them.
+too narrow a conclusion from them. The seventh fits the rule rather than
+testing it — the files were right again — but it is the first where the second
+source was produced deliberately, by computing the figure before writing it.
 
 This is a stronger claim than the first five could support, and it explains
 something the narrower version could not: **why the blind relabel works.** The
