@@ -162,6 +162,13 @@ is set to avoid it:
   typically flat-priced; revolvers and pro rata TLAs typically have a grid, so
   structural variety supplies this for free.
 
+  **In this corpus the TLB half of that did not hold.** Four of the five
+  `term_loan_b` records carry a margin grid — Amentum, Peloton, Hertz, and Lamb
+  Weston's euro term loan, a bank bullet that is a TLB by rule — and only
+  Paya's is flat. Peloton inverts the assumed pattern outright, with a gridded
+  TLB and a flat revolver. The four `false` values came from other places; see
+  [corpus.md](corpus.md#mattel-is-the-last-unread-candidate-for-has_margin_grid-false).
+
 Stratify the sample across three facility structures: revolver-only,
 revolver + TLA (pro rata), and revolver + TLB (institutional). The covenant
 fields behave differently across them — cov-lite TLBs yield an empty covenant

@@ -1,0 +1,340 @@
+{
+  "source": {
+    "accession_number": "0001104659-21-089858",
+    "exhibit": "EX-10.3",
+    "document_file": "tm2121430d1_ex10-3.htm",
+    "document_title": "Credit Agreement",
+    "agreement_date": "2021-06-30",
+    "closing_date": "2021-06-30",
+    "closing_date_basis": "Not stated in the exhibit as a calendar date: 'Closing Date' is defined as the date the Section 6.1 conditions are satisfied. 2021-06-30 is the 'dated as of' date and the 8-K's period of report. Provenance only; no scored value depends on it.",
+    "filing_date": "2021-07-07",
+    "filing_date_source": "EDGAR filing index for the accession (Form 8-K, accepted 2021-07-07 17:18:16, period of report 2021-06-30)",
+    "filers": "Hertz Global Holdings, Inc. and The Hertz Corporation (co-registrants), SIC 7510",
+    "borrowers": [
+      "The Hertz Corporation (Parent Borrower)",
+      "Subsidiary Borrowers by joinder (none party at signing)"
+    ],
+    "holdings": "Rental Car Intermediate Holdings, LLC",
+    "administrative_agent": "Barclays Bank PLC (also Collateral Agent)",
+    "facility_structure": "revolver + TLB (institutional) + TLC (funded letter-of-credit facility)",
+    "accession_contents": "The accession carries ten EX-10 exhibits (EX-10.1 through EX-10.10). The accession number alone does not identify this document; the file name does.",
+    "corpus_row": 8,
+    "corpus_check": {
+      "document_type": "full credit agreement (Section 1.1 definitions + Section 2.1 commitments; not an amendment)",
+      "commitments_in_frame": "USD 2,800,000,000 (within $150M-$5B)",
+      "syndicated": "Barclays Bank PLC as Administrative Agent + 11 revolving lenders on Schedule A-3, summing to the stated $1,255,000,000; Term B and Term C each held 100% by Barclays at signing (arranger funding, syndicated afterward)",
+      "borrower": "US corporate (The Hertz Corporation, Delaware), New York law",
+      "sector": "auto rental (SIC 7510) - not bank/insurer/REIT",
+      "structure_stratum": "revolver + term (named Term B, Term C)",
+      "post_restructuring": "Chapter 11 exit facility (D. Del. Case No. 20-11218; plan confirmed 2021-06-10); lenders fund cash at closing (Section 2.1); neither a DIP nor plan-allocated debt",
+      "included": true
+    },
+    "row_8_rationale": "Replacement for the vacated row 8 (Avaya). Chosen against the original rationale, 'revolver + term, post-restructuring credit', and verified by reading before inclusion on those two elements only; covenants and pricing were read during labeling, not selection. See corpus.md, Vacated rows 8 and 14."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Initial Term B Loan Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term Loan Facilities\"); name defined in \"Facility\", clause (a)",
+          "quote": "the Initial Term B Loan Facility and/or the Initial Term C Loan Facility, as the context may require."
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_b",
+        "citation": {
+          "section": "2.4(b)",
+          "quote": "equal to 0.25% of the aggregate original principal amount of the Initial Term B Loans on the Closing Date"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 1300000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term B Loan Commitment\")",
+          "quote": "The aggregate amount of the Initial Term B Loan Commitments as of the Closing Date is $1,300,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 7,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term B Loan Maturity Date\")",
+          "quote": "the seventh anniversary of the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.1 (definition of \"Eurocurrency Base Rate\"), clause (a)(i)",
+          "quote": "the London interbank offered rate administered by ICE Benchmark Administration Limited (such page currently being the LIBOR01 page)"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 350,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"), clause (b)(ii)",
+          "quote": "with respect to Eurocurrency Loans, 3.50% per annum during the period from the Closing Date until the first Adjustment Date"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"; grid in \"Pricing Grid\", clause (b))",
+          "quote": "The Applicable Margins with respect to the Initial Term Loans will be adjusted on each Adjustment Date to the applicable rate per annum set forth under clause (b) of the definition of “Pricing Grid” under the heading “Applicable Margin for ABR Loans” or “Applicable Margin for Eurocurrency Loans” which corresponds to the Consolidated Total Corporate Leverage Ratio"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Initial Term C Loan Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term Loan Facilities\"); name defined in \"Facility\", clause (b)",
+          "quote": "the Initial Term B Loan Facility and/or the Initial Term C Loan Facility, as the context may require."
+        }
+      },
+      "facility_type": {
+        "value": "other",
+        "citation": {
+          "section": "Recitals, clause (iii); see also 3.11(a)",
+          "quote": "a term loan “C” facility to cash collateralize letters of credit initially in an aggregate principal amount of $245,000,000"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 245000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term C Loan Commitment\")",
+          "quote": "The aggregate amount of the Initial Term C Loan Commitments as of the Closing Date is $245,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 7,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Term C Loan Maturity Date\")",
+          "quote": "the seventh anniversary of the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.1 (definition of \"Eurocurrency Base Rate\"), clause (a)(i)",
+          "quote": "the London interbank offered rate administered by ICE Benchmark Administration Limited (such page currently being the LIBOR01 page)"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 350,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"), clause (b)(ii)",
+          "quote": "with respect to Eurocurrency Loans, 3.50% per annum during the period from the Closing Date until the first Adjustment Date"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"; grid in \"Pricing Grid\", clause (b))",
+          "quote": "The Applicable Margins with respect to the Initial Term Loans will be adjusted on each Adjustment Date to the applicable rate per annum set forth under clause (b) of the definition of “Pricing Grid” under the heading “Applicable Margin for ABR Loans” or “Applicable Margin for Eurocurrency Loans” which corresponds to the Consolidated Total Corporate Leverage Ratio"
+        }
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Initial Revolving Facility",
+        "citation": {
+          "section": "1.1 (definition of \"Fee Letters\"); name defined in \"Facility\", clause (c)",
+          "quote": "in connection with the Initial Term Loan Facilities and the Initial Revolving Facility."
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.1(c)(i)",
+          "quote": "the Borrowers may use the Initial Revolving Commitments by borrowing, prepaying the Initial Revolving Loans in whole or in part, and reborrowing"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 1255000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Revolving Commitment\")",
+          "quote": "The original amount of the aggregate Initial Revolving Commitments of the Lenders is $1,255,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 5,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Initial Revolving Maturity Date\")",
+          "quote": "the fifth anniversary of the Closing Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "libor",
+        "citation": {
+          "section": "1.1 (definition of \"Eurocurrency Base Rate\"), clause (a)(i)",
+          "quote": "the London interbank offered rate administered by ICE Benchmark Administration Limited (such page currently being the LIBOR01 page)"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 350,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"), clause (a)(ii)",
+          "quote": "with respect to Eurocurrency Loans, SONIA Loans and BA Equivalent Loans, 3.50% per annum during the period from the Closing Date until the first Adjustment Date"
+        }
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Margin\"; grid in \"Pricing Grid\", clause (a))",
+          "quote": "The Applicable Margins with respect to the Initial Revolving Loans and Swing Line Loans will be adjusted on each Adjustment Date to the applicable rate per annum set forth under clause (a) of the definition of “Pricing Grid”"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "minimum_liquidity",
+        "citation": {
+          "section": "8.9(a)",
+          "quote": "the Parent Borrower and its Restricted Subsidiaries shall maintain minimum Liquidity of at least"
+        }
+      },
+      "initial_threshold": {
+        "value": 500000000,
+        "citation": {
+          "section": "8.9(a)(i)",
+          "quote": "shall maintain minimum Liquidity of at least (i) $500,000,000 on the last day of each calendar month falling within each fiscal quarter ending on March 31 or December 31"
+        }
+      },
+      "step_down_schedule": {
+        "value": null,
+        "citation": {
+          "section": "8.9(a)(ii)",
+          "quote": "(ii) $400,000,000 on the last day of each calendar month falling within each fiscal quarter ending on June 30 or September 30"
+        },
+        "null_kind": "unrepresentable"
+      },
+      "testing_frequency": {
+        "value": "monthly",
+        "citation": {
+          "section": "8.9(a)",
+          "quote": "on the last day of each calendar month falling within each fiscal quarter ending on March 31 or December 31"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "null_kind": "absence"
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "first_lien_net_leverage",
+        "citation": {
+          "section": "1.1 (definition of \"Consolidated First Lien Indebtedness\"), clauses (b)-(c)",
+          "quote": "minus (b) Unrestricted Cash minus (c) amounts in the Term C Loan Collateral Accounts"
+        }
+      },
+      "initial_threshold": {
+        "value": 3.0,
+        "citation": {
+          "section": "8.9(b) (table, first row)",
+          "quote": "March 31 or December 31 of any fiscal year 3.00:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": null,
+        "citation": {
+          "section": "8.9(b) (table, second row)",
+          "quote": "June 30 or September 30 of any fiscal year 3.50:1.00"
+        },
+        "null_kind": "unrepresentable"
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "8.9(b)",
+          "quote": "Commencing with the first fiscal quarter following the expiration of the Relief Period, the Parent Borrower and its Restricted Subsidiaries shall not permit the Consolidated First Lien Leverage Ratio as at the last day of the Most Recent Four Quarter Period"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "null_kind": "absence"
+      }
+    }
+  ],
+  "notes": {
+    "hesitations": [
+      "HESITATION 1: TLC facility_type = other. The agreement labels the tranche explicitly (a term loan 'C' facility) and describes its purpose as cash-collateralizing letters of credit. Under 3.11(a), its proceeds were deposited on the Closing Date into the Term C Loan Collateral Accounts backing the Term Letters of Credit, so the borrower never had use of the money. The labeled-tranche rule covers only Term A and Term B, and 'C' has no enum value. The amortization fallback would give term_loan_b (the TLC has no scheduled amortization), but schema.md applies that fallback only to tranches with no letter, and term_loan_b would describe a funded L/C facility as an institutional term loan. Alternative: term_loan_b. Proposed rule: a tranche lettered other than A or B is `other` whatever its amortization; the amortization test applies only to unlettered tranches. Alignment consequence: a prediction of term_loan_b for the TLC becomes a spurious term_loan_b record plus a missed `other` record.",
+      "HESITATION 2: seasonal covenant levels (both covenants). Each covenant sets its level by time of year, not by a dated schedule, and nothing in schema.md covers that. (a) step_down_schedule has no correct v1 value. [] would claim the level is flat, and any dated array would be dates the labeler computed rather than dates the agreement states. Both covenants carry null and should be excluded from scoring until a rule exists; the full seasonal structure is under 'seasonal_levels' below. (b) initial_threshold: for the leverage covenant, the top row gives 3.00, and so does the first test date at the Relief Period's stated outside date (the Relief Period ends no later than the first day of the fiscal quarter ended March 31, 2023, so the first test is the quarter ending 2023-03-31). The Relief Period can also end earlier, once a Compliance Certificate shows LTM Consolidated EBITDA of at least $650,000,000; if that happened, the first test could fall at a June 30 or September 30 quarter-end and the level would be 3.50. That is a performance fact outside the document, so the label cannot depend on it. 3.00 is also the most restrictive level, so the rule proposed below gives 3.00 regardless. For the Liquidity Covenant, the top row and the first test date disagree. The top row gives $500,000,000. Reading the Closing Date as 2021-06-30 puts the first test at 2021-07-31, a month in the quarter ending September 30, which gives $400,000,000. Recorded $500,000,000: the agreement never states the Closing Date as a calendar date, and when the schema cannot pin the applicable level it already takes the borrower-adverse one (the silence rule for margin grids records the most expensive level). Alternative: 400000000. Proposed rule: where a covenant level is set by fiscal quarter or month of the year on a repeating cycle, initial_threshold is the most restrictive level; step_down_schedule is null and unscored; the seasonal levels go in the notes. A v2 field could carry them.",
+      "HESITATION 3 (lower stakes): relief-period covenants. The Liquidity Covenant applies only while the Relief Period lasts, and the leverage covenant starts only after it ends. The schema has no field for when a covenant is in force. Both are recorded, under the existing principle that a covenant limited to the revolving lenders 'is a financial covenant in this agreement'. The covenant-holiday rule concerns the level of a single covenant, not whether a substitute covenant exists, so it does not apply. Both springing_trigger values are null: a start or stop that happens once is not a per-period condition, the same treatment as the Avaya 'ending after the Final Order Entry Date' start condition. A model that drops the liquidity test as transitional will score a missed record, so schema.md should say explicitly that these covenants are recorded.",
+      "Minor: facility_name convention. The agreement defines facility-level names in 'Facility' ('Initial Term B Loan Facility', 'Initial Term C Loan Facility', 'Initial Revolving Facility'). The quoted terms in Section 2.1 are loan names instead ('Initial Term B Loan', 'Initial Term C Loan', 'Initial Revolving Loans'). This label follows the Paya precedent: a defined facility-level term wins when one exists. The labeling guide's 'names in quotes in 2.01' would give the loan names. The field is reported separately either way, but the guide and the precedent should agree."
+    ],
+    "seasonal_levels": {
+      "liquidity_covenant_8_9_a": [
+        {
+          "months_falling_within_fiscal_quarters_ending": "March 31 or December 31",
+          "minimum_usd": 500000000
+        },
+        {
+          "months_falling_within_fiscal_quarters_ending": "June 30 or September 30",
+          "minimum_usd": 400000000
+        }
+      ],
+      "financial_maintenance_covenant_8_9_b": [
+        {
+          "fiscal_quarter_ending": "March 31 or December 31 of any fiscal year",
+          "maximum_ratio": 3.0
+        },
+        {
+          "fiscal_quarter_ending": "June 30 or September 30 of any fiscal year",
+          "maximum_ratio": 3.5
+        }
+      ]
+    },
+    "covenant_windows": "Relief Period: from the Closing Date to the earlier of (1) the first day of the fiscal quarter ended March 31, 2023, and (2) the date as of which LTM Consolidated EBITDA, as reflected in a Compliance Certificate, is at least $650,000,000. Liquidity Covenant: tested from the last day of the first full calendar month after the Closing Date until the Relief Period expires, with a monthly compliance certificate under 7.2(e). Financial Maintenance Covenant: starts with the first fiscal quarter following expiration of the Relief Period; Exhibit U footnote 8 puts it at 'the first fiscal quarter ending after the expiration of the Relief Period'. At the stated outside date, the last liquidity test is 2022-12-31 and the first leverage test is the quarter ending 2023-03-31; if the EBITDA test is met earlier, both move earlier.",
+    "covenant_definitions": "'Liquidity' is the sum of Unrestricted Cash, Term C Loan Collateral Account balances in excess of outstanding Term L/C Obligations, and Available Revolving Commitments; the dollar threshold is recorded as an integer in whole units. 'Consolidated First Lien Leverage Ratio' is Consolidated First Lien Indebtedness divided by Consolidated EBITDA for the Most Recent Four Quarter Period. The debt side is Consolidated Total Corporate Indebtedness secured by Liens on the Collateral (junior-lien debt excluded), minus Unrestricted Cash, minus amounts in the Term C Loan Collateral Accounts. That makes it first-lien and net, so first_lien_net_leverage.",
+    "covenant_beneficiary": "Under 9.1(c), an Event of Default under Section 8.9 (a 'Financial Covenant Event of Default') is not a default for the Term Loans unless the Required Revolving Lenders have accelerated the Revolving Loans and terminated the Revolving Commitments. In practice both covenants run for the revolving lenders, the standard cov-lite TLB construction. The 9.2 equity cure (Specified Equity Contribution) applies to the Financial Maintenance Covenant only.",
+    "springing_trigger": "Null for both, with no citation because nothing is being relied on. There is no utilization or availability condition anywhere in Section 8.9 or in the definitions (no 'Test Period', 'Testing Condition' or 'Trigger Event' terms). The Liquidity Covenant is tested every month it is in force, and the leverage covenant every quarter once it starts.",
+    "benchmark_chain": "The Applicable Margin prices 'Eurocurrency Loans', which bear interest at the Eurocurrency Rate. That rate is a formula over the Eurocurrency Base Rate (the formula is an image in the filing; for Initial Term Loans it is floored at 0.50%). Eurocurrency Base Rate clause (a), for Dollar loans, is the 'US LIBO Rate': the London interbank offered rate administered by ICE Benchmark Administration, Reuters LIBOR01. 'Benchmark' is initially the Eurocurrency Rate. The Benchmark Replacement waterfall (Term SOFR plus 0.11448% / 0.26161% / 0.42826% by tenor, then Daily Simple SOFR) and Section 1.5 are conditional fallback language and are ignored under the rule.",
+    "multicurrency": "Term loans are Dollars only (2.1(a)(i), 2.1(b)(i)). The revolver can also be drawn in Designated Foreign Currencies: Canadian Dollars as BA Equivalent Loans (BA Rate from the Reuters CDOR page) or Canadian Prime Rate Loans; Sterling as SONIA Loans (Daily Simple SONIA plus a 0.1193% adjustment); Euros off EURIBOR; Australian Dollars off BBSY; any other currency off LIBOR. The aggregate commitment is expressed in Dollars on a Dollar Equivalent basis, and the primary benchmark is USD LIBOR. No record is created for any currency.",
+    "libor_floor": "Not a field. Initial Term Loans (TLB and TLC) have a 0.50% Eurocurrency Rate floor; the revolver has 0.00%.",
+    "base_rate_margin": "Not a field. The ABR margin (and, for the revolver, the Canadian Prime Rate margin) opens at 2.50%, 100 bps under the Eurocurrency margin, and moves in step with it through the grid.",
+    "pricing_grid": "The grid is keyed to the Consolidated Total Corporate Leverage Ratio and resets on each Adjustment Date. An Adjustment Date is the second Business Day after the Lenders receive the financials and the Compliance Certificate, starting from the first full fiscal quarter ended after the Closing Date. Clause (a), revolver and swingline, has three levels: above 3.50x, 3.50%; at or below 3.50x and above 2.50x, 3.25%; at or below 2.50x, 3.00% (Eurocurrency, SONIA and BA loans). Clause (b), Initial Term Loans, has two levels: above 3.50x, 3.50%; at or below 3.50x, 3.25%. The opening level is stated expressly ('during the period from the Closing Date until the first Adjustment Date'), so neither the silence rule nor the deferral-null rule applies. All three facilities are has_margin_grid true, the TLB and TLC included.",
+    "commitment_fee": "Not a field. The Applicable Commitment Fee Percentage opens at 0.50%, then 0.500% / 0.375% / 0.250% on the same three leverage levels (Pricing Grid clause (a)).",
+    "excluded_from_facilities": [
+      "Swing Line Loans (2.7): up to $250,000,000, within the Revolving Commitments. No record.",
+      "Revolving Letters of Credit (3.1(a)(i)): issued within the Revolving Commitments against each issuer's Revolving L/C Commitment Amount. No record.",
+      "Term Letters of Credit / Term Letter of Credit Commitment ($245,000,000): L/C capacity cash-collateralized by the Initial Term C Loan proceeds (3.11). A record would double-count the TLC commitment. No record.",
+      "2.9 Incremental Facility (Maximum Incremental Facilities Amount: the greater of $635,000,000 and 100% of LTM Consolidated EBITDA, plus further capacity), 2.10 Extension Amendments, 2.11 Specified Refinancing Facilities: options, not commitments at signing. No record."
+    ],
+    "commitment_schedules": "The schedules are attached. Schedule A-1: Barclays Bank PLC, $1,300,000,000 (100%). Schedule A-2: Barclays Bank PLC, $245,000,000 (100%). Schedule A-3 has 11 lenders totalling $1,255,000,000: Barclays, Deutsche Bank AG New York Branch, BNP Paribas, Royal Bank of Canada, Citizens Bank, Bank of Montreal, Mizuho and JPMorgan Chase at $125,000,000 each; Credit Agricole CIB and Natixis at $100,000,000 each; Bank of America at $55,000,000. All three schedules reconcile to the defined terms, with no discrepancy. Schedule A-4 (Term L/C commitments, not a facility) prints its total as '$245,000,000,000' against a single $245,000,000.00 line. That is a typo; the defined term 'Term Letter of Credit Commitment' ($245,000,000) governs.",
+    "maturity": "Each maturity is defined only relative to the Closing Date, and 'Closing Date' is defined as the date the 6.1 conditions are satisfied rather than as a calendar date. The basis is therefore relative, matching the schema's own example. There is no 'earliest of' construction and no springing maturity proviso (no reference to any external instrument's maturity). The TLB and TLC formulations are the identical string 'the seventh anniversary of the Closing Date'. Under first-match span derivation both citation quotes resolve to the TLB definition. That is harmless for the existence check, and the section strings tell the two apart.",
+    "citation_verification": "Every non-null quote in this file was checked as an exact substring of the exhibit under four extraction conventions: bs4 with block breaks, bs4 get_text(' '), tag-strip with no separator, and tag-strip with a space separator. Quotes avoid spans that cross the <U> tags wrapping defined-term names and clause letters, because those break the space-separated strip. All quotes are unique in the document except 'the seventh anniversary of the Closing Date' (2 occurrences, see maturity) and the shared quotes reused across the TLB, TLC and revolver records.",
+    "filing_edits": "Structural edits at filing; no scored value altered. maturity_date strings became {tenor_years, anchor} (7, 7, 5 from the Closing Date); springing_trigger nulls gained null_kind absence; step_down_schedule nulls gained null_kind unrepresentable, the kind added under this document, with the labeler's citations kept as the cited construction; source.file_name became document_file. The corpus_fit block, written against an outdated corpus.md that did not yet list Hertz, was replaced by corpus_check and corpus_row 8."
+  }
+}

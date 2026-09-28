@@ -55,15 +55,15 @@ exactly the kind of table that goes stale when a label lands:
 <!-- BEGIN BASELINE TABLE -->
 | Field | Naive strategy | Scores | n |
 |---|---|---:|---:|
-| `aggregate_commitment` | always non-null | **91%** | 21/23 |
+| `aggregate_commitment` | always non-null | **92%** | 24/26 |
 | `step_down_schedule` | always `[]` | **87%** | 20/23 |
-| `testing_frequency` | always `quarterly` | **87%** | 20/23 |
-| `has_margin_grid` | always `true` | **83%** | 19/23 |
-| `applicable_margin_bps` | always non-null | **78%** | 18/23 |
-| `springing_trigger` | always `null` | **78%** | 18/23 |
-| `interest_rate_benchmark` | always `term_sofr` | **70%** | 16/23 |
-| `facility_type` | always `revolver` | **70%** | 16/23 |
-| `covenant_type` | always `interest_coverage` | **26%** | 6/23 ← lead with this one |
+| `has_margin_grid` | always `true` | **85%** | 22/26 |
+| `testing_frequency` | always `quarterly` | **84%** | 21/25 |
+| `applicable_margin_bps` | always non-null | **81%** | 21/26 |
+| `springing_trigger` | always `null` | **80%** | 20/25 |
+| `facility_type` | always `revolver` | **65%** | 17/26 |
+| `interest_rate_benchmark` | always `term_sofr` | **62%** | 16/26 |
+| `covenant_type` | always `interest_coverage` | **24%** | 6/25 ← lead with this one |
 <!-- END BASELINE TABLE -->
 
 A system scoring a couple of points above the naive figure on
@@ -127,7 +127,9 @@ These are properties of the corpus, not of a system, and they do not change
 when results arrive.
 
 **`step_down_schedule` is thin, and multi-step schedules are n = 1.** Three
-non-empty arrays across 23 covenant records: two with a single step (Amentum,
+non-empty arrays across the 23 covenant records the field scores — 25 in all,
+less Hertz's two seasonal cycles, which are excluded as `unrepresentable`: two
+with a single step (Amentum,
 Lamb Weston EX-10.1) and one with two (Mattel). Report the field's count beside
 its score, and report the multi-step subset separately — a sequence comparison
 scored over one real two-element array is a demonstration, not a measurement.
@@ -216,60 +218,60 @@ A snapshot as of the current gold set is below. It is **not** a result; it is
 the shape a result will be reported in, filled with instance counts.
 
 <!-- BEGIN COVERAGE SNAPSHOT -->
-**15 documents · 23 facility records · 23 covenant records · 1 with an empty covenant list**
+**16 documents · 26 facility records · 25 covenant records · 1 with an empty covenant list**
 
 ## Facility fields
 
-### `facility_type`  ·  n = 23
-*Naive baseline: always answer `revolver` → 16/23 = 70%*
+### `facility_type`  ·  n = 26
+*Naive baseline: always answer `revolver` → 17/26 = 65%*
 
 | Value | n | Status |
 |---|---:|---|
-| `revolver` | 16 | — |
-| `term_loan_b` | 4 | — |
+| `revolver` | 17 | — |
+| `term_loan_b` | 5 | — |
 | `term_loan_a` | 3 | — |
+| `other` | 1 | — |
 | `bridge` | 0 | **not exercised** |
 | `delayed_draw_term_loan` | 0 | **pre-registered as possibly never firing** |
-| `other` | 0 | **not exercised** |
 
-### `aggregate_commitment`  ·  n = 23
-*Naive baseline: always answer `(non-null)` → 21/23 = 91%*
+### `aggregate_commitment`  ·  n = 26
+*Naive baseline: always answer `(non-null)` → 24/26 = 92%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 21 | — |
+| `(non-null)` | 24 | — |
 | `(null)` | 2 | — |
 
-### `aggregate_commitment.currency`  ·  n = 21
-*Naive baseline: always answer `USD` → 20/21 = 95%*
+### `aggregate_commitment.currency`  ·  n = 24
+*Naive baseline: always answer `USD` → 23/24 = 96%*
 
 | Value | n | Status |
 |---|---:|---|
-| `USD` | 20 | — |
+| `USD` | 23 | — |
 | `EUR` | 1 | — |
 
-### `maturity_date`  ·  n = 23
-*Naive baseline: always answer `(non-null)` → 23/23 = 100%*
+### `maturity_date`  ·  n = 26
+*Naive baseline: always answer `(non-null)` → 26/26 = 100%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 23 | — |
+| `(non-null)` | 26 | — |
 
-### `maturity_date.basis`  ·  n = 23
-*Naive baseline: always answer `relative` → 12/23 = 52%*
+### `maturity_date.basis`  ·  n = 26
+*Naive baseline: always answer `relative` → 15/26 = 58%*
 
 | Value | n | Status |
 |---|---:|---|
-| `relative` | 12 | — |
+| `relative` | 15 | — |
 | `stated` | 11 | — |
 
-### `interest_rate_benchmark`  ·  n = 23
-*Naive baseline: always answer `term_sofr` → 16/23 = 70%*
+### `interest_rate_benchmark`  ·  n = 26
+*Naive baseline: always answer `term_sofr` → 16/26 = 62%*
 
 | Value | n | Status |
 |---|---:|---|
 | `term_sofr` | 16 | — |
-| `libor` | 6 | — |
+| `libor` | 9 | — |
 | `euribor` | 1 | — |
 | `base_rate` | 0 | **not exercised** |
 | `cdor` | 0 | **pre-registered as possibly never firing** |
@@ -277,47 +279,47 @@ the shape a result will be reported in, filled with instance counts.
 | `other` | 0 | **not exercised** |
 | `prime` | 0 | **not exercised** |
 
-### `applicable_margin_bps`  ·  n = 23
-*Naive baseline: always answer `(non-null)` → 18/23 = 78%*
+### `applicable_margin_bps`  ·  n = 26
+*Naive baseline: always answer `(non-null)` → 21/26 = 81%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 18 | — |
+| `(non-null)` | 21 | — |
 | `(null)` | 5 | — |
 
-### `has_margin_grid`  ·  n = 23
-*Naive baseline: always answer `true` → 19/23 = 83%*
+### `has_margin_grid`  ·  n = 26
+*Naive baseline: always answer `true` → 22/26 = 85%*
 
 | Value | n | Status |
 |---|---:|---|
-| `true` | 19 | — |
+| `true` | 22 | — |
 | `false` | 4 | — |
 
 ## Covenant fields
 
-### `covenant_type`  ·  n = 23
-*Naive baseline: always answer `interest_coverage` → 6/23 = 26%*
+### `covenant_type`  ·  n = 25
+*Naive baseline: always answer `interest_coverage` → 6/25 = 24%*
 
 | Value | n | Status |
 |---|---:|---|
 | `interest_coverage` | 6 | — |
+| `first_lien_net_leverage` | 4 | — |
 | `total_net_leverage` | 4 | — |
-| `first_lien_net_leverage` | 3 | — |
+| `minimum_liquidity` | 3 | — |
 | `total_leverage_gross` | 3 | — |
 | `debt_to_capitalization` | 2 | — |
 | `fixed_charge_coverage` | 2 | — |
-| `minimum_liquidity` | 2 | — |
 | `other` | 1 | — |
 | `capex_limit` | 0 | **not exercised** |
 | `debt_service_coverage` | 0 | **pre-registered as possibly never firing** |
 | `secured_net_leverage` | 0 | **not exercised** |
 
-### `initial_threshold`  ·  n = 23
-*Naive baseline: always answer `(non-null)` → 23/23 = 100%*
+### `initial_threshold`  ·  n = 25
+*Naive baseline: always answer `(non-null)` → 25/25 = 100%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(non-null)` | 23 | — |
+| `(non-null)` | 25 | — |
 
 ### `step_down_schedule`  ·  n = 23
 *Naive baseline: always answer `[]` → 20/23 = 87%*
@@ -336,25 +338,27 @@ the shape a result will be reported in, filled with instance counts.
 | `1 step(s)` | 2 | — |
 | `2 step(s)` | 1 | — |
 
-### `testing_frequency`  ·  n = 23
-*Naive baseline: always answer `quarterly` → 20/23 = 87%*
+*Excluded from scoring, and from n above: 2 covenant(s) whose `step_down_schedule` is null with `null_kind` `unrepresentable` — a construction the field's type cannot hold.*
+
+### `testing_frequency`  ·  n = 25
+*Naive baseline: always answer `quarterly` → 21/25 = 84%*
 
 | Value | n | Status |
 |---|---:|---|
-| `quarterly` | 20 | — |
+| `quarterly` | 21 | — |
+| `monthly` | 2 | — |
 | `continuous` | 1 | — |
-| `monthly` | 1 | — |
 | `weekly` | 1 | — |
 | `annual` | 0 | **not exercised** |
 | `event_driven` | 0 | **not exercised** |
 | `semiannual` | 0 | **not exercised** |
 
-### `springing_trigger`  ·  n = 23
-*Naive baseline: always answer `(null)` → 18/23 = 78%*
+### `springing_trigger`  ·  n = 25
+*Naive baseline: always answer `(null)` → 20/25 = 80%*
 
 | Value | n | Status |
 |---|---:|---|
-| `(null)` | 18 | — |
+| `(null)` | 20 | — |
 | `(non-null)` | 5 | — |
 
 ### `springing_trigger.condition_type`  ·  n = 5

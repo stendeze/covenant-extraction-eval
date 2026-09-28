@@ -920,8 +920,8 @@ rule](schema.md#freezing) a document could still be added for this value before
 the first extraction run — that is stratified sampling, disclosed per document —
 and none has been. The field carries its instance count and one sentence more:
 the
-minority class is 4 of 23 across three documents and two constructions, and **a
-model that answered `true` unconditionally and read nothing would score 83%**.
+minority class is 4 of 26 across three documents and two constructions, and **a
+model that answered `true` unconditionally and read nothing would score 85%**.
 That is the score to beat.
 
 #### A wrong claim about this field reached the repo through an instruction
@@ -1027,11 +1027,13 @@ the instrument used to pick documents for this field cannot see grids.
 
 ## `step_down_schedule`: one multi-step schedule, and it was not selected for
 
-Fourteen documents labeled, twenty-three covenant records, **three non-empty
-`step_down_schedule` arrays** — Amentum's single step (5.25x → 5.00x), Lamb
+Sixteen documents labeled, twenty-five covenant records — twenty-three scored
+on this field, once Hertz's two seasonal cycles are excluded as
+[`unrepresentable`](schema.md#9-step_down_schedule) — and **three non-empty
+`step_down_schedule` arrays**: Amentum's single step (5.25x → 5.00x), Lamb
 Weston EX-10.1's single step (5.00x → 4.75x), and **Mattel's two steps**
 (4.50x → 4.25x at the quarter ending 2023-03-31 → 4.00x at 2023-09-30). Every
-other covenant is flat. Multi-step arrays are **n = 1**.
+other scored covenant is flat. Multi-step arrays are **n = 1**.
 
 That is still a thin field and it is still reported with its count. But it is
 no longer the field this note used to describe.

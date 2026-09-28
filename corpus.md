@@ -10,8 +10,8 @@ sits at model output rather than at the start of labeling, is in
 [schema.md](schema.md#freezing); the inclusion rule and sampling frame are in
 [schema.md](schema.md#corpus-selection).
 
-**Status: sixteen of sixteen slots filled; fifteen labeled — row 8 (Hertz)
-selected, label pending. Not yet frozen — no extraction has been run.**
+**Status: sixteen of sixteen slots filled and labeled. Not yet frozen — no
+extraction has been run.**
 
 Accession numbers are entered only from an actual EDGAR query — never
 reconstructed from memory, because an accession number that looks plausible
@@ -348,7 +348,6 @@ recorded query's output, `data/search/candidates.jsonl`, which also carries each
 filer's CIK; against the live EDGAR filing index, which lists that file under
 that exhibit number in that accession; and against the file on disk, whose cover
 names the borrower. The four agree on every row, and so does the Filed column.
-Row 8's label is pending, so its first check waits for the label.
 
 The exhibit and the file are recorded, not just the accession, because an
 accession number does not identify a document. **Two rows' accessions hold a
@@ -505,10 +504,11 @@ chance at the minority class.
 
 **Mattel has been read, and it has a grid** — a five-level ratings grid, so row
 15's rationale failed like the other two rows selected for `has_margin_grid:
-false`. The minority class ends at **4 of 23 facility records, from three
+false`. The minority class ends at **4 of 26 facility records, from three
 documents**: Paya (flat, an ordinary sponsor LBO), Peloton's revolver (flat, a
 stressed refinancing) and PureCycle (a calendar escalator, a distressed
-bridge). None came from a row selected for it. Reported with its count, per
+bridge). None came from a row selected for it. Hertz, labeled last, added
+three facility records, all gridded. Reported with its count, per
 [`has_margin_grid`](labeling-notes.md#has_margin_grid-the-minority-class-three-documents-and-two-constructions).
 
 > **Correction.** This paragraph previously said *"If Mattel also has a grid,
