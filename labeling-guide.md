@@ -234,6 +234,14 @@ be outstanding.
 
 If the agreement labels a tranche "Term A" or "Term B", that governs.
 
+**Any other letter on a term tranche is `other`.** A Term C, D or later is
+recorded `other` whatever its amortization: the letter is the agreement's own
+classification, and the table below is for tranches with no letter. Hertz's
+Term C is a bullet, which the table would call `term_loan_b` — but the
+agreement already has a Term B and draws the distinction itself. A suffix does
+not change the letter: a Term A-2 is a Term A. Revolvers are not classified by
+letter at all — Lamb Weston's "Revolving B-2" is a revolver.
+
 If it says only "Term Loans" or "Initial Term Loans" with no letter, go to
 the repayment section and read the amortization:
 
@@ -327,6 +335,16 @@ final level and not the "thereafter" row.
 
 Normalize "6.50 to 1.00" and "6.50:1.00" to `6.50`.
 
+**A level that cycles by quarter or month of the year: record the most
+restrictive level** — the highest minimum or the lowest maximum. Hertz's
+minimum Liquidity is $500M at the end of months in the March and December
+quarters and $400M in June and September. Its first test is the end of the
+first full month after the Closing Date, which the agreement defines only by
+its conditions, so the document does not say which level opens. Record
+`500000000`. This is the covenant version of the margin silence rule, and it
+is flagged in schema.md as the rule closest to arbitration: if a second
+document makes you hesitate over it, write the hesitation down.
+
 **A percentage level is a ratio too.** "more than 60% of Total Capital" is
 `0.60`, not `60`. This differs from `springing_trigger`, where 35% is recorded
 as `35` — that field has a `threshold_unit` to say which, and this one does
@@ -352,6 +370,15 @@ other in free text. Ask what applies on the day the agreement is signed.
 ### `step_down_schedule`
 
 `[]` means confirmed flat, not unknown.
+
+**A seasonal cycle is not a step-down schedule.** If the level alternates by
+quarter or month of the year, `[]` is false and a dated array would be dates
+you computed. Record `null` with `null_kind` `unrepresentable`, cite the cycle,
+and describe it in free text; the field is excluded from scoring. Use this only
+where the field's type cannot hold what the document states — never because a
+schedule is hard to extract. The three null kinds, by where the value is:
+`deferral`, it exists outside the document; `absence`, it does not exist;
+`unrepresentable`, it exists in the document and the field cannot express it.
 
 Do not repeat `initial_threshold` as the first element. The array holds only
 changes.
@@ -427,6 +454,10 @@ The test is whether the condition is re-checked *every* test date. MP
 Materials' covenants switch on at a "Covenant Trigger Event" and stay on:
 record `null`, `null_kind` `absence`, and describe the phase-in in free text.
 
+A covenant that exists only before or after such a switch is still a record.
+Hertz's Relief Period retires one covenant and starts another; both are
+recorded, each `null` / `absence`.
+
 The tell is a defined term like "Covenant Trigger Event", "Covenant Commencement
 Date" or "Financial Covenant Period", used with *commencing with* or *prior to*
 rather than *solely to the extent*.
@@ -482,6 +513,9 @@ Consolidated, in the order they bite.
 10. **Covenant holiday levels are conditional overrides.** Record the
     non-holiday level.
 11. **An empty covenant list is a real answer.**
+12. **A seasonal covenant cycle** → most restrictive level for
+    `initial_threshold`; `step_down_schedule` `null`, `unrepresentable`, with
+    the cycle cited.
 
 ---
 

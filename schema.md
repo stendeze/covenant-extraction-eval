@@ -363,6 +363,28 @@ amortization schedule (a 1%/yr amortizing institutional tranche is a TLB; a
   rata pricing" are judgments a second labeler cannot reliably replicate, and
   a rule that requires taste is not one this schema can use. Flagged for the
   [blind relabel](#annotator-agreement) rather than resolved by preference.
+- **A term tranche lettered other than A or B is `other`, whatever its
+  amortization.** The letter is the agreement's own classification of the
+  tranche, and the amortization test is for tranches with no letter. Hertz's
+  Initial Term C Loans are a bullet — §2.4(b) amortizes only the Term B, and
+  §2.4(c)(ii) repays the Term C at maturity — so the amortization test would
+  make them `term_loan_b`. But the agreement has its own Term B, and recording
+  the C as a second one erases a distinction the document draws between the
+  two. The C is "a term loan 'C' facility to cash collateralize letters of
+  credit": on the Closing Date its proceeds were deposited into collateral
+  accounts backing letters of credit (§3.11). A suffix does not change the
+  letter — a Term A-2 is a Term A, a Term B-1 a Term B — and revolvers are not
+  classified by letter at all.
+
+  **The cost, stated:** an ordinary institutional tranche that happens to be
+  lettered C is `other` too. That is the trade already made at Lamb Weston —
+  the rule governs over market usage — because a test on what a tranche is for
+  would need taste.
+
+  This extends the field to a construction it had not met: neither existing
+  rule applied to a C on its own terms, and this one overrides neither, so it
+  does not count against `facility_type` under the [rule-accumulation
+  test](#when-a-field-has-accumulated-too-many-rules).
 - **Letter of credit and swingline sublimits are not facilities.** They are
   carve-outs of the revolving commitment and creating a separate record for
   them double-counts the commitment. No record.
@@ -841,6 +863,32 @@ rules:
 
 - Record the level at the **first test date**, which is the top row of the
   step-down table — not the final level, and not the level "thereafter".
+- **Where the level repeats on a cycle within the year — set by fiscal quarter
+  or month of the year rather than by a dated or counted schedule — record the
+  most restrictive level in the cycle:** the highest minimum, or the lowest
+  maximum. Hertz §8.9(a) requires minimum Liquidity of $500,000,000 at the end
+  of months in fiscal quarters ending March 31 or December 31 and $400,000,000
+  in those ending June 30 or September 30, "Commencing with the last day of the
+  first full calendar month following the Closing Date". The Closing Date is
+  defined only as the date the §6.1 conditions are satisfied or waived, so the
+  document does not say which level governs the first test; $400,000,000 would
+  need the closing date from the 8-K. The value is `500000000`. Its leverage
+  covenant, 3.00x and 3.50x on the same quarters, is `3.00`.
+
+  This mirrors the silence rule for
+  [`applicable_margin_bps`](#5-applicable_margin_bps): where the document does
+  not fix the opening level, record the conservative one. It is consistent
+  with that rule rather than new in kind, and unlike "the top row" it does not
+  depend on the order a drafter listed the quarters in. The step-down side of
+  the same construction is [below](#9-step_down_schedule).
+
+  **Of the four rules written at Hertz, this is the closest to arbitration.**
+  It is classed as coverage — a construction the field had not met, on the
+  same reasoning as the calendar escalator under
+  [`has_margin_grid`](#6-has_margin_grid) — but the field's own two
+  descriptions, the level at the first test date and the top row, come apart
+  on this construction, and the rule chooses between readings. If a second
+  document ever splits on it, this is where to look.
 - Where the agreement expresses the ratio as "4.00:1.00" or "4.00 to 1.00",
   normalize to `4.00`.
 - **Where the agreement expresses the level as a percentage, record the
@@ -918,6 +966,22 @@ Adjudication rules:
 
 - `[]` means the covenant level is flat for the life of the agreement.
   Confirmed flat, not unknown.
+- **A level that repeats on a cycle within the year is not a step-down
+  schedule, and the field's type cannot hold it.** `[]` would assert the level
+  is flat, which is false, and a dated array would hold dates the labeler
+  computed, which this field forbids. Record `null` with `null_kind`
+  [`unrepresentable`](#null_kind--a-gold-annotation-not-a-schema-field), cite
+  the construction, and put the cycle in free text. The field is excluded from
+  scoring for that covenant. Hertz is the case: both §8.9 covenants set their
+  levels by fiscal quarter of the year — $500,000,000 and $400,000,000 of
+  minimum Liquidity, 3.00x and 3.50x of first lien leverage — and the
+  [`initial_threshold`](#8-initial_threshold) rule records the most
+  restrictive of each.
+
+  The precedent is the springing-maturity exclusion under `maturity_date`:
+  decline a construction the field cannot hold rather than record a distorted
+  version of it. **The cost, stated:** the corpus's only seasonal schedules
+  survive only as notes, in the field that was already its thinnest.
 - The `initial_threshold` is **not** repeated as the first element. The array
   holds only changes from the initial level.
 - Where the table's periods are described relative to fiscal quarters ("the
@@ -1070,6 +1134,13 @@ Adjudication rules:
   note. A field that records a construction falsely is worse than a field that
   declines to record it, but the information is lost either way and that
   should be visible.
+
+  **A covenant in force only before or after such a switch is recorded as a
+  covenant.** Hertz's Relief Period ends on the earlier of an EBITDA
+  certificate and a fixed date — the shape of MP Materials' trigger — and its
+  end retires one covenant, minimum Liquidity, and starts another, first lien
+  leverage. Both are records, each `null` / `absence` here, with the window in
+  free text.
 - The typical trigger is revolver utilization above a threshold (commonly 35%
   or 40% of commitments) measured on the last day of a fiscal quarter. Record
   the percentage as a number: 35% → `35`, unit `percent`.
@@ -1143,21 +1214,42 @@ reason should not be able to hide inside a single aggregate.
 
 ### `null_kind` — a gold annotation, not a schema field
 
-Label files carry `null_kind` alongside any null value, taking `"deferral"` or
-`"absence"`. It determines whether a citation is required: a deferral null
-must quote the language that defers, an absence null has nothing to quote.
+Label files carry `null_kind` alongside any null value, taking `"deferral"`,
+`"absence"` or `"unrepresentable"`. It determines whether a citation is
+required, and whether the field is scored at all. The three are told apart by
+where the value is:
+
+- **`deferral`** — the value exists outside the document. The agreement says
+  so, and the null must quote the language that defers.
+- **`absence`** — the value does not exist. There is nothing to quote.
+- **`unrepresentable`** — the value exists in the document, and the field's
+  type cannot express it. The null must quote the construction, and the field
+  is **excluded from scoring** for that record: neither a hit nor a miss, and
+  not counted among the field's instances. Added under Hertz.
+
+**Guard against overuse — the same guard the deferral null carries.**
+`unrepresentable` applies only where the field's type cannot hold the
+construction the document states, never where a value is merely hard to
+extract, buried, cross-referenced within the document, or tedious to assemble.
+It must cite the construction, and it is sanctioned only where a rule in this
+document names the construction; today there is one, the seasonal covenant
+cycle under [`step_down_schedule`](#9-step_down_schedule). Without that limit
+it becomes the escape hatch the deferral rule was written to prevent, and a
+worse one: a field excluded from scoring cannot even be scored wrong.
 
 **It is deliberately not part of the extraction schema and is not scored.**
 The model is never asked for it. The reason is the one that already excluded
 covenant direction: `null_kind` is fully determined by field identity. On
 `applicable_margin_bps` a null is essentially always a deferral; on
-`springing_trigger` it is essentially always an absence. A model producing it
+`springing_trigger` it is essentially always an absence; on
+`step_down_schedule` it is only ever unrepresentable. A model producing it
 would be right by construction, and scoring it would inflate the headline
 number with a field that cannot be got wrong.
 
 The scorer reads `null_kind` from the gold record to decide whether to demand
-a citation for that null. That preserves the machine-checkability without
-asking the model for an answer it cannot fail.
+a citation for that null, and whether to score the field at all. That
+preserves the machine-checkability without asking the model for an answer it
+cannot fail.
 
 ---
 

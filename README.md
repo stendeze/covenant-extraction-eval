@@ -22,6 +22,8 @@ Most extraction benchmarks score only whether the right value was found. This on
 
 A `null` returned for a deferral must cite the deferral language itself. The value alone cannot distinguish a system that read the clause from one that declined out of vagueness; the citation can, and it does so through the citation check the harness already performs. Declining is only correct when the system can point at the sentence that made it decline.
 
+A third kind of gold `null`, `unrepresentable`, sits outside this test altogether: it marks a value the document states and a field's type cannot hold — Hertz's seasonal covenant levels are the one case — and that field is excluded from scoring rather than scored, under the same guard against use on anything merely hard to extract.
+
 **On few-shot examples:** any drawn for prompting come from documents outside the corpus, and that is stated with the results. Examples taken from the held-out set would leak the answers the set exists to measure.
 
 ## Reporting

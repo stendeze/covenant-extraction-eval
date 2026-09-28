@@ -81,9 +81,18 @@ GUARDED_SETS: dict[str, tuple[frozenset[str], str]] = {
         "and `threshold_unit` is `percent` or `currency`.",
     ),
     "null_kind": (
-        frozenset({"deferral", "absence"}),
-        "Label files carry `null_kind` alongside any null value, taking `\"deferral\"` or "
-        "`\"absence\"`.",
+        frozenset({"deferral", "absence", "unrepresentable"}),
+        "Label files carry `null_kind` alongside any null value, taking `\"deferral\"`, "
+        "`\"absence\"` or `\"unrepresentable\"`.",
+    ),
+    # Not an enum but a permission: the fields schema.md lets carry an
+    # `unrepresentable` null. Guarded like the sets above, so a new use cannot
+    # appear here without the rule that sanctions it appearing there first —
+    # which is the overuse guard, enforced rather than only written down.
+    "unrepresentable_fields": (
+        frozenset({"step_down_schedule"}),
+        "today there is one, the seasonal covenant cycle under "
+        "[`step_down_schedule`](#9-step_down_schedule).",
     ),
 }
 
@@ -109,6 +118,7 @@ class SchemaSets:
     condition_type: frozenset[str]
     threshold_unit: frozenset[str]
     null_kinds: frozenset[str]
+    unrepresentable_fields: frozenset[str]
 
 
 def _normalize_prose(text: str) -> str:
@@ -208,6 +218,7 @@ def load_schema_sets(schema_path: Path = SCHEMA_PATH) -> SchemaSets:
         condition_type=GUARDED_SETS["condition_type"][0],
         threshold_unit=GUARDED_SETS["threshold_unit"][0],
         null_kinds=GUARDED_SETS["null_kind"][0],
+        unrepresentable_fields=GUARDED_SETS["unrepresentable_fields"][0],
     )
 
 ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -362,12 +373,13 @@ def _check_citation(
 
 
 def _check_null_kind(
-    report: Report, path: str, entry: dict[str, Any], value: Any, sets: SchemaSets
+    report: Report, path: str, name: str, entry: dict[str, Any], value: Any, sets: SchemaSets
 ) -> None:
     """schema.md, `null_kind` — a gold annotation, not a schema field.
 
-    It decides whether a citation is demanded, so a null without it leaves the
-    scorer unable to tell a deferral from an absence.
+    It decides whether a citation is demanded and whether the field is scored
+    at all, so a null without it leaves the scorer unable to tell a deferral
+    from an absence, or either from a construction the field cannot hold.
     """
     null_kind = entry.get("null_kind")
     citation = entry.get("citation")
@@ -396,6 +408,23 @@ def _check_null_kind(
                 "an absence null has nothing to quote; citation should be null",
                 severity="warn",
             )
+        if null_kind == "unrepresentable":
+            # Excluded from scoring, so the citation is the only thing that
+            # makes the null checkable at all: it must point at the
+            # construction the field cannot hold.
+            if not citation:
+                report.add(
+                    path,
+                    "unrepresentable_null_without_citation",
+                    "an unrepresentable null must quote the construction the field cannot hold",
+                )
+            if name not in sets.unrepresentable_fields:
+                report.add(
+                    path,
+                    "unrepresentable_without_rule",
+                    f"schema.md sanctions unrepresentable only on {sorted(sets.unrepresentable_fields)}; "
+                    f"a use on {name} needs a rule naming the construction first",
+                )
     elif null_kind is not None:
         report.add(path, "null_kind_on_non_null", f"value is not null but null_kind is {null_kind!r}")
 
@@ -572,7 +601,7 @@ def _check_field(
 
     value = entry["value"]
     citation = entry.get("citation")
-    _check_null_kind(report, path, entry, value, sets)
+    _check_null_kind(report, path, name, entry, value, sets)
 
     if value is None:
         # A deferral null's citation is the whole reason the null is

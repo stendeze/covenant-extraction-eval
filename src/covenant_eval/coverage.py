@@ -66,6 +66,7 @@ def tally(labels: list[dict[str, Any]], sets: SchemaSets) -> dict[str, Any]:
         "springing_trigger.condition_type": Counter(),
         "springing_trigger.threshold_unit": Counter(),
         "step_down_schedule.length": Counter(),
+        "step_down_schedule.excluded": Counter(),
     }
     empty_covenant_lists = 0
 
@@ -104,8 +105,15 @@ def tally(labels: list[dict[str, Any]], sets: SchemaSets) -> dict[str, Any]:
                         derived["springing_trigger.condition_type"][value.get("condition_type")] += 1
                         derived["springing_trigger.threshold_unit"][value.get("threshold_unit")] += 1
                 elif name == "step_down_schedule":
-                    covenant[name]["[]" if not value else "(non-empty)"] += 1
-                    derived["step_down_schedule.length"][len(value)] += 1
+                    if value is None:
+                        # schema.md, `null_kind`: an unrepresentable null is
+                        # excluded from scoring, so it stays out of n and out
+                        # of the baseline. Counting it as `[]` would record a
+                        # seasonal cycle as a flat covenant.
+                        derived["step_down_schedule.excluded"][entry.get("null_kind")] += 1
+                    else:
+                        covenant[name]["[]" if not value else "(non-empty)"] += 1
+                        derived["step_down_schedule.length"][len(value)] += 1
                 elif isinstance(value, str):
                     covenant[name][value] += 1
                 elif value is None:
@@ -193,6 +201,14 @@ def render(tallies: dict[str, Any], sets: SchemaSets) -> str:
             lines += _rows("step_down_schedule.length (diagnostic)",
                            Counter({f"{k} step(s)": v for k, v in
                                     tallies["derived"]["step_down_schedule.length"].items()}), None)
+            excluded = tallies["derived"]["step_down_schedule.excluded"]
+            if excluded:
+                kinds = ", ".join(f"`{k}`" for k in sorted(excluded, key=str))
+                lines.append(
+                    f"\n*Excluded from scoring, and from n above: {sum(excluded.values())} "
+                    f"covenant(s) whose `step_down_schedule` is null with `null_kind` {kinds} — "
+                    f"a construction the field's type cannot hold.*"
+                )
     return "\n".join(lines) + "\n"
 
 
