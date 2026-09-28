@@ -196,6 +196,9 @@ So the rule has two phases:
   exhibit, scanned image, wrong document type that passed the filter — which is
   replaced, with the replacement and its reason recorded.
 
+**The corpus froze at tag `corpus-freeze`, before the first extraction run.**
+The tag names the freeze commit; the first extraction run comes after it.
+
 > **This line was originally drawn at the start of labeling, and that was the
 > wrong place.** PureCycle showed it. The corpus had no empty covenant list —
 > the case [README.md](README.md) builds its central hallucination argument on

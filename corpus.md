@@ -2,16 +2,16 @@
 
 The held-out set: which documents are in it, and the query that produced them.
 
-This file **freezes at the first extraction run**, before any model output is
-looked at. A test set chosen after seeing which documents a system handles well
+This file **froze at tag `corpus-freeze`**, before the first extraction run and
+before any model output existed. A test set chosen after seeing which documents a system handles well
 is not held out; a test set chosen for what its documents contain is stratified,
 and every such choice is disclosed row by row below. The rule, and why the line
 sits at model output rather than at the start of labeling, is in
 [schema.md](schema.md#freezing); the inclusion rule and sampling frame are in
 [schema.md](schema.md#corpus-selection).
 
-**Status: sixteen of sixteen slots filled and labeled. Not yet frozen — no
-extraction has been run.**
+**Status: frozen at tag `corpus-freeze`. Sixteen of sixteen slots filled and
+labeled; no extraction has been run.**
 
 Accession numbers are entered only from an actual EDGAR query — never
 reconstructed from memory, because an accession number that looks plausible
