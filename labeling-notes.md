@@ -119,7 +119,11 @@ Three independent instances, in the order they surfaced:
    negative**. It scored `false` on Plains and Advance Auto, both of which
    carry five-level ratings grids, and on Lamb Weston, which carries three
    tiered grids. `structure` reported `revolver_plus_tla` for a term-only
-   agreement and confused TLA with TLB twice.
+   agreement and confused TLA with TLB twice. **Final, over all seventeen
+   documents read that the screen scored** — every corpus row it scored and
+   the three discarded documents: `structure` 9 of 17, `pricing_grid_hint`
+   11 of 17, and every grid error still a false negative, six misses and no
+   false positives.
 
 4. **Covenant counts, in both directions.** The rationales also quote covenant
    counts, and the signal that produced them matches *defined ratio
@@ -128,15 +132,45 @@ Three independent instances, in the order they surfaced:
    ratios are defined and used only for incurrence tests. Kontoor predicted
    three and has two, for the same reason. Advance Auto predicted one and has
    two, because its second covenant is labeled "Consolidated Coverage Ratio",
-   a neutral name no pattern matches. Two of five exact.
+   a neutral name no pattern matches. Two of five exact. **Final, over the
+   same seventeen: 6 exact, 6 over-counted, 5 under-counted** — the
+   under-counts are covenants whose names no pattern matches, Boeing's and
+   Roper's debt-to-capitalization tests among them.
+
+The final measurement, document by document, generated from `screened.jsonl`
+against the label files on 2026-09-27 (Hertz and Lamb Weston EX-10.1 are not
+in the screened sample, so the screen made no prediction about them):
+
+| Document | `structure` said | Labels | | Grid said | Labels | | Covenants said / labeled |
+|---|---|---|---|---|---|---|---|
+| ANI Pharmaceuticals | `revolver_plus_term_unlettered` | revolver + TLA | ✅ | true | true | ✅ | 3 / 2 (over) |
+| Advance Auto Parts | `revolver_only` | revolver only | ✅ | false | true | ❌ miss | 1 / 2 (under) |
+| Amentum | `revolver_plus_tlb` | revolver + TLB | ✅ | true | true | ✅ | 4 / 1 (over) |
+| Extreme Networks | `revolver_plus_tlb` | revolver + TLA | ❌ | true | true | ✅ | 2 / 2 ✅ |
+| G-III Leather Fashions | `revolver_plus_term_unlettered` | revolver only | ❌ | false | true | ❌ miss | 3 / 1 (over) |
+| Kontoor Brands | `revolver_plus_tlb` | revolver + TLA | ❌ | true | true | ✅ | 3 / 2 (over) |
+| MP Materials | `revolver_plus_term_unlettered` | revolver only | ❌ | false | true | ❌ miss | 2 / 3 (under) |
+| Mattel | `revolver_only` | revolver only | ✅ | false | true | ❌ miss | 2 / 2 ✅ |
+| Paya | `revolver_plus_term_unlettered` | revolver + TLB | ✅ | false | false | ✅ | 3 / 1 (over) |
+| Peloton Interactive | `revolver_plus_term_unlettered` | revolver + TLB | ✅ | true | true | ✅ | 3 / 2 (over) |
+| Plains | `revolver_only` | revolver only | ✅ | false | true | ❌ miss | 1 / 1 ✅ |
+| PureCycle Technologies | `revolver_only` | revolver only | ✅ | false | false | ✅ | 0 / 0 ✅ |
+| Roper Technologies | `revolver_plus_term_unlettered` | revolver only | ❌ | true | true | ✅ | 0 / 1 (under) |
+| The Boeing Company | `revolver_only` | revolver only | ✅ | true | true | ✅ | 0 / 1 (under) |
+| Avaya (discarded) | `revolver_plus_term_unlettered` | revolver only | ❌ | false | false | ✅ | 0 / 1 (under) |
+| Lamb Weston Holdings (discarded) | `revolver_plus_tla` | term only: 3 × TLA | ❌ | false | true | ❌ miss | 2 / 2 ✅ |
+| Lithia (discarded) | `revolver_only` | revolver + 4 × other | ❌ | true | true | ✅ | 2 / 2 ✅ |
+
+**9 of 17** on structure, **11 of 17** on the grid with every error a miss, and **6 of 17** exact on covenant counts — 6 over, 5 under.
 
 **The errors are systematic, not random, but they are not all misses.** A
 keyword rule fires on the language it was written for and is silent on
 everything else, so anything asking *does this exist* — covenant presence,
-grid presence — fails as a miss, and every `pricing_grid_hint` error measured
-so far is a false negative. But anything asking *how many* over-counts
-instead, because a defined term that looks like a covenant is counted whether
-or not it is one. Both directions produce the same end state: a corpus
+grid presence — fails as a miss, and every `pricing_grid_hint` error is a
+false negative: six of six over the seventeen documents read. Anything asking
+*how many* errs both ways — it over-counts where a defined term that looks like
+a covenant is counted whether or not it is one, and under-counts where a
+covenant's name matches no pattern. Both directions produce the same end state: a corpus
 rationale that asserts something the document does not support.
 [corpus.md](corpus.md) row 7 selected Lamb Weston for "Lettered TLA with no
 grid"; that accession holds two agreements, neither matching, and both carry

@@ -202,13 +202,17 @@ State this plainly wherever results are reported, because the two framings
 give different numbers and blurring them would be the most misleading thing in
 the project.
 
-The fifteen were selected to exercise each field's value space, not to mirror
+The corpus was selected to exercise each field's value space, not to mirror
 the population of syndicated credit agreements. Springing covenants are 2 of
-75 in the qualified pool and 3 of 15 here. Explicitly lettered tranches are 4
-of 75 and 4 of 15. That is roughly 5x enrichment on both, and it is
-deliberate: a representative sample of fifteen would contain zero or one
-springing covenant, and `springing_trigger` would report an accuracy figure
-computed over a single instance.
+75 in the qualified pool and **4 of 16** here, counted from the label files
+(the screen predicted ~~3 of 15~~). Explicitly lettered term tranches are 4 of
+75 in the pool and **2 of 16** here (predicted ~~4 of 15~~). The corpus figures
+are measured; the pool figures are the screen's, over documents never read, so
+the ratios — roughly 9x on springing covenants and 2x on lettering, where the
+prediction was 5x on both — are indicative rather than measured. The intent
+holds for the field it mattered to: a representative sample of sixteen would
+contain zero or one springing covenant, and `springing_trigger` would report
+an accuracy figure computed over a single instance.
 
 **The consequence for reporting.** Per-field F1 is the result. A single
 headline accuracy number across all fields either should not be reported, or
@@ -262,13 +266,14 @@ schedule, size at the floor. Adding a document after labeling had begun, for
 what it contains, was never an exception to anything; it is what the [freezing
 rule](schema.md#freezing) permits until the first extraction run.
 
-> ## ⚠ The "Selected for" column is unverified, and is wrong wherever it has been checked
+> ## The "Selected for" column, checked against every document
 >
 > **Read this before using the table.** The rationales below — what each
-> document is supposed to exercise — were generated from `screen.py`'s keyword
-> and regex signals, not by reading the agreements. Those signals have a
-> measured error rate. As each document is labeled, its rationale is checked
-> against the document, and the result so far is this:
+> document was chosen to exercise — were generated from `screen.py`'s keyword
+> and regex signals, not by reading the agreements. Every row has now been read
+> and every rationale checked against its document. **The predictions are kept
+> beside the corrections rather than overwritten**, because how many needed
+> correcting is the finding this section promised:
 >
 > | Row | Rationale said | Document says | |
 > |---|---|---|---|
@@ -287,57 +292,64 @@ rule](schema.md#freezing) permits until the first extraction run.
 > | 15 Mattel | revolver only; **flat margin, no grid** | revolver only holds; **five-level ratings grid** | ❌ |
 > | 13 Roper | **covenant-free** | §7.1 Total Debt to Total Capital at 0.65:1.00 | ❌ |
 >
-> **Three hold, eleven fail — and the split is not random.** Rows 1–3 are
-> precisely the three that the screen did not select; they were labeled or
-> benchmark-confirmed by hand during schema development. **Every
-> screen-derived rationale that has been checked has failed: eleven of eleven.**
+> **The final count: three hold, eleven fail — and the split is not random.**
+> Rows 1–3 are precisely the three that the screen did not select; they were
+> labeled or benchmark-confirmed by hand during schema development. **Every
+> screen-derived rationale that was checked failed: eleven of eleven.** The
+> count went five through eleven on consecutive documents and never produced
+> a single success. The rationales were not partially reliable; they were
+> unreliable, with a failure rate of 100% over eleven trials, and the only
+> rationales that held describe the three documents the instrument never
+> touched.
 >
-> That count has gone five through eleven on consecutive documents. It is not
-> drifting toward a rate — it has not yet produced a single success. The
-> rationales are not partially reliable; they are unreliable, with a measured
-> failure rate of 100% over eleven trials, and the only rationales that hold
-> describe the three documents the instrument never touched.
+> The three rows filled by reading instead — the replacements in rows 8 and
+> 14, and PureCycle in row 16 — were verified before inclusion on what they
+> were chosen for, and are not counted as tests of the screen: a rationale
+> written from the document cannot fail against it. Lithia, row 14's first
+> draw, is not in the count either; it was dropped as a Canadian agreement
+> outside the frame, with its pricing grid redacted, and its rationale was not
+> scored.
 >
-> **The rows that got corrected are the rows that happened to be read, not the
-> rows that happened to be wrong.** Nothing about labeling order was chosen to
-> find errors, so the seven unread rows should be assumed to carry the same
-> error rate as the five read ones, not a lower one. Corrections appear here
-> as they are found, which makes the table look progressively more accurate
-> while the unread remainder is exactly as unverified as it was on day one.
+> **The Structure column needed correcting in 6 of 16 rows** — all six among
+> the nine whose Structure still carried the screen-era prediction (rows 4–6,
+> 9–13 and 15). The other seven had been read before selection or corrected
+> already. Each wrong prediction is struck through beside the labeled
+> structure.
 >
-> **What this does and does not undermine.** The *inclusion* filters are a
-> different question and mostly hold: these are real syndicated credit
+> **What this does and does not undermine.** The *inclusion* filters were a
+> different question and mostly held: these are real syndicated credit
 > agreements in the size band, and where one was not — Lamb Weston EX-10.2,
-> one lender of record — the criterion caught it on reading. What is
-> unreliable is the *rationale*: why a document was chosen and what field
-> values it is supposed to supply. Every claim in this file that depends on
-> that column depends on an unverified instrument. That includes the
-> stratification counts, the enrichment ratios quoted under [This is an
-> enriched test set](#this-is-an-enriched-test-set-not-a-representative-sample),
-> and any statement that a particular field is balanced across the corpus.
+> one lender of record — the criterion caught it on reading. What was
+> unreliable was the *rationale*: why a document was chosen and what field
+> values it was supposed to supply. The claims in this file that depended on
+> it are now restated from the label files, with the predictions left visible:
+> the Structure column, the [resulting distribution](#resulting-distribution),
+> and the corpus side of the enrichment ratios under [This is an enriched test
+> set](#this-is-an-enriched-test-set-not-a-representative-sample). The pool
+> side of those ratios was never read and remains the screen's estimate.
 >
 > The instrument's measured behaviour, and why this is also the baseline's
 > failure mode, is in
 > [labeling-notes.md](labeling-notes.md#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it).
-> This caveat stands until every row has been read, at which point it is
-> replaced by the corrected table and a count of how many rows needed
-> correcting.
+> This section was a caveat until every row had been read; it now records the
+> corrected table and the count of rows that needed correcting, as it said it
+> would.
 
 | # | Borrower | Accession · exhibit · file | Filed | Structure | Selected for |
 |---|---|---|---|---|---|
 | 1 | Paya Holdings III | `0001213900-21-034493` **EX-10.1**<br>`ea143383ex10-1_payaholdings.htm` | 2021-06-28 | revolver + term | LIBOR; flat margin (integer, no grid); springing covenant |
 | 2 | Plains All American Pipeline, L.P. | `0001104659-21-109833` **EX-10.1**<br>`tm2125730d3_ex10-1.htm` | 2021-08-26 | revolver only | LIBOR; ratings grid; deferral null (certificate) |
 | 3 | Advance Auto Parts | `0001158449-21-000208` **EX-10.1**<br>`aap_exhibit101x10092021.htm` | 2021-11-15 | revolver only | LIBOR; ratings grid; deferral null (external fact) |
-| 4 | Kontoor Brands | `0001760965-21-000058` **EX-10.1**<br>`exhibit101creditagreemen.htm` | 2021-11-19 | revolver + TLA + TLB | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
-| 5 | Amentum Holdings | `0000950157-24-001363` **EX-10.1**<br>`ex10-1.htm` | 2024-10-03 | revolver + TLA + TLB | 4 covenant types — richest record alignment case in the pool |
-| 6 | Extreme Networks | `0000950170-23-029645` **EX-10.1**<br>`extr-ex10_1.htm` | 2023-06-23 | revolver + TLA + TLB | Lettered tranches; grid; 2 covenants |
+| 4 | Kontoor Brands | `0001760965-21-000058` **EX-10.1**<br>`exhibit101creditagreemen.htm` | 2021-11-19 | ~~revolver + TLA + TLB~~ **revolver + TLA** | Stated opening margin *then* a grid; CDOR/ESTR multicurrency; 3 covenants |
+| 5 | Amentum Holdings | `0000950157-24-001363` **EX-10.1**<br>`ex10-1.htm` | 2024-10-03 | ~~revolver + TLA + TLB~~ **revolver + TLB** | 4 covenant types — richest record alignment case in the pool |
+| 6 | Extreme Networks | `0000950170-23-029645` **EX-10.1**<br>`extr-ex10_1.htm` | 2023-06-23 | ~~revolver + TLA + TLB~~ **revolver + TLA** | Lettered tranches; grid; 2 covenants |
 | 7 | Lamb Weston Holdings | `0001679273-24-000026` **EX-10.1**<br>`ex10_1conformed-lwxbofax.htm` | 2024-05-08 | 2 revolvers + EUR term | Non-USD commitment currency; EURIBOR — see [amendment](#row-7-amended-the-wrong-exhibit-and-a-false-rationale) |
 | 8 | The Hertz Corporation | `0001104659-21-089858` **EX-10.3**<br>`tm2121430d1_ex10-3.htm` | 2021-07-07 | revolver + term (named Term B, Term C) | Post-restructuring: Chapter 11 exit facility — **replacement, rationale verified by reading**; Avaya dropped, see [Vacated rows](#vacated-rows-8-and-14) |
-| 9 | MP Materials | `0001193125-25-187776` **EX-10.1**<br>`d15553dex101.htm` | 2025-08-25 | revolver + term | Springing covenant |
+| 9 | MP Materials | `0001193125-25-187776` **EX-10.1**<br>`d15553dex101.htm` | 2025-08-25 | ~~revolver + term~~ **revolver only** | Springing covenant |
 | 10 | Peloton Interactive | `0001193125-24-150397` **EX-10.1**<br>`d832347dex101.htm` | 2024-05-30 | revolver + term | Grid; 3 covenants; step-down candidate |
 | 11 | ANI Pharmaceuticals | `0000950103-24-012144` **EX-10.2**<br>`dp216536_ex1002.htm` | 2024-08-13 | revolver + term | Grid; 3 covenants; step-down candidate |
-| 12 | G-III Leather Fashions, Inc. | `0001558370-24-008935` **EX-10.1**<br>`giii-20240604xex10d1.htm` | 2024-06-06 | revolver + term | 3 covenants with **no** grid — contrast against 10 and 11 |
-| 13 | Roper Technologies | `0001193125-22-199694` **EX-10.1**<br>`d291205dex101.htm` | 2022-07-22 | revolver + term | **Covenant-free** — the empty-covenant-list case |
+| 12 | G-III Leather Fashions, Inc. | `0001558370-24-008935` **EX-10.1**<br>`giii-20240604xex10d1.htm` | 2024-06-06 | ~~revolver + term~~ **revolver only** | 3 covenants with **no** grid — contrast against 10 and 11 |
+| 13 | Roper Technologies | `0001193125-22-199694` **EX-10.1**<br>`d291205dex101.htm` | 2022-07-22 | ~~revolver + term~~ **revolver only** | **Covenant-free** — the empty-covenant-list case |
 | 14 | The Boeing Company | `0000012927-24-000037` **EX-10.1**<br>`a202405may15ex101.htm` | 2024-05-17 | revolver only | Grid (ratings); debt-to-capitalization — **replacement, rationale verified by reading**; see [Vacated rows](#vacated-rows-8-and-14) |
 | 15 | Mattel | `0001193125-22-246779` **EX-10.1**<br>`d252167dex101.htm` | 2022-09-19 | revolver only | ~~Flat-margin, no grid~~ — **read: ratings grid; two-step leverage schedule** |
 | 16 | PureCycle Technologies | `0001830033-23-000021` **EX-10.2**<br>`pct-form8xk3152023ex102xsy.htm` | 2023-03-15 | revolver only | **Empty covenant list**; escalator, no grid — purposive addition, [documented exception](#document-16-purecycle-a-documented-exception) |
@@ -372,14 +384,27 @@ carried agreement dates here — 2021-06-25, 2021-08-20 and 2021-11-09 — and
 were corrected against `data/search/candidates.jsonl`. Label files record both
 dates separately.
 
-**Resulting distribution:** 4 revolver-only, 7 revolver + unlettered term, 4
-revolver + explicitly lettered tranches. Benchmark: 3 LIBOR, 12 SOFR-era.
+#### Resulting distribution
 
-The seven unlettered term loans are a feature rather than a shortfall. Each
-one exercises the `facility_type` rule that classifies by amortization rather
-than by name — a 1%/yr institutional tranche is a TLB whatever the agreement
-calls it — which is among the more fragile adjudications in the schema and
-would go untested by a corpus of neatly labeled Term A and Term B facilities.
+**From the label files: 8 revolver-only, 8 revolver + term.** Of the 8 with
+term debt, 3 carry a `term_loan_a` (Kontoor, Extreme, ANI), 4 a `term_loan_b`
+(Paya, Amentum, Peloton, and Lamb Weston's euro bullet beside two revolvers),
+and 1 a `term_loan_b` and an `other` (Hertz). Two letter their term tranches
+(Kontoor's "Tranche A", Hertz's Term B and Term C); six do not. Benchmark: 5
+LIBOR, 11 SOFR-era, one of which also carries a EURIBOR tranche.
+
+The screen's picture of the first fifteen rows, kept for comparison: ~~4
+revolver-only, 7 revolver + unlettered term, 4 revolver + explicitly lettered
+tranches. Benchmark: 3 LIBOR, 12 SOFR-era.~~ Every figure in it moved. The
+stratification this corpus can claim is the one above: half revolver-only,
+half revolver + term, with Term A and Term B both present.
+
+The ~~seven~~ six unlettered term tranches are a feature rather than a
+shortfall. Each one exercises the `facility_type` rule that classifies by
+amortization rather than by name — a 1%/yr institutional tranche is a TLB
+whatever the agreement calls it — which is among the more fragile
+adjudications in the schema and would go untested by a corpus of neatly
+labeled Term A and Term B facilities.
 
 ### Vacated rows 8 and 14
 
@@ -686,11 +711,15 @@ rationales in this file inherited the misses — is recorded in
 and in [README.md](README.md), because it is also the baseline's failure mode.
 
 **A note on the Structure column generally.** It was derived from the same
-screen signal, which is correct 3 of 6 on the documents read so far. Row 7 is
-corrected here because it was read; the other unread rows are not corrected,
-because correcting them from the same signal would be no better than leaving
-them. Treat the column as a selection artifact, not a finding, until each row
-is labeled. The "Resulting distribution" line below inherits that caveat.
+screen, whose `structure` signal is right 9 of 17 on every document read that
+it scored — measured as in
+[labeling-notes.md](labeling-notes.md#keyword-heuristics-under-detect-and-the-corpus-rationales-inherited-it).
+Row 7 was corrected when it was read; the rest were left alone until each row
+was labeled, because correcting them from the same signal would have been no
+better than leaving them. Every row is now labeled, the column shows each
+wrong prediction struck through beside the labeled structure — **6 of 16 rows
+needed correcting** — and the [resulting distribution](#resulting-distribution)
+is restated from the label files.
 
 ### Amendment to the stratification target
 
