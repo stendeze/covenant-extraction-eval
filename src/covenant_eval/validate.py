@@ -598,8 +598,23 @@ def _check_step_downs(report: Report, path: str, value: Any, sets: SchemaSets) -
             report.add(path, "step_downs_out_of_order", "schema.md orders the array by effective_from")
 
 
+# The dev set may mark a field it cannot score, with a reason from this closed
+# set. Gold never may: a gold field the schema's types cannot hold is a null with
+# null_kind `unrepresentable`, sanctioned field by field in schema.md. The marker
+# exists because a dev document can fail in ways no corpus document is allowed
+# to — Lithia's pricing grid is redacted — and inventing a fourth null_kind for a
+# document outside the corpus would put a rule in schema.md that no corpus
+# document needs.
+EXCLUSION_REASONS = frozenset({"redacted"})
+
+
+def _is_gold(label_path: Path) -> bool:
+    return label_path.parent.name == "labels" and label_path.parent.parent.name == "data"
+
+
 def _check_field(
-    report: Report, path: str, name: str, entry: Any, document: str | None, sets: SchemaSets
+    report: Report, path: str, name: str, entry: Any, document: str | None, sets: SchemaSets,
+    gold: bool = True,
 ) -> None:
     if not isinstance(entry, dict) or "value" not in entry:
         report.add(path, "malformed_field", "expected {value, citation}")
@@ -607,6 +622,26 @@ def _check_field(
 
     value = entry["value"]
     citation = entry.get("citation")
+
+    excluded = entry.get("excluded_from_scoring")
+    if excluded is not None:
+        if gold:
+            report.add(
+                path,
+                "exclusion_in_gold",
+                "excluded_from_scoring is for the dev set; a gold field the schema cannot hold is "
+                "null with null_kind unrepresentable",
+            )
+        elif excluded not in EXCLUSION_REASONS:
+            report.add(path, "bad_exclusion_reason", f"{excluded!r} is not one of {sorted(EXCLUSION_REASONS)}")
+        else:
+            report.add(path, "excluded_from_scoring", f"not scored: {excluded}", severity="info")
+        # The value is kept as labeled and not checked against the schema, but a
+        # quote is still a quote: it must be in the document.
+        if citation:
+            _check_citation(report, f"{path}.citation", citation, document)
+        return
+
     _check_null_kind(report, path, name, entry, value, sets)
 
     if value is None:
@@ -665,6 +700,7 @@ def _check_field(
 
 def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
     report = Report(label_path)
+    gold = _is_gold(label_path)
     try:
         label = json.loads(label_path.read_text())
     except json.JSONDecodeError as exc:
@@ -720,7 +756,7 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
             if name not in facility:
                 report.add(path, "missing_field", "scored field absent from the record")
                 continue
-            _check_field(report, path, name, facility[name], document, sets)
+            _check_field(report, path, name, facility[name], document, sets, gold)
 
     # An empty covenant list is a real answer for a cov-lite agreement, so its
     # absence is a hole and its emptiness is not.
@@ -734,7 +770,7 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
             if name not in covenant:
                 report.add(path, "missing_field", "scored field absent from the record")
                 continue
-            _check_field(report, path, name, covenant[name], document, sets)
+            _check_field(report, path, name, covenant[name], document, sets, gold)
 
     return report
 

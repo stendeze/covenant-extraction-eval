@@ -1,0 +1,297 @@
+{
+  "source": {
+    "borrower": "Lamb Weston Holdings, Inc.",
+    "accession_number": "0001679273-24-000026",
+    "exhibit": "EX-10.2",
+    "document_file": "ex10_2conformed-lwxagwes.htm",
+    "agreement_date": "2024-05-03",
+    "filing_date": "2024-05-08",
+    "agreement_type": "Amended and Restated Credit Agreement (Farm Credit facility; AgWest Farm Credit, PCA as Administrative Agent)",
+    "notes": "filing_date taken from the EDGAR index for accession 0001679273-24-000026; the exhibit states only the 2024-05-03 agreement date. CORPUS-FRAME FLAG: Schedule 2.01 lists a single Lender of record (AgWest Farm Credit, PCA, 100% of every tranche). The ~13 other Farm Credit institutions on the signature pages are Voting Participants under Section 11.06(e), not Lenders on the commitment schedule. The frame requires an Administrative Agent and >=3 lenders on the commitment schedule; as literally written this document fails that test even though it is economically syndicated and has an agent and a margin grid. Decide whether it stays before scoring anything against it. Also note the structure is term-loan-only (three TLA tranches, no revolver), which is outside the three stratification buckets. SECOND FLAG, added on review: this accession contains two credit agreements. EX-10.1 (ex10_1conformed-lwxbofax.htm) is the Bank of America agreement; this is EX-10.2, the AgWest Farm Credit facility. corpus.md selected 'Lamb Weston Holdings' for 'revolver + TLA / Lettered TLA with no grid', which describes neither this document nor its screen record accurately."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Term A Loan",
+        "citation": {
+          "section": "2.01(a)(i)",
+          "quote": "each Term A Lender severally made, on the Original Closing Date, its portion of a term loan (the “Term A Loan”)"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.07(a)",
+          "quote": "equal quarterly installments of $3,750,000"
+        },
+        "notes": "Labeled 'Term A' explicitly, which governs. Amortization confirms: $3,750,000/quarter on $300,000,000 = 1.25%/quarter = 5%/yr."
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 300000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A Loan Commitment\")",
+          "quote": "The aggregate principal amount of the Term A Loan Commitments of all of the Lenders as in effect on the Original Closing Date (before giving effect to the incurrence of the Term A Loan) was $300,000,000"
+        },
+        "notes": "Schedule 2.01 agrees ($300,000,000.00 as of June 28, 2019). This tranche was funded on the Original Closing Date (2019-06-28) and carried into the restatement; it has amortized since, and the agreement does not state the outstanding balance on the Restatement Effective Date. Recorded per the 'as stated in the document' rule. HESITATION: 'commitment at closing' is ambiguous for pre-existing tranches rolled into an A&R; rule may need a sentence."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2026-06-28",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A Maturity Date\")",
+          "quote": "“Term A Maturity Date” means June 28, 2026"
+        },
+        "notes": "June 28, 2026 is a Sunday. The 'Maturity Date' definition provides that if the date is not a Business Day, the Maturity Date is the next preceding Business Day (Friday, June 26, 2026). Stated date recorded; the adjustment is ordinary mechanics, treated like the 'earliest of' construction."
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Benchmark\")",
+          "quote": "“Benchmark” means, initially, the Adjusted Term SOFR Rate"
+        },
+        "notes": "Section 2.08(a)(i): Term SOFR Loans bear interest at Adjusted Term SOFR Rate plus Applicable Rate. Adjusted Term SOFR = Term SOFR Rate + SOFR Adjustment (CSA of 0.10%/0.10%/0.25%); adjusted variant maps to term_sofr. Term SOFR Administrator is CME Group Benchmark Administration Limited. Base Rate is the alternative, not the answer."
+      },
+      "applicable_margin_bps": {
+        "value": 185,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), last paragraph and Term A grid, Pricing Tier 4 row",
+          "quote": "shall be determined based upon, (x) with respect to the Term A Loan, Pricing Tier 4, (y) with respect to the Term A-3 Loan, Pricing Tier 4, and (z) with respect to the Term A-4 Loan, Pricing Tier 5"
+        },
+        "notes": "Opening level is stated explicitly (not silent, not deferred). Term A grid, Pricing Tier 4 (< 3.25:1.00): Term SOFR Loans 1.850% -> 185 bps. Base Rate margin (0.850%) is not recorded."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "“Applicable Rate” means, from time to time, the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        },
+        "notes": "Four-tier leverage grid keyed to Consolidated Net Leverage Ratio, reset on Compliance Certificate delivery."
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Term A-3 Loan",
+        "citation": {
+          "section": "2.01(a)(iii)",
+          "quote": "its portion of a term loan (the “Term A-3 Loan”)"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.07(c)",
+          "quote": "equal quarterly installments of $5,625,000"
+        },
+        "notes": "Labeled 'Term A-3', which governs. Amortization confirms: $5,625,000/quarter on $450,000,000 = 1.25%/quarter = 5%/yr."
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 450000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A-3 Loan Commitment\")",
+          "quote": "The aggregate principal amount of the Term A-3 Loan Commitments of all of the Lenders as in effect on January 31, 2023 (before giving effect to the incurrence of the Term A-3 Loan) was $450,000,000"
+        },
+        "notes": "Schedule 2.01 agrees ($450,000,000.00 as of January 31, 2023). Funded 2023-01-31 under the Fourth Amendment and carried into the restatement; outstanding balance on the Restatement Effective Date is not stated. Same hesitation as Term A."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2030-01-31",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A-3 Maturity Date\")",
+          "quote": "“Term A-3 Maturity Date” means January 31, 2030"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Benchmark\")",
+          "quote": "“Benchmark” means, initially, the Adjusted Term SOFR Rate"
+        },
+        "notes": "Section 2.01(a)(iii): Term A-3 Loan consists of Base Rate Loans or Term SOFR Loans. Same benchmark mechanics as Term A."
+      },
+      "applicable_margin_bps": {
+        "value": 200,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), last paragraph and Term A-3 grid, Pricing Tier 4 row",
+          "quote": "shall be determined based upon, (x) with respect to the Term A Loan, Pricing Tier 4, (y) with respect to the Term A-3 Loan, Pricing Tier 4, and (z) with respect to the Term A-4 Loan, Pricing Tier 5"
+        },
+        "notes": "Opening level stated explicitly. Term A-3 grid, Pricing Tier 4 (< 3.25:1.00): Term SOFR Loans 2.00% -> 200 bps."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "“Applicable Rate” means, from time to time, the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        },
+        "notes": "Four-tier leverage grid (2.75% / 2.50% / 2.15% / 2.00%)."
+      }
+    },
+    {
+      "facility_name": {
+        "value": "Term A-4 Loan",
+        "citation": {
+          "section": "2.01(a)(iv)",
+          "quote": "each Term A-4 Lender severally agrees to make a portion of a term loan (the “Term A-4 Loan”)"
+        }
+      },
+      "facility_type": {
+        "value": "term_loan_a",
+        "citation": {
+          "section": "2.07(d)",
+          "quote": "equal quarterly installments of $4,062,500"
+        },
+        "notes": "Labeled 'Term A-4', which governs. Amortization confirms: $4,062,500/quarter on $325,000,000 = 1.25%/quarter = 5%/yr. This is the only tranche newly committed at the Restatement Effective Date (refinances the Term A-2 Loan)."
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 325000000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A-4 Loan Commitment\")",
+          "quote": "The aggregate principal amount of the Term A-4 Loan Commitments of all of the Lenders as in effect on the Restatement Effective Date (before giving effect to the incurrence of the Term A-4 Loan) is $325,000,000"
+        },
+        "notes": "Schedule 2.01 agrees ($325,000,000.00). Incremental Term Loan capacity of up to $100,000,000 under Section 2.01(b) is an accordion and is not a facility."
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2029-05-03",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.01 (definition of \"Term A-4 Maturity Date\")",
+          "quote": "“Term A-4 Maturity Date” means May 3, 2029"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.01 (definition of \"Benchmark\")",
+          "quote": "“Benchmark” means, initially, the Adjusted Term SOFR Rate"
+        },
+        "notes": "Section 2.01(a)(iv): Term A-4 Loan may consist of Base Rate Loans, Term SOFR Loans or Fixed Rate Loans. Fixed Rate Loans price off AWFC's cost of funds (Rate Pricing Index, Schedule 1.01) and are a fixed-rate option, not a floating benchmark. Primary floating benchmark is Term SOFR."
+      },
+      "applicable_margin_bps": {
+        "value": 185,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\"), last paragraph and Term A-4 grid, Pricing Tier 5 row",
+          "quote": "shall be determined based upon, (x) with respect to the Term A Loan, Pricing Tier 4, (y) with respect to the Term A-3 Loan, Pricing Tier 4, and (z) with respect to the Term A-4 Loan, Pricing Tier 5"
+        },
+        "notes": "Opening level stated explicitly. Term A-4 grid has five tiers; Pricing Tier 5 (< 2.50:1.00): Term SOFR Loans 1.85% -> 185 bps. The Fixed Rate Loan margin column is identical to the Term SOFR column."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "1.01 (definition of \"Applicable Rate\")",
+          "quote": "“Applicable Rate” means, from time to time, the following percentages per annum, based upon the Consolidated Net Leverage Ratio as set forth in the most recent Compliance Certificate received by the Administrative Agent pursuant to Section 7.01(c)"
+        },
+        "notes": "Five-tier leverage grid (2.85% / 2.50% / 2.20% / 2.00% / 1.85%)."
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "total_net_leverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Net Leverage Ratio\")",
+          "quote": "“Consolidated Net Leverage Ratio” means, on any date, the ratio of (a) Consolidated Funded Indebtedness on such date, minus (i) unrestricted cash and Cash Equivalents of Loan Parties"
+        },
+        "notes": "Classified by the ratio's definition: all Consolidated Funded Indebtedness (secured and unsecured), net of unrestricted cash of Loan Parties plus 100% of distributable unrestricted cash of non-Loan-Party Restricted Subsidiaries. A separate 'Consolidated Secured Net Leverage Ratio' is defined but is not a Section 8.11 covenant."
+      },
+      "initial_threshold": {
+        "value": 5.0,
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "After the Restatement Effective Date and prior to the last day of the Fiscal Quarter ending November 2027 5.00 to 1.00"
+        },
+        "notes": "First test date is the end of the first full Fiscal Quarter after the Restatement Effective Date (fiscal quarter ending August 2024). Two conditional overrides are NOT recorded as the level: (1) Acquisition Period step-up of 0.50x for four quarters after a Material Acquisition (>= $350,000,000) - the covenant holiday; (2) a tighter 3.50 to 1.00 level applicable during a Collateral and Guarantee Suspension Period (investment-grade ratings from two agencies). Section 6.13 confirms Liens are in place except during a suspension period, so no suspension period is in effect at the Restatement Effective Date."
+      },
+      "step_down_schedule": {
+        "value": [
+          {
+            "effective_from": {
+              "value": "2027-11",
+              "basis": "stated"
+            },
+            "threshold": 4.75
+          }
+        ],
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "On and after the last day of the Fiscal Quarter ending November 2027 4.75 to 1.00"
+        },
+        "notes": "HESITATION - RULE GAP. The agreement identifies the step-down period only as 'the Fiscal Quarter ending November 2027'; it states no calendar day. Fiscal Year ends on the last Sunday in May (definition of 'Fiscal Year'); the quarter-end day is not derivable from the document without assuming a 13-week quarter, which schema.md says not to do. Recorded as ISO-8601 reduced-precision YYYY-MM rather than inventing a day. Proposed rule for schema.md: where a step-down is keyed to a fiscal period identified only by month, record YYYY-MM. If the user prefers a full date, the last Sunday of November 2027 is 2027-11-28, but that is a resolution, not a label."
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "8.11(a)",
+          "quote": "The Borrower shall not permit the Consolidated Net Leverage Ratio as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date) of the Borrower to be greater than"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "notes": "Tested unconditionally as of the end of every Fiscal Quarter. No revolver exists in this agreement, so no utilization trigger is possible. Absence null; no citation required.",
+        "null_kind": "absence"
+      }
+    },
+    {
+      "covenant_type": {
+        "value": "interest_coverage",
+        "citation": {
+          "section": "1.01 (definition of \"Consolidated Interest Coverage Ratio\")",
+          "quote": "“Consolidated Interest Coverage Ratio” means, the ratio, determined as of the end of each Fiscal Quarter of the Borrower for the most-recently ended four Fiscal Quarters, of (a) Consolidated EBITDA to (b) Consolidated Interest Expense"
+        },
+        "notes": "EBITDA to cash interest expense (plus receivables-financing discount). Not fixed charge coverage: the denominator has no scheduled principal, taxes, or capex component."
+      },
+      "initial_threshold": {
+        "value": 2.75,
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "The Borrower shall not permit the Consolidated Interest Coverage Ratio as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date) of the Borrower to be less than 2.75 to 1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "to be less than 2.75 to 1.00"
+        },
+        "notes": "Confirmed flat: a single level with no table, no 'thereafter' row, and no Acquisition Period adjustment (the 0.50x proviso in 8.11(a) applies only to the Maximum Permitted Levels of the leverage covenant)."
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "8.11(b)",
+          "quote": "as of the end of any Fiscal Quarter (commencing as of the end of the first full Fiscal Quarter after the Restatement Effective Date)"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "notes": "Tested unconditionally every Fiscal Quarter. Absence null.",
+        "null_kind": "absence"
+      }
+    }
+  ],
+  "free_text_notes": [
+    "Document type: full Amended and Restated Credit Agreement dated May 3, 2024 (in scope). Restates the June 28, 2019 Credit Agreement as amended four times. The Term A-2 Loan is refinanced by the Term A-4 Loan and does not appear as a facility.",
+    "Records created: 3 facilities (Term A, Term A-3, Term A-4 - all term_loan_a), 2 covenants (total_net_leverage, interest_coverage).",
+    "Records deliberately NOT created: Incremental Term Loan Commitments up to $100,000,000 (Section 2.01(b) accordion); Fixed Rate Loan option under the Term A-4 Loan (a pricing Type, not a tranche).",
+    "No revolver, no letter of credit or swingline sublimits, no commitment fee grid.",
+    "Lender of record: AgWest Farm Credit, PCA holds 100% of each Class per Schedule 2.01; other Farm Credit institutions participate as Voting Participants (Section 11.06(e)). See corpus-frame flag in source.notes.",
+    "Term A maturity of June 28, 2026 falls on a Sunday; the Maturity Date definition rolls it back to the preceding Business Day. Stated date recorded.",
+    "Applicable Rate opening tiers are stated for all three tranches; no silence fallback and no deferral null needed."
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "source": {
+    "accession_number": "0001418100-23-000041",
+    "exhibit": "EX-10.7",
+    "document_file": "avaya-ex1072022930x10k.htm",
+    "filing_date": "2023-09-08",
+    "agreement_title": "Superpriority Secured Debtor-in-Possession ABL Credit Agreement",
+    "agreement_date": "2023-02-24",
+    "borrower": "Avaya Inc.",
+    "holdings": "Avaya Holdings Corp.",
+    "administrative_agent": "Citibank, N.A.",
+    "lenders_on_signature_pages": [
+      "Citibank, N.A.",
+      "Royal Bank of Canada",
+      "Bank of America, N.A.",
+      "Deutsche Bank AG New York Branch"
+    ],
+    "structure": "revolver-only (asset-based, debtor-in-possession)",
+    "filing_date_source": "EDGAR filing index, verified 2026-09-11",
+    "discard_note": "document_file added on filing so the label remains checkable; the accession holds four credit agreements and the validator cannot resolve it without a filename. No scored value altered. All 10 citations verified verbatim against EX-10.7."
+  },
+  "corpus_fit": {
+    "document_type_filter": "PASS — full agreement with Article I definitions and a Section 2.1 commitment section; title does not match amendment|waiver|consent|joinder",
+    "filing_date_range": "PASS — 2023",
+    "syndication": "PASS — Administrative Agent plus four lenders on the signature pages",
+    "borrower_sector": "PASS — US corporate, not a bank/insurer/REIT",
+    "aggregate_commitments_150M_to_5B": "FAIL — $128,125,000 is below the $150M floor",
+    "flag": "This is a debtor-in-possession facility with a ~6-month stated tenor, bankruptcy-court-driven maturity limbs, and a liquidity-only covenant. It fails the commitment-size frame and is structurally atypical for the corpus. If it is in the frozen corpus, replace it and record the reason in the corpus file; labels below are complete regardless.",
+    "sibling_exhibits_in_same_accession": {
+      "EX-10.4": "Amended and Restated ABL Credit Agreement dated 2023-05-01 (exit ABL); revolver-only; $128,125,000 per the recital — below the $150M floor",
+      "EX-10.5": "Term Loan Credit Agreement dated 2023-05-01 (exit term loan); $810,000,000 term-only, of which $500,000,000 is a Debt Rights Offering allocated to creditors under the plan of reorganization; no stratum for term-only",
+      "EX-10.12": "Amendment No. 4 (2022-07-12) to the 2017 Term Loan Credit Agreement, with conformed copy attached — excluded by title rule; note the structural amendment filter alone would not catch it"
+    },
+    "row_8_rationale_check": "FAIL. corpus.md row 8 says \"revolver + term; springing covenant; 3 covenants; post-restructuring credit\". No single exhibit in the filing matches; EX-10.7 is a revolver-only DIP with one unconditional minimum-liquidity covenant. Sixth screen-derived rationale checked, sixth failure.",
+    "recommendation": "Drop Avaya from the slate before freezing (selection correction, recorded with reason). No exhibit in the accession satisfies both the size band and a structural stratum. Add an explicit DIP/exit-facility exclusion to schema.md naming this document. The has_margin_grid=false finding here is out of frame and must not be counted toward corpus balance."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "ABL Facility",
+        "citation": {
+          "section": "Recitals",
+          "quote": "an asset-based revolving credit facility in an aggregate committed amount equal to $128,125,000 (the “ABL Facility”)"
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.1(a)",
+          "quote": "each Revolving Credit Lender severally agrees to make revolving credit loans (each such loan, a “Revolving Credit Loan”) to the Borrower from time to time"
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 128125000,
+          "currency": "USD"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Revolving Credit Commitments\")",
+          "quote": "The Aggregate Revolving Credit Commitments of all Lenders is $128,125,000 on the Closing Date"
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": "2023-08-15",
+          "basis": "stated"
+        },
+        "citation": {
+          "section": "1.1 (definition of \"Maturity Date\")",
+          "quote": "the earliest to occur of (a) August 15, 2023, or if the Conversion Date has occurred, the third anniversary of the Conversion Date"
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "term_sofr",
+        "citation": {
+          "section": "1.1 (definition of \"Term SOFR\")",
+          "quote": "the Term SOFR Reference Rate for a tenor comparable to the applicable Interest Period on the day (such day, the “Periodic Term SOFR Determination Day”) that is two (2) Business Days prior to the first day of such Interest Period, as such rate is published by the Term SOFR Administrator"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": 300,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Rate\")",
+          "quote": "a percentage per annum equal to (i) for Term SOFR Loans, 3.00%, (ii) for ABR Loans, 2.00% and (iii) for Letter of Credit Fees, 3.00%"
+        }
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "1.1 (definition of \"Applicable Rate\")",
+          "quote": "a percentage per annum equal to (i) for Term SOFR Loans, 3.00%, (ii) for ABR Loans, 2.00% and (iii) for Letter of Credit Fees, 3.00%"
+        }
+      }
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "minimum_liquidity",
+        "citation": {
+          "section": "10.15(a)",
+          "quote": "Minimum Liquidity. The Borrower shall not permit the Consolidated Liquidity on the last Business Day of each month ending after the Final Order Entry Date to be less than $250,000,000."
+        }
+      },
+      "initial_threshold": {
+        "value": 250000000,
+        "citation": {
+          "section": "10.15(a)",
+          "quote": "Minimum Liquidity. The Borrower shall not permit the Consolidated Liquidity on the last Business Day of each month ending after the Final Order Entry Date to be less than $250,000,000."
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "10.15(a)",
+          "quote": "Minimum Liquidity. The Borrower shall not permit the Consolidated Liquidity on the last Business Day of each month ending after the Final Order Entry Date to be less than $250,000,000."
+        }
+      },
+      "testing_frequency": {
+        "value": "monthly",
+        "citation": {
+          "section": "10.15(a)",
+          "quote": "on the last Business Day of each month ending after the Final Order Entry Date"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "null_kind": "absence",
+        "citation": null
+      }
+    }
+  ],
+  "notes": {
+    "facility_name": "No defined term \"Revolving Credit Facility\" exists (0 occurrences). The agreement labels the facility \"ABL Facility\" in the recitals and operates through the defined terms \"Revolving Credit Commitments\" / \"Revolving Credit Loans\". Recorded the recital-defined label. The recitals also define an \"L/C Facility\" ($100,000,000 letter of credit subfacility, \"Facilities\" = ABL Facility + L/C Facility); it is a sublimit of the Revolving Credit Commitments, not a separate facility — no record.",
+    "sublimits_excluded": "L/C Sublimit $100,000,000 (§1.1); Swing Line Sublimit lesser of $15,000,000 and the Revolving Credit Commitments — \"The Swing Line Sublimit is part of, and not in addition to, the Revolving Credit Commitments.\" No records created.",
+    "protective_advances": "§2.1(b) Protective Advances (agent-discretion ABR loans, capped at 5% of the Borrowing Base, within the Aggregate Revolving Credit Commitments) are not a facility — no record.",
+    "incremental_excluded": "§2.14 Incremental Commitments: \"The aggregate principal amount of all Incremental Commitments hereunder, together with the then-existing Revolving Credit Commitments, shall not exceed $200,000,000.\" Option, not a commitment — excluded per rule.",
+    "commitment_schedule": "Schedule 1.1(a) (Commitments of Lenders) is not attached to the filed exhibit. The defined term governs ($128,125,000); no discrepancy check possible.",
+    "maturity_date": "HESITATION. Limb (a) states a hard date (August 15, 2023) and a conditional alternative — \"or if the Conversion Date has occurred, the third anniversary of the Conversion Date\" — where the Conversion Date is the conversion into the Exit ABL Facility under §2.15, which supersedes and replaces this agreement. Recorded the stated date per the hard-date rule. DIP-specific limbs not recorded: (b) 45 days after the Petition Date (Feb 14, 2023) if the Final Order has not been entered, unless extended by Required Lenders; (c) the Consummation Date (substantial consummation of a confirmed plan); (e) a section 363 sale of substantially all assets. Limb (d) is ordinary acceleration/termination. Limbs (b), (c) and (e) are bankruptcy-process events internal to the document rather than an external instrument, so they are not springing-maturity provisos in the schema's sense, but they can shorten the tenor below the stated date.",
+    "interest_rate_benchmark": "§2.8(a): \"each Term SOFR Loan denominated in Dollars shall bear interest on the outstanding principal amount thereof for each Interest Period at a rate per annum equal to Adjusted Term SOFR for such Interest Period plus the Applicable Rate\". Adjusted Term SOFR = Term SOFR + Term SOFR Adjustment (0.00%), subject to a 0.00% Floor. Term SOFR Administrator = \"CME Group Benchmark Administration Limited (CBA)\". Adjusted variant maps to term_sofr per rule. §2.18 Benchmark Replacement Setting ignored (conditional).",
+    "applicable_margin": "Flat 3.00% for Term SOFR Loans (300 bps), 2.00% for ABR Loans, 3.00% Letter of Credit fee. No pricing levels, no ratings or leverage grid; opening margin is stated. has_margin_grid false. Default Rate is +2% (§2.8(b)) — not a grid per rule. Commitment fee is flat: \"a commitment fee equal to 0.50% times the actual daily Unused Amount\" (§4.1(a)) — no commitment-fee grid either.",
+    "covenant_scope": "§1.1: \"“Financial Covenant” shall mean the financial covenants set forth in Section 10.15.\" §10.15 contains a single covenant, (a) Minimum Liquidity. HESITATION: §10.12 Permitted Variance is a DIP budget-variance test (actual total receipts / operating disbursements vs. the Approved Budget, determined bi-weekly, subject to a Permitted Variance). It is a quantitative covenant but is not designated a Financial Covenant by the agreement and has no analogue in the enum; not recorded. If DIP budget covenants should be captured, the rule needs to say so and the record would be covenant_type other.",
+    "covenant_definition": "\"Consolidated Liquidity\" = \"the sum of (i) Unrestricted Cash of the Credit Parties (but excluding, in any event, any restricted Cash Equivalents (other than Cash Equivalents restricted for the benefit of the Lenders)) and (ii) Excess Availability\"; cash in the DIP Proceeds Account and Foreign Reserve Account counts as Unrestricted Cash solely for this purpose. Dollar threshold recorded as an integer in whole currency units per rule.",
+    "testing_frequency": "\"on the last Business Day of each month\" → monthly. \"ending after the Final Order Entry Date\" is a start condition on when testing begins (first test is the first month-end after the Final Order is entered), not a measured-condition trigger — springing_trigger is null (absence null, no citation required). Step-down schedule [] is confirmed flat: a single stated level, no table.",
+    "beneficiary": "Covenant runs for the benefit of the ABL lenders generally; not a cov-lite revolver-only construct.",
+    "conversion_to_exit": "§2.15: upon satisfaction of the Annex I conditions the agreement is deemed amended and restated as the Exit ABL Facility and the Commitments become Exit ABL Commitments. Exit pricing and covenants live in the Exit ABL Term Sheet (Exhibit A to the Commitment Letter), which is outside this document — not recorded."
+  }
+}

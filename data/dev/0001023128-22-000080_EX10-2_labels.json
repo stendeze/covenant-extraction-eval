@@ -1,0 +1,457 @@
+{
+  "source": {
+    "accession_number": "0001023128-22-000080",
+    "exhibit": "EX-10.2",
+    "form": "8-K",
+    "filing_date": "2022-06-08",
+    "document_file": "executed-bns_lithiaxsynd.htm",
+    "registrant": "Lithia Motors, Inc. (CIK 0001023128)",
+    "borrower": "Lithia Master LP Company, LP (Alberta limited partnership) and subsidiary Borrowers",
+    "administrative_agent": "The Bank of Nova Scotia",
+    "lender_count_on_commitment_schedule": 6,
+    "agreement_date": "2022-06-03",
+    "governing_law": "Ontario, Canada",
+    "document_currency": "CAD",
+    "discard_note": "Excluded from the corpus 2026-09-22. Borrower is an Alberta LP under Ontario law in CAD; the frame requires a US corporate borrower. Structure is dealer floorplan, outside all three strata. The entire s.4.3 pricing grid is redacted (146 '<*>' markers), making applicable_margin_bps unlabelable for all five facilities. Retained as evidence; see data/discarded/README.txt and corpus.md."
+  },
+  "facilities": [
+    {
+      "facility_name": {
+        "value": "Revolving Facility",
+        "citation": {
+          "section": "2.1(1)",
+          "quote": "the Lenders hereby establish in favour of Revolving Borrowers a committed revolving term credit facility (the “Revolving Facility”) in an aggregate amount of up to the Revolving Limit."
+        }
+      },
+      "facility_type": {
+        "value": "revolver",
+        "citation": {
+          "section": "2.1(1)",
+          "quote": "the Lenders hereby establish in favour of Revolving Borrowers a committed revolving term credit facility (the “Revolving Facility”) in an aggregate amount of up to the Revolving Limit."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 100000000,
+          "currency": "CAD"
+        },
+        "citation": {
+          "section": "1.1(190)",
+          "quote": "the aggregate amount of the Commitments of the Lenders from time to time under the Revolving Facility which on the Closing Date is $100,000,000"
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 3,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1(209)",
+          "quote": "“Termination Date” means the date which is three (3) years after the Closing Date, as extended from time to time hereunder."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "cdor",
+        "citation": {
+          "section": "4.2(1)",
+          "quote": "The Borrowers shall pay to the Administrative Agent on behalf of the Lenders interest on CDOR Loans at the Administrative Agent’s Account for Payments at a rate per annum equal to the CDOR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "citation": {
+          "section": "Cover legend; 4.3",
+          "quote": "CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY <*>, HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) THE TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL"
+        },
+        "excluded_from_scoring": "redacted",
+        "notes": "Redacted under confidential treatment (146 '<*>' markers in the exhibit). Not a deferral and not an absence; no null_kind fits, and the dev set does not get a new one. Excluded from dev scoring, decision of 2026-09-30."
+      },
+      "has_margin_grid": {
+        "value": true,
+        "citation": {
+          "section": "4.3",
+          "quote": "With respect to Revolving Facility, the Applicable Margin shall be as set forth in the applicable row representing the Leverage Ratio on the date of determination"
+        }
+      },
+      "notes": "Five-tier leverage grid (Tiers I-V), opening level expressly Tier I, but the Tier I value is redacted. L/C Sublimit $30,000,000 and Revolving Swing Line Limit $20,000,000 are carve-outs. Revolving Limit is the lesser of the $100M commitment and the Revolving Borrowing Base; the commitment is recorded. Closing Date is June 3, 2022, so the relative maturity computes to 2025-06-03; s.5.2 permits two extensions."
+    },
+    {
+      "facility_name": {
+        "value": "Wholesale Flooring Facility",
+        "citation": {
+          "section": "2.2(1)",
+          "quote": "the Lenders hereby establish in favour of Wholesale Flooring Borrowers a demand revolving new vehicle wholesale flooring financing credit facility (the “Wholesale Flooring Facility”) in a maximum amount principal amount not to exceed the Wholesale Flooring Facility Limit."
+        }
+      },
+      "facility_type": {
+        "value": "other",
+        "citation": {
+          "section": "2.2(1)",
+          "quote": "the Lenders hereby establish in favour of Wholesale Flooring Borrowers a demand revolving new vehicle wholesale flooring financing credit facility (the “Wholesale Flooring Facility”) in a maximum amount principal amount not to exceed the Wholesale Flooring Facility Limit."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 500000000,
+          "currency": "CAD"
+        },
+        "citation": {
+          "section": "1.1(225)",
+          "quote": "“Wholesale Flooring Facility Limit” means the aggregate amount of the Commitments of the Lenders from time to time under the Wholesale Flooring Facility which on the Closing Date is $500,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 3,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1(209)",
+          "quote": "“Termination Date” means the date which is three (3) years after the Closing Date, as extended from time to time hereunder."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "cdor",
+        "citation": {
+          "section": "4.2(1)",
+          "quote": "The Borrowers shall pay to the Administrative Agent on behalf of the Lenders interest on CDOR Loans at the Administrative Agent’s Account for Payments at a rate per annum equal to the CDOR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "citation": {
+          "section": "Cover legend; 4.3",
+          "quote": "CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY <*>, HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) THE TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL"
+        },
+        "excluded_from_scoring": "redacted",
+        "notes": "Redacted under confidential treatment (146 '<*>' markers in the exhibit). Not a deferral and not an absence; no null_kind fits, and the dev set does not get a new one. Excluded from dev scoring, decision of 2026-09-30."
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "4.3 (Applicable Margins table)",
+          "quote": "Applicable Margins Facilities Prime Loan CDOR Loan Standby Fee"
+        },
+        "notes": "False on the table's layout, not its numbers, which are redacted: this facility has one row in the Applicable Margins table, whose columns are Prime Loan, CDOR Loan and Standby Fee, with no tier, ratio, rating or utilization column. The only tiered table is 'Applicable Margin - Revolving Facility', and every sentence that makes the margin vary is confined to the Revolving Facility (has_margin_grid_audit). Citation replaced 2026-09-30; it previously quoted the Revolving Facility's sentence."
+      },
+      "notes": "DEMAND facility (s.11.3). Excluded from the defined term 'Committed Facilities' but carried on Schedule 1.1(43) at $500,000,000 and included in the $1,125,000,000 total. Recorded as a facility because the limit is established at signing with lenders allocated; the demand right is treated as a termination mechanic. Wholesale Flooring Swing Line Limit $50,000,000 is a carve-out. Single fixed (redacted) pricing row; leverage adjustment language is expressly limited to the Revolving Facility."
+    },
+    {
+      "facility_name": {
+        "value": "Used Vehicle Flooring Facility",
+        "citation": {
+          "section": "2.3(1)",
+          "quote": "the Lenders hereby establish in favour of Used Vehicle Flooring Borrower a committed revolving used vehicle flooring financing credit facility (“Used Vehicle Flooring Facility”) in the maximum amount of the Used Vehicle Flooring Facility Limit."
+        }
+      },
+      "facility_type": {
+        "value": "other",
+        "citation": {
+          "section": "2.3(1)",
+          "quote": "the Lenders hereby establish in favour of Used Vehicle Flooring Borrower a committed revolving used vehicle flooring financing credit facility (“Used Vehicle Flooring Facility”) in the maximum amount of the Used Vehicle Flooring Facility Limit."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 100000000,
+          "currency": "CAD"
+        },
+        "citation": {
+          "section": "1.1(217)",
+          "quote": "“Used Vehicle Flooring Facility Limit” means the aggregate amount of the Commitments of the Lenders from time to time under the Used Vehicle Flooring Facility which on the Closing Date is $100,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 3,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1(209)",
+          "quote": "“Termination Date” means the date which is three (3) years after the Closing Date, as extended from time to time hereunder."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "cdor",
+        "citation": {
+          "section": "4.2(1)",
+          "quote": "The Borrowers shall pay to the Administrative Agent on behalf of the Lenders interest on CDOR Loans at the Administrative Agent’s Account for Payments at a rate per annum equal to the CDOR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "citation": {
+          "section": "Cover legend; 4.3",
+          "quote": "CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY <*>, HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) THE TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL"
+        },
+        "excluded_from_scoring": "redacted",
+        "notes": "Redacted under confidential treatment (146 '<*>' markers in the exhibit). Not a deferral and not an absence; no null_kind fits, and the dev set does not get a new one. Excluded from dev scoring, decision of 2026-09-30."
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "4.3 (Applicable Margins table)",
+          "quote": "Applicable Margins Facilities Prime Loan CDOR Loan Standby Fee"
+        },
+        "notes": "False on the table's layout, not its numbers, which are redacted: this facility has one row in the Applicable Margins table, whose columns are Prime Loan, CDOR Loan and Standby Fee, with no tier, ratio, rating or utilization column. The only tiered table is 'Applicable Margin - Revolving Facility', and every sentence that makes the margin vary is confined to the Revolving Facility (has_margin_grid_audit). Citation replaced 2026-09-30; it previously quoted the Revolving Facility's sentence."
+      },
+      "notes": "Borrowing-base-limited (85% of eligible used inventory). Used Vehicle Flooring Swing Line Limit $20,000,000 is a carve-out. Flat (redacted) pricing row in s.4.3."
+    },
+    {
+      "facility_name": {
+        "value": "Wholesale Leasing Facility",
+        "citation": {
+          "section": "2.4(1)",
+          "quote": "the Lenders hereby establish in favour of Wholesale Leasing Borrower a committed wholesale lease revolving credit facility (“Wholesale Leasing Facility”) in the maximum amount of the Wholesale Leasing Limit."
+        }
+      },
+      "facility_type": {
+        "value": "other",
+        "citation": {
+          "section": "2.4(1)",
+          "quote": "the Lenders hereby establish in favour of Wholesale Leasing Borrower a committed wholesale lease revolving credit facility (“Wholesale Leasing Facility”) in the maximum amount of the Wholesale Leasing Limit."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 400000000,
+          "currency": "CAD"
+        },
+        "citation": {
+          "section": "1.1(234)",
+          "quote": "“Wholesale Leasing Limit” means the aggregate amount of the Commitments of the Lenders from time to time under the Wholesale Leasing Facility which on the Closing Date is $400,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 3,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1(209)",
+          "quote": "“Termination Date” means the date which is three (3) years after the Closing Date, as extended from time to time hereunder."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "cdor",
+        "citation": {
+          "section": "4.2(1)",
+          "quote": "The Borrowers shall pay to the Administrative Agent on behalf of the Lenders interest on CDOR Loans at the Administrative Agent’s Account for Payments at a rate per annum equal to the CDOR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "citation": {
+          "section": "Cover legend; 4.3",
+          "quote": "CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY <*>, HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) THE TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL"
+        },
+        "excluded_from_scoring": "redacted",
+        "notes": "Redacted under confidential treatment (146 '<*>' markers in the exhibit). Not a deferral and not an absence; no null_kind fits, and the dev set does not get a new one. Excluded from dev scoring, decision of 2026-09-30."
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "4.3 (Applicable Margins table)",
+          "quote": "Applicable Margins Facilities Prime Loan CDOR Loan Standby Fee"
+        },
+        "notes": "False on the table's layout, not its numbers, which are redacted: this facility has one row in the Applicable Margins table, whose columns are Prime Loan, CDOR Loan and Standby Fee, with no tier, ratio, rating or utilization column. The only tiered table is 'Applicable Margin - Revolving Facility', and every sentence that makes the margin vary is confined to the Revolving Facility (has_margin_grid_audit). Citation replaced 2026-09-30; it previously quoted the Revolving Facility's sentence."
+      },
+      "notes": "Borrowing-base-limited against eligible wholesale leases and finance contracts; up to $40,000,000 available for Eligible Finance Contracts. Flat (redacted) pricing row in s.4.3."
+    },
+    {
+      "facility_name": {
+        "value": "Daily Rental Facility",
+        "citation": {
+          "section": "2.5(1)",
+          "quote": "the Lenders hereby establish in favour of Daily Rental Borrower a committed daily rental revolving credit facility (“Daily Rental Facility”) in the maximum amount of the Daily Rental Limit."
+        }
+      },
+      "facility_type": {
+        "value": "other",
+        "citation": {
+          "section": "2.5(1)",
+          "quote": "the Lenders hereby establish in favour of Daily Rental Borrower a committed daily rental revolving credit facility (“Daily Rental Facility”) in the maximum amount of the Daily Rental Limit."
+        }
+      },
+      "aggregate_commitment": {
+        "value": {
+          "amount": 25000000,
+          "currency": "CAD"
+        },
+        "citation": {
+          "section": "1.1(62)",
+          "quote": "“Daily Rental Limit” means the aggregate amount of the Commitments of the Lenders from time to time under the Daily Rental Facility which on the Closing Date is $25,000,000."
+        }
+      },
+      "maturity_date": {
+        "value": {
+          "value": {
+            "tenor_years": 3,
+            "anchor": "Closing Date"
+          },
+          "basis": "relative"
+        },
+        "citation": {
+          "section": "1.1(209)",
+          "quote": "“Termination Date” means the date which is three (3) years after the Closing Date, as extended from time to time hereunder."
+        }
+      },
+      "interest_rate_benchmark": {
+        "value": "cdor",
+        "citation": {
+          "section": "4.2(1)",
+          "quote": "The Borrowers shall pay to the Administrative Agent on behalf of the Lenders interest on CDOR Loans at the Administrative Agent’s Account for Payments at a rate per annum equal to the CDOR Rate plus the Applicable Margin"
+        }
+      },
+      "applicable_margin_bps": {
+        "value": null,
+        "citation": {
+          "section": "Cover legend; 4.3",
+          "quote": "CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY <*>, HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) THE TYPE OF INFORMATION THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL"
+        },
+        "excluded_from_scoring": "redacted",
+        "notes": "Redacted under confidential treatment (146 '<*>' markers in the exhibit). Not a deferral and not an absence; no null_kind fits, and the dev set does not get a new one. Excluded from dev scoring, decision of 2026-09-30."
+      },
+      "has_margin_grid": {
+        "value": false,
+        "citation": {
+          "section": "4.3 (Applicable Margins table)",
+          "quote": "Applicable Margins Facilities Prime Loan CDOR Loan Standby Fee"
+        },
+        "notes": "False on the table's layout, not its numbers, which are redacted: this facility has one row in the Applicable Margins table, whose columns are Prime Loan, CDOR Loan and Standby Fee, with no tier, ratio, rating or utilization column. The only tiered table is 'Applicable Margin - Revolving Facility', and every sentence that makes the margin vary is confined to the Revolving Facility (has_margin_grid_audit). Citation replaced 2026-09-30; it previously quoted the Revolving Facility's sentence."
+      },
+      "notes": "Borrowing-base-limited against eligible daily rental leases. Flat (redacted) pricing row in s.4.3."
+    }
+  ],
+  "financial_covenants": [
+    {
+      "covenant_type": {
+        "value": "fixed_charge_coverage",
+        "citation": {
+          "section": "1.1(103)",
+          "quote": "“Fixed Charge Coverage Ratio” means, on the last day of any Fiscal Quarter for Master Borrower calculated on a consolidated basis, the ratio of (a) EBITDAR for the Rolling Period ended on that date minus"
+        }
+      },
+      "initial_threshold": {
+        "value": 1.2,
+        "citation": {
+          "section": "10.3(a)",
+          "quote": "a Fixed Charge Coverage Ratio of not less than 1.20:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "10.3",
+          "quote": "Master Borrower covenants with each Lender that it shall maintain, at all times, on a consolidated basis (excluding any Non-Designated Subsidiary), tested at the end of each Fiscal Quarter:"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "10.3",
+          "quote": "Master Borrower covenants with each Lender that it shall maintain, at all times, on a consolidated basis (excluding any Non-Designated Subsidiary), tested at the end of each Fiscal Quarter:"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "null_kind": "absence"
+      },
+      "notes": "Numerator is EBITDAR less an $85,000-per-dealership maintenance capex allowance, cash income taxes, and distributions/withdrawals/affiliate loans (s.1.1(103)); denominator is cash interest + scheduled principal + rent/lease expense (s.1.1(104)). Confirmed flat. Calculation adjustments only: Distributions normalized for the first four Fiscal Quarters (s.10.3(iv)); floorplan/leasing/rental Debt and Interest Expense excluded (s.10.3(iii))."
+    },
+    {
+      "covenant_type": {
+        "value": "total_leverage_gross",
+        "citation": {
+          "section": "1.1(143)",
+          "quote": "“Leverage Ratio” means with respect to Master Borrower and with respect to any Rolling Period, the ratio of Lease Adjusted Funded Debt to EBITDAR."
+        }
+      },
+      "initial_threshold": {
+        "value": 5.75,
+        "citation": {
+          "section": "10.3(b)",
+          "quote": "a Leverage Ratio of not more than 5.75:1.00"
+        }
+      },
+      "step_down_schedule": {
+        "value": [],
+        "citation": {
+          "section": "10.3",
+          "quote": "Master Borrower covenants with each Lender that it shall maintain, at all times, on a consolidated basis (excluding any Non-Designated Subsidiary), tested at the end of each Fiscal Quarter:"
+        }
+      },
+      "testing_frequency": {
+        "value": "quarterly",
+        "citation": {
+          "section": "10.3",
+          "quote": "Master Borrower covenants with each Lender that it shall maintain, at all times, on a consolidated basis (excluding any Non-Designated Subsidiary), tested at the end of each Fiscal Quarter:"
+        }
+      },
+      "springing_trigger": {
+        "value": null,
+        "citation": null,
+        "null_kind": "absence"
+      },
+      "notes": "LEASE-ADJUSTED leverage: Lease Adjusted Funded Debt = all Funded Debt plus six times rental or lease expense (s.1.1(137)); denominator is EBITDAR. Classified total_leverage_gross under the netting rule: neither Funded Debt nor Lease Adjusted Funded Debt subtracts cash, and the debt captured is all Funded Debt. s.10.3(iii) excludes floorplan/leasing/rental Debt, so this is effectively non-floorplan lease-adjusted leverage. Confirmed flat."
+    }
+  ],
+  "has_margin_grid_audit": {
+    "audited": "2026-09-11",
+    "method": "Followed s.1.1(13) to s.4.3, read both pricing matrices from the exhibit's text layer, counted redacted cells per row against column headers, and read all 13 occurrences of 'Applicable Margin' for variation language.",
+    "matrix_1": "'Applicable Margins' - columns Prime Loan | CDOR Loan | Standby Fee; one row each for Wholesale Flooring, Used Vehicle Flooring, Wholesale Leasing, Daily Rental; 3 cells per row. No tier, ratio, rating or utilization column.",
+    "matrix_2": "'Applicable Margin - Revolving Facility' - columns Tier | Leverage Ratio | Prime Loan | CDOR Loan | Standby Fee | L/C Fee; five rows I-V. Keyed to the Leverage Ratio, reset on Compliance Certificate delivery, opening level Tier I.",
+    "variation_language": "All three sentences that make the margin vary are expressly confined to the Revolving Facility (s.4.3 twice, s.4.4). No template residue.",
+    "result": {
+      "Revolving Facility": true,
+      "Wholesale Flooring Facility": false,
+      "Used Vehicle Flooring Facility": false,
+      "Wholesale Leasing Facility": false,
+      "Daily Rental Facility": false
+    },
+    "caveat": "All margin values are redacted, so the four false values rest on matrix shape plus the express confinement of variation language, not on reading the numbers.",
+    "corpus_rationale_check": "corpus.md row 14 said 'revolver only | Grid; leverage + fixed charge'. Grid holds at document level (1 of 5 facilities); covenants hold; structure wrong - five facilities, not one.",
+    "exhibit_format": "Page-image exhibit (193 JPGs) with a hidden 1-pt white text layer; no <table> elements. Text-extractable, so labelable, but table structure survives only as reading order."
+  },
+  "labeler_hesitations": [
+    {
+      "field": "facility_type (facilities 2-5)",
+      "resolution": "other",
+      "alternative": "revolver",
+      "why_it_matters": "Each vehicle-finance facility has a 'Revolving Nature' clause, so 'revolver' is defensible on label-governs. Resolved to 'other' because the enum's 'revolver' denotes a general-purpose corporate revolver, the agreement reserves 'the Revolving Facility' for s.2.1, and labeling all five 'revolver' produces an unresolvable alignment tie (two CAD $100,000,000 facilities). The alignment point is a defect in the alignment rule, not a fact about this document, and was recorded in schema.md on exclusion."
+    },
+    {
+      "field": "Wholesale Flooring Facility - record or no record",
+      "resolution": "record",
+      "why_it_matters": "Demand facility, excluded from 'Committed Facilities', but established at signing with a $500,000,000 limit and lender allocations on Schedule 1.1(43). Not an accordion and not a carve-out. Excluding it would drop 44% of the headline total."
+    },
+    {
+      "field": "applicable_margin_bps (all facilities)",
+      "resolution": "null with null_reason = REDACTED",
+      "why_it_matters": "Schema has two nulls, silence and deferral. Redaction is neither: the value exists in the executed agreement and is omitted from the filed exhibit, and the highest-level fallback is also redacted. This is the cost that decided the exclusion - five unlabelable records in a field carrying the hallucination finding."
+    },
+    {
+      "field": "interest_rate_benchmark",
+      "resolution": "cdor",
+      "why_it_matters": "Every facility permits Prime and CDOR Loans; Prime is the Canadian analogue of Base Rate and is the alternative per the rule. Swing line overdrafts are deemed CDOR Loans (s.2.1(6)(a)); Prime Rate is floored at CDOR + 100 bps (s.1.1(177)). Zero occurrences of SOFR or LIBOR in the document."
+    },
+    {
+      "field": "maturity_date basis",
+      "resolution": "relative",
+      "why_it_matters": "No calendar maturity anywhere; Termination Date is three years after the Closing Date. Closing Date is hard-coded June 3, 2022, but basis is decided by the maturity definition alone."
+    }
+  ]
+}

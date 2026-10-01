@@ -150,9 +150,12 @@ disagreements by rule → tag `label-freeze` → first extraction run.
   dropped Avaya). Always use `document_file`; the validator matches it exactly.
 - `data/raw/` is gitignored. Raw filings live at
   `data/raw/{accession}_{file}`, and the validator needs them to check quotes.
-- `data/discarded/` is gitignored. It holds three discarded labels (Lamb
-  Weston EX-10.2, Avaya EX-10.7, Lithia EX-10.2), which the final
-  screen-signal measurement used.
+- `data/dev/` is the development set: the three labels discarded from the
+  corpus (Lamb Weston EX-10.2, Avaya EX-10.7, Lithia EX-10.2), brought
+  current and committed. Mechanics only — never for tuning, and Lamb Weston
+  EX-10.2 never for prompt iteration or few-shot examples (it shares corpus
+  row 7's accession). See `data/dev/README.txt`. The gitignored
+  `data/discarded/` where they used to live keeps only its README.
 - EDGAR needs `SEC_USER_AGENT` set. It is in `~/.zshenv`, because
   non-interactive shells do not read `~/.zshrc`. EDGAR throttles with 503s:
   keep `EdgarClient(rate=...)` at 4 or below.
