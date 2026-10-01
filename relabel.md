@@ -113,3 +113,61 @@ their own and reported separately:
   for each facility.
 - Lamb Weston Holdings, `0001679273-24-000026`, `ex10_1conformed-lwxbofax.htm`
   — `facility_type` for the European Term Loan.
+
+## Fields the repository already answers
+
+Listed before the blind pass begins, as [schema.md](schema.md#how-agreement-is-computed)
+requires. Several drawn documents were worked examples while the rules were
+written, so for some fields the answer is printed in the rulebook the relabel
+is done from, or elsewhere in this repository. Agreement on such a field
+measures recall of the rulebook, not consistency. **The headline is agreement
+without tier 1.** Beside it: agreement over every field, and without tiers 1
+and 2. Each figure carries its count and the field's majority-class rate. The
+relabel does not open the tier-2 files, or this file, until it is done.
+
+A field is listed when a committed document states its value or a fact that
+determines it — a sentence saying a tranche's margin is flat determines its
+`has_margin_grid`. Some
+passages quote a drawn agreement without naming it; those were found by
+matching every quotation in schema.md and labeling-guide.md against the five
+filings, and are marked. A passage that only discloses that a construction
+exists, without determining the value, is listed separately and excluded from
+nothing. No value is repeated here. Line numbers are as of `3733eb5`.
+
+**Tier 1 — the rulebook** (schema.md, labeling-guide.md), which the relabel is
+done from and cannot avoid:
+
+| Document | Fields | Where |
+|---|---|---|
+| G-III | `aggregate_commitment`; `springing_trigger`; `testing_frequency` | schema.md:131, 144–146, 1239–1256; labeling-guide.md:477–489 |
+| Paya | `applicable_margin_bps`, `has_margin_grid` and `interest_rate_benchmark` on both facilities; `facility_type` and `aggregate_commitment` of the term loan; `springing_trigger` | schema.md:165–169, 804–812; labeling-guide.md:76–78\*, 465–472\* |
+| Plains | `applicable_margin_bps`; `maturity_date` | schema.md:686–690\*, 713\*, 602–605\*; labeling-guide.md:113\*, 174–176\* |
+| Roper | `covenant_type`, `initial_threshold`, `testing_frequency`; `has_margin_grid` | schema.md:278, 740, 885–903, 963–965; labeling-guide.md:303, 351 |
+| Extreme | `maturity_date` | schema.md:569–572; labeling-guide.md:121–123 |
+
+\* Quoted without naming the document.
+
+**Tier 2 — elsewhere in the repository** (README.md, results.md, corpus.md,
+labeling-notes.md), which the relabel can avoid opening. Fields beyond tier 1:
+
+| Document | Fields | Where |
+|---|---|---|
+| G-III | `facility_type`; `has_margin_grid`; `covenant_type`; record count | corpus.md:291, 351; labeling-notes.md:150, 667–671 |
+| Paya | `facility_type` and `aggregate_commitment` of the revolver; `covenant_type`; `initial_threshold`; record count | labeling-notes.md:154, 1396–1425; corpus.md:340 |
+| Plains | `facility_type`; `aggregate_commitment`; `interest_rate_benchmark`; `has_margin_grid`; `covenant_type`; `initial_threshold`; `step_down_schedule`; record count | labeling-notes.md:156, 259–263, 1325, 1426–1476; corpus.md:281, 341 |
+| Roper | `facility_type`; `aggregate_commitment`; `applicable_margin_bps`; record count | corpus.md:293, 352, 753; README.md:21, 53; results.md:173–178; labeling-notes.md:158 |
+| Extreme | `facility_type` on both facilities; `has_margin_grid` on at least one; record count | corpus.md:285, 345, 390; labeling-notes.md:149 |
+
+Record count — how many facilities and covenants a document has — is not a
+field; it bears on the record-level agreement line.
+
+**Constructions disclosed, value not determined — excluded from nothing:**
+Plains and Extreme carry a conditional override on `initial_threshold`
+(schema.md:999); Roper's grid prints a level that is not its opening one
+(schema.md:738–741).
+
+**Not listed in either tier, and therefore the fields the "without tiers 1 and
+2" figure rests on:** every field not named above. For Paya that leaves both
+`maturity_date` values, `testing_frequency` and `step_down_schedule`; for
+Plains, `testing_frequency` and `springing_trigger`. The figure will be thin,
+and its count says so.
