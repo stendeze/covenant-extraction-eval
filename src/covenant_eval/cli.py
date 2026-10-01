@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 
 from .edgar import MissingUserAgent
+from .extract import RUNS_DIR, CorpusLocked, Settings, score_run
+from .extract import run as run_extraction
 from .screen import run_screen
 from .search import run_census
 from .coverage import run_coverage, write_results
@@ -76,9 +78,32 @@ def main(argv: list[str] | None = None) -> int:
     prompt.add_argument("--write", action="store_true", help="replace the committed prompt and schema")
     prompt.add_argument("--schema", type=Path, default=SCHEMA_PATH)
 
+    extract = sub.add_parser(
+        "extract", help="prepare an extraction run over labeled documents; --submit sends it to the Batch API"
+    )
+    extract.add_argument("labels", type=Path, nargs="+", help="label-shaped files naming the documents")
+    extract.add_argument("--run-id", required=True)
+    extract.add_argument("--submit", action="store_true", help="send the batch (costs money; needs credentials)")
+    extract.add_argument("--model", default=Settings.model)
+    extract.add_argument("--effort", default=Settings.effort)
+    extract.add_argument("--max-tokens", type=int, default=Settings.max_tokens)
+    extract.add_argument("--poll", type=float, default=60, help="seconds between batch status checks")
+
+    score_run_p = sub.add_parser("score-run", help="compare a run's predictions with label files: counts, no values")
+    score_run_p.add_argument("run_id")
+    score_run_p.add_argument("--labels", type=Path, default=Path("data/dev"))
+
     args = parser.parse_args(argv)
 
     try:
+        if args.command == "extract":
+            settings = Settings(model=args.model, effort=args.effort, max_tokens=args.max_tokens)
+            print(run_extraction(args.run_id, args.labels, submit_batch=args.submit, settings=settings,
+                                 poll_seconds=args.poll))
+            return 0
+        if args.command == "score-run":
+            print(score_run(RUNS_DIR / args.run_id, args.labels))
+            return 0
         if args.command == "prompt":
             report = run_prompt(args.write, args.schema)
             print(report)
@@ -115,7 +140,7 @@ def main(argv: list[str] | None = None) -> int:
             # not fail: several of them are judgment calls the labeler owns.
             return 1 if result["total_errors"] else 0
         print(json.dumps(result, indent=2))
-    except (MissingUserAgent, SchemaParseError) as exc:
+    except (MissingUserAgent, SchemaParseError, CorpusLocked, FileExistsError) as exc:
         # Exit 2 is "cannot run", distinct from exit 1, "ran and found
         # deviations". A schema.md that will not parse must not degrade into a
         # clean-looking report computed from a partial value set.
