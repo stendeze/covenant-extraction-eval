@@ -87,9 +87,10 @@ disagreements by rule → tag `label-freeze` → first extraction run.
   (most restrictive level) is recorded in schema.md as the closest of the
   Hertz rules to arbitration. If a second document ever splits on it, that is
   where to look.
-- **Known and deliberately unpatched:** the record-alignment tiebreak hole
-  (two facilities with the same type, currency and amount). See schema.md,
-  Record alignment.
+- **Closed when the comparison rules were fixed:** the record-alignment
+  tiebreak hole (two facilities with the same type, currency and amount).
+  Records now align by agreement, with position as the last tie-break. See
+  schema.md, Record alignment.
 
 ## Gotchas a fresh session will hit
 

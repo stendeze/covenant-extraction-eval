@@ -376,7 +376,7 @@ Eleven scored fields. Every one of them carries a citation (see
 > `Revolving Facility` in Article I and makes `Revolving Loans` under §2.6(a) —
 > and the field has no principled way to choose. A field two careful readers
 > answer differently is measuring phrasing, not extraction. `facility_type`
-> carries the semantic weight and record alignment keys off it, so almost
+> carries the semantic weight and record alignment leans on it, so almost
 > nothing is lost.
 
 ### 1. `facility_type`
@@ -536,8 +536,19 @@ size.
 Maturity Date", "Term Loan Maturity Date".
 
 **Correct when:** `basis` matches and, for `stated`, the date matches exactly;
-for `relative`, `tenor_years` (or `tenor_months`) and the normalized `anchor`
-both match.
+for `relative`, the tenor and the normalized `anchor` both match.
+
+- **The tenor is compared in months.** `{"tenor_years": 5}` and
+  `{"tenor_months": 60}` are the same answer: both count calendar time from
+  the same day, and which key a reader chose says nothing about whether they
+  read the definition. The key records how the agreement phrases the period;
+  the comparison does not depend on it.
+- **The anchor is the defined term the Maturity Date definition counts from,
+  normalized as an [anchor](#normalization-applied-before-comparison).**
+  `Closing Date`, `the Closing Date` and `closing date` match. Different
+  defined terms do not, even where the agreement defines them as the same
+  day: equating them means reading a second definition, which is the hop the
+  basis rule below declines to take.
 
 > **Why `relative` is structured rather than a verbatim string.** As a free
 > string it would be scored under the normalization rules for text —
@@ -730,9 +741,11 @@ Adjudication rules:
   happened to be an opening level, which is the only reason nothing had broken.
 
   This is different in kind from the [record-alignment
-  defect](#record-alignment) that was deliberately left open. That construction
-  appears nowhere in the corpus, so a rule for it would be written against a
-  hypothetical. These values are printed in four of the corpus's own documents;
+  defect](#record-alignment) that was deliberately left open at the time. That
+  construction appears nowhere in the corpus, so a rule for it would have been
+  written against a hypothetical; it was closed later, when building the
+  scorer forced a deterministic last tie-break. These values are printed in
+  four of the corpus's own documents;
   the type was simply too narrow for the value space. Widening a type cannot
   change how anything is adjudicated, and no recorded value changes.
 
@@ -949,9 +962,9 @@ rules:
   a bare `60` is indistinguishable from a ratio of sixty times. The two
   documents that force this are the same covenant type — Roper's
   `debt_to_capitalization` at "0.65 to 1.00" and Boeing's at "60% of Total
-  Capital" — and covenants align on `covenant_type`, so the records are meant
-  to be directly comparable. Recorded either way, one of them would be wrong by
-  a factor of a hundred.
+  Capital" — and records of one covenant type are meant to be directly
+  comparable. Recorded either way, one of them would be wrong by a factor of a
+  hundred.
 
   Two careful labelers did split on this, which is the condition this document
   exists to remove.
@@ -1005,10 +1018,21 @@ the **first fiscal period at the new level**.
 **Where it lives:** same table as `initial_threshold`.
 
 **Correct when:** the arrays match as ordered sequences — same length, and
-every pair matches on both keys. For `relative`, `quarters_after` (or
-`months_after`) and the normalized `anchor` must both match. A partial match is
-scored as a miss on this field; per-step credit is reported separately as a
-diagnostic.
+every pair matches on both keys. For `relative`, the count, its unit and the
+normalized `anchor` must all match. A partial match is scored as a miss on this
+field; per-step credit is reported separately as a diagnostic.
+
+- **`quarters_after` and `months_after` are not interchangeable**, unlike the
+  maturity tenor. "The fifth full Fiscal Quarter ending after the Closing
+  Date" counts fiscal periods, and where it lands depends on where the anchor
+  falls inside a quarter; fifteen months after the same day is a different
+  date. Choosing the unit is reading the table, so the unit is compared.
+- **The per-step diagnostic** counts a gold step as recovered when the
+  prediction contains a step with the same `effective_from` and `threshold`,
+  wherever it sits in the array. Recall is recovered gold steps over gold
+  steps; precision is matching predicted steps over predicted steps. It is
+  computed over every aligned pair where either side has a step, reported
+  beside the field, and never changes the field's score.
 
 Adjudication rules:
 
@@ -1139,7 +1163,13 @@ where `condition_type` is `revolver_utilization`, `minimum_availability`, or
 "Covenant Trigger Event", "Financial Covenant Test Period", "Testing Period".
 
 **Correct when:** null-vs-non-null is correct, and where non-null,
-`condition_type` and `threshold` both match.
+`condition_type`, `threshold` and `threshold_unit` all match.
+
+The unit is part of the threshold. 35 percent of commitments and $35 are
+different triggers, and the any-drawn rule below records `0` in `currency`
+precisely so that the unit carries meaning. The `quote` carried inside the
+value is checked like any other citation and scored with [citation
+accuracy](#citations), not here.
 
 Adjudication rules:
 
@@ -1307,32 +1337,73 @@ Facilities and covenants are lists, so predicted items must be aligned to gold
 items before any field can be scored. Without a stated alignment rule, the
 accuracy number is not reproducible.
 
-- **Facilities** align on `facility_type`. Where an agreement has two tranches
-  of the same type (two TLBs, or a USD and a EUR revolver), align on
-  `(facility_type, aggregate_commitment.currency)`, then on commitment amount
-  descending.
-- **Covenants** align on `covenant_type`.
-> **Known limitation: all three facility tiebreakers can be exhausted.** Type,
-> then `(type, currency)`, then commitment descending — an agreement with two
-> facilities of the same type, in the same currency, at the same amount
-> defeats every one of them, and the alignment becomes arbitrary. Lithia
-> Motors is the demonstrated case: its Revolving Facility and Used Vehicle
-> Flooring Facility are both CAD $100,000,000, so classifying both as
-> `revolver` would have left no rule to align them by. That document was
-> excluded for unrelated reasons, which means **this hole is unpatched and
-> undemonstrated in the corpus** rather than fixed.
->
-> It is recorded because it is a defect in the rule, not a fact about one
-> document, and the next agreement with mirrored tranches will hit it. The
-> obvious next tiebreaker is order of appearance in the commitment sections,
-> which is mechanical and reproducible; it is deliberately **not** adopted
-> here, because no document in the corpus forces it and a rule written against
-> a hypothetical is the thing this schema keeps refusing to do.
+**A record's type is a field like any other, not the key it is found by.**
+Keyed on type, a covenant recorded as `total_leverage_gross` where the gold
+says `total_net_leverage` would become one spurious record and one missed one,
+and its threshold, schedule, frequency and trigger would all count against
+both precision and recall — four fields charged for one error in a fifth.
+`covenant_type` errors would leak into every other covenant field's number,
+and per-field reporting is what this schema is for. So a wrong type costs the
+type field and nothing else, provided the record can still be recognized.
 
-- A predicted item with no gold match is a **spurious record** — every one of
-  its fields counts against precision.
-- A gold item with no predicted match is a **missed record** — every one of
-  its fields counts against recall.
+Records align within one document and one level — facilities with facilities,
+covenants with covenants — by how much they agree:
+
+1. **Score every candidate pair** by the number of scored fields on which the
+   two records agree, each judged by that field's own **Correct when** test.
+   Type is one field among the rest. A field the gold excludes from scoring
+   (`unrepresentable`) counts for neither side.
+2. **A pair must agree on at least one identifying field**, or it is not a
+   candidate. For facilities the identifying fields are `facility_type` and
+   `aggregate_commitment`; for covenants, `covenant_type` and
+   `initial_threshold`. This is what "can still be recognized" means: a record
+   wrong on every identifying field is not the same record with errors in it.
+3. **Take the pairing with the highest total agreement.** Each record pairs at
+   most once.
+4. **Break ties in this order:** more pairs that agree on type; then, for
+   facilities, more pairs that agree on `(facility_type,
+   aggregate_commitment.currency)`; then more pairs whose commitment amounts
+   hold the same rank, ranking each side's facilities by amount descending
+   with null amounts last; then position — records pair in the order they
+   appear in each list.
+
+**Why those fields identify and the others do not.** Agreeing on a value that
+every record in the document shares is not evidence that two records are the
+same record. Counted over every pair of records within one gold document when
+this rule was written: of 12 facility pairs, 1 shares a `facility_type` and
+none an `aggregate_commitment`, while 8 share a `maturity_date`, 10 an
+`interest_rate_benchmark`, 10 an `applicable_margin_bps` and 11 a
+`has_margin_grid`. Of 11 covenant pairs, none shares a `covenant_type` and 1 an
+`initial_threshold`, while 9 share a `step_down_schedule`, 9 a
+`testing_frequency` and 10 a `springing_trigger`. Without the condition, a
+hallucinated covenant and a missed one would pair on `quarterly`, `[]` and a
+null trigger, and earn credit there for nothing.
+
+- A predicted item left unpaired is a **spurious record** — every one of its
+  fields counts against precision.
+- A gold item left unpaired is a **missed record** — every one of its fields
+  counts against recall.
+
+The same procedure aligns the two passes of the [blind
+relabel](#annotator-agreement), where it is symmetric: neither pass is the
+reference.
+
+> **The last tie-break reverses an earlier refusal, and says why.** This
+> section used to key facilities on type, then `(type, currency)`, then
+> commitment descending, and recorded that all three can be exhausted: an
+> agreement with two facilities of the same type, currency and amount defeats
+> them. Lithia Motors is the demonstrated case — its Revolving Facility and
+> Used Vehicle Flooring Facility are both CAD $100,000,000 — and that document
+> was excluded for unrelated reasons. Order of appearance was the obvious next
+> tie-break, and it was deliberately not adopted, because no document forced
+> it.
+>
+> What forces it now is the scorer, not a document. Alignment by agreement
+> needs a final deterministic tie-break, or two runs of the same scorer on the
+> same files could pair records differently. Position in the record list is
+> that tie-break. It is reached only when every content-based one is
+> exhausted, and no gold document has two records of the same type, currency
+> and amount.
 
 Reporting per-field F1 rather than raw accuracy follows CUAD and ContractEval,
 which is the point: the methodology is borrowed so that the numbers are
@@ -1460,6 +1531,49 @@ full set — not by quietly picking whichever label looks better.
 and it closes at `label-freeze`**, which comes before the first extraction run.
 See [After the freeze](#after-the-freeze-two-things-two-tags).
 
+### How agreement is computed
+
+Fixed before the blind pass exists, for the reason the reporting shape was
+fixed before any model ran: a statistic chosen after seeing the disagreements
+is chosen around them.
+
+- **Per field, the share of compared instances on which the two passes agree,
+  with the count beside it.** Each instance is judged by the field's own
+  **Correct when** test. An instance is one field on a pair of records that
+  [record alignment](#record-alignment) pairs; the procedure is the one a
+  model is scored by, applied symmetrically, so neither pass is the reference.
+- **Records one pass has and the other does not are their own line**, reported
+  as record-level agreement, and enter no field's rate. This is the same
+  reasoning that keeps a wrong type from costing a record's other fields: a
+  disagreement about whether a covenant exists is one disagreement, not five.
+- **`null_kind` is compared wherever both passes record a null.** Two nulls
+  of different kinds disagree. The kind decides whether a citation is
+  required and whether the field is scored at all, so two passes that differ
+  on it have not labeled the same thing.
+- **A field either pass records as `unrepresentable` is excluded**, as it is
+  from scoring, and listed by name so that an exclusion one pass alone
+  claims is visible.
+- **Citations are not compared.** Two passes can quote different sentences
+  that support the same value, and the value is what agreement measures.
+- **No kappa.** Over five documents several fields take a single value in
+  both passes, where kappa is undefined, and a statistic undefined on half
+  the table cannot be the headline. Raw agreement with its count is reported,
+  and the count is what tells a reader how little a field rests on.
+- **Each field's majority-class rate sits beside its agreement figure** — the
+  share of the compared values, both passes pooled, that take the field's
+  most common value. On a field that is mostly `quarterly`, two passes agree
+  mostly by both writing `quarterly`, and five documents are too few for
+  kappa to correct for that. The two numbers side by side let a reader do the
+  correction by eye: agreement near the majority rate says little.
+- **The headline excludes the fields whose answers the rulebook states.** The
+  fields are listed in [relabel.md](relabel.md), fixed before the blind pass
+  began, in two tiers: tier 1, stated in this document or the labeling guide,
+  which the relabel is done from and cannot avoid; tier 2, stated elsewhere in
+  the repository, which the relabel does not open. Agreement on a tier-1 field
+  measures recall of the rulebook, not consistency. The headline is agreement
+  without tier 1; beside it, agreement over every field and agreement without
+  tiers 1 and 2, each with its count.
+
 ---
 
 ## Normalization applied before comparison
@@ -1472,13 +1586,23 @@ See [After the freeze](#after-the-freeze-two-things-two-tags).
 | Dates | ISO-8601 `YYYY-MM-DD` |
 | Enums | exact match against the stated value set |
 | Free strings | lowercase, strip articles and punctuation, collapse whitespace |
+| Anchors | the `anchor` of a `relative` maturity or `effective_from`: casefold, strip one leading "the", surrounding quotation marks and trailing punctuation, collapse whitespace — nothing else |
 
-> **The free-string row currently governs nothing.** `facility_name` was the
+> **The free-string row currently governs no field.** `facility_name` was the
 > only free-string field and it was
 > [cut](#facility-fields); every remaining scored field is an enum, a number, a
-> date, a boolean or a structured object, all compared exactly. The row is kept
-> because a v2 that reintroduces a string field will need it — and because
-> anyone reading this table cold would otherwise assume it is live.
+> date, a boolean or a structured object. The row is kept because a v2 that
+> reintroduces a string field will need it — and because anyone reading this
+> table cold would otherwise assume it is live.
+>
+> **The anchor row is narrower on purpose.** An anchor is the one string inside
+> a structured value, and it names a defined term, so it gets only the
+> normalization a defined term can survive. Stripping every article or every
+> punctuation mark would be harmless today and is not needed; collapsing
+> plurals — the free-string row's known gap, below — would be wrong for a
+> defined term. Applied to the gold set when this row was written, it merged
+> none of the sixteen anchors: they take three distinct forms before
+> normalization and three after.
 >
 > **A known gap for that v2: it does not collapse plurals.** Lamb Weston names
 > its tranches `Revolving A-2 Loan` in the §2.01 definition and `Revolving A-2
