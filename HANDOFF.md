@@ -29,6 +29,10 @@ Fixed since, all before the relabel began:
 | `4f21be0` | The fields of the five drawn documents that the repository already answers, in relabel.md, so the headline agreement can exclude them |
 | `afa93aa` | `data/dev/`, the development set, and the validator's `excluded_from_scoring` marker for it |
 | `a1b6214` | The scorer core — per-field comparison, alignment, agreement — tested against `data/dev/` only |
+| `b200a0a` | Every decision before the first corpus run, with defaults (below) |
+| `8ffd9ab` | The prompt generator and its output: `prompts/extraction_system.md`, `prompts/output_schema.json` (D1, D4) |
+| `71811d0` | The extraction pipeline on the Batch API, with the corpus guard (D3, D5, D11, D12, B4, B7) |
+| `fa7f69f` | The regex baseline, to R1 |
 
 ## Tags and freeze points
 
@@ -70,11 +74,19 @@ Two things can run in parallel; one must wait.
    Term Loan `facility_type`. Relabels go to `data/relabel/`, never
    `data/labels/`, in the label files' shape; `covenant-eval agree` pairs them
    with the originals by accession and `document_file`.
-2. **Code that can be written now**, all developed against `data/dev/` and
-   never run on a corpus document, on the defaults in [Decisions before the
-   first corpus run](#decisions-before-the-first-corpus-run) until Daniel
-   reviews them: the prompt generator, the extraction pipeline, the regex
-   baseline, and the fetch script.
+2. **Code**, all developed against `data/dev/` and never run on a corpus
+   document, on the defaults in [Decisions before the first corpus
+   run](#decisions-before-the-first-corpus-run) until Daniel reviews them.
+   - *Built:* the prompt generator, the extraction pipeline and the regex
+     baseline. The pipeline has not met the API — see Q4.
+   - *Still to build:* the group B scoring on top of the scorer core —
+     - F1 (B1);
+     - null detection and the deferral-shape mapping (B2);
+     - the deferral-citation span check (B3);
+     - citation accuracy (B5);
+     - the naive baseline through the scorer (B6).
+
+     These wait for B1–B7 to be accepted. The fetch script also remains.
 3. **Must wait:** running extraction on any corpus document. That is the
    first extraction run, and it comes after `label-freeze`.
 
@@ -329,6 +341,77 @@ Mapping "the term loan" to a record index means reading the original labels.
 `data/relabel/flagged.json`, listing document, facility, field, value and
 citation, compared and reported on its own.
 
+### Questions from the build
+
+Raised while building on the defaults. Each has a default; nothing waits on
+an answer except Q4.
+
+**Q1. Some rules lost a clause along with their example.** D1's filter drops a
+sentence when its numbers or dates equal a gold value. Several rulebook
+sentences state a rule and its example in one breath, so the rule went too:
+- the calendar-date half of the maturity `basis` rule, the `stated` type
+  description, and the "earliest of" example — their date equals a gold
+  maturity;
+- "a threshold below 1.00 cannot be an EBITDA multiple" — its example level
+  equals a gold threshold;
+- "record the precision the agreement states, which may be a month", and the
+  exact-comparison examples — their month equals a gold step;
+- the normalization row saying a percentage level is a ratio — its example is
+  a corpus document's phrase.
+
+Rules that existed only as examples are gone entirely: what `continuous` and
+`weekly` mean, the "thereafter, add one" count, the explanations behind the
+Term C, greater-of and any-drawn rules. Three harmless orphans remain
+("Limbs (ii) and (iii) are mechanics.", "This is not hypothetical.", and a
+bold lead about market usage).
+*Default:* one schema.md commit restating each lost rule without a corpus
+example, and swapping example values for ones no gold record holds. That
+changes no rule and no label. Then regenerate the prompt, and correct
+relabel.md's tier-1 line references, which would shift.
+
+**Q2. The A8 list was matched on quotations, not values.** Building D1 showed
+the rulebook also carries gold values with no quote around them — the
+maturity example's date, for one. relabel.md's tier 1 may therefore miss
+fields whose value, not wording, is printed in the rulebook.
+*Default:* re-run the A8 check with value matching for the five drawn
+documents, and update relabel.md before the relabel starts. Daniel need not
+read it. If the relabel has already started, record the gap in its report
+instead.
+
+**Q3. The prompt keeps two generic priors:** "post-2022 agreements are almost
+entirely Term SOFR", and triggers "commonly 35% or 40%". Both are market
+facts, not corpus facts. *Default:* keep.
+
+**Q4. The pipeline has not met the API.** This machine has no credentials:
+no `ANTHROPIC_API_KEY`, no `ant` login. The first live call should be one dev
+run — `covenant-eval extract data/dev/*_labels.json --run-id dev-1 --submit`
+— which tests that the API accepts the output schema, that responses parse,
+and that predictions score. At Batch prices, from the dev documents' sizes,
+it costs $1.26–2.58.
+*Default:* run it once a key is available, and commit the run (D11). Fix only
+mechanical failures, never the prompt's wording: the dev set is not for
+tuning.
+
+**Q5. Two gaps in R1 were filled.**
+- screen.py's `BENCHMARKS` has no CDOR pattern, so the baseline cannot answer
+  `cdor`. Its bare "SOFR" also matches inside every "Term SOFR", so it counts
+  only when no named benchmark is found.
+- R1 reads only a definition named "… Maturity Date", so a "Termination
+  Date" gives null.
+
+*Default:* keep both as built. Both are the cheap tool's real limits.
+
+**Q6. The prompt's frame is hand-written, not generated:** the opening that
+maps "label" to "your output", the citation instruction, the closing task,
+and the user-message template. It is in `prompt.py` and `extract.py`, hashed
+into every run's manifest, and frozen with the rest at the first run.
+*Default:* as written. Review it once.
+
+**Q7. `max_tokens: 64000` at effort `high`** covers thinking and the JSON
+together. Whether that is enough for the longest document is not knowable
+before a live run. *Default:* keep. A `max_tokens` stop on the dev run (Q4)
+is the signal to raise it, before any corpus run.
+
 ## Not built yet
 
 The fetch script that [README.md](README.md) says will make the corpus
@@ -448,7 +531,17 @@ uv run covenant-eval coverage --write results.md   # regenerate the generated ta
 uv run pytest                                      # the scorer's tests, against data/dev/ only
 uv run covenant-eval compare A.json B.json         # align two records of one agreement, field by field
 uv run covenant-eval agree                         # relabel agreement: data/relabel/ against data/labels/
+uv run covenant-eval prompt                        # check the committed prompt and schema still match schema.md
+uv run covenant-eval prompt --write                # regenerate them (reads corpus filings for the leak check)
+uv run covenant-eval extract data/dev/*_labels.json --run-id ID            # prepare a run; nothing sent
+uv run covenant-eval extract data/dev/*_labels.json --run-id ID --submit   # send it to the Batch API (costs money)
+uv run covenant-eval baseline data/dev/*_labels.json --run-id ID           # the regex baseline, as a run
+uv run covenant-eval score-run ID --labels data/dev                         # predictions against labels, counts only
 ```
+
+`extract` and `baseline` refuse any corpus document until the `label-freeze`
+tag exists. That is the code half of the rule above; the rule itself does not
+depend on the code.
 
 `compare` prints ok, MISS or excluded for each field and no values unless
 asked with `--values`. Do not run it on a drawn document's original label in
