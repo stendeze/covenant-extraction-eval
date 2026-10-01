@@ -1,0 +1,661 @@
+{
+  "type": "object",
+  "properties": {
+    "facilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "facility_type": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "enum": [
+                  "bridge",
+                  "delayed_draw_term_loan",
+                  "other",
+                  "revolver",
+                  "term_loan_a",
+                  "term_loan_b"
+                ]
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "aggregate_commitment": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "amount": {
+                        "type": "integer"
+                      },
+                      "currency": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "amount",
+                      "currency"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "citation": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "section": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "section",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "maturity_date": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "basis": {
+                        "type": "string",
+                        "const": "stated"
+                      },
+                      "value": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    },
+                    "required": [
+                      "basis",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "basis": {
+                        "type": "string",
+                        "const": "relative"
+                      },
+                      "value": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tenor_years": {
+                                "type": "integer"
+                              },
+                              "anchor": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "tenor_years",
+                              "anchor"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "tenor_months": {
+                                "type": "integer"
+                              },
+                              "anchor": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "tenor_months",
+                              "anchor"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "basis",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "interest_rate_benchmark": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "enum": [
+                  "base_rate",
+                  "cdor",
+                  "daily_simple_sofr",
+                  "euribor",
+                  "libor",
+                  "other",
+                  "prime",
+                  "term_sofr"
+                ]
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "applicable_margin_bps": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "citation": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "section": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "section",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "has_margin_grid": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "boolean"
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "facility_type",
+          "aggregate_commitment",
+          "maturity_date",
+          "interest_rate_benchmark",
+          "applicable_margin_bps",
+          "has_margin_grid"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "financial_covenants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "covenant_type": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "enum": [
+                  "capex_limit",
+                  "debt_service_coverage",
+                  "debt_to_capitalization",
+                  "first_lien_net_leverage",
+                  "fixed_charge_coverage",
+                  "interest_coverage",
+                  "minimum_liquidity",
+                  "other",
+                  "secured_net_leverage",
+                  "total_leverage_gross",
+                  "total_net_leverage"
+                ]
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "initial_threshold": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "step_down_schedule": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "effective_from": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "basis": {
+                                  "type": "string",
+                                  "const": "stated"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "basis",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "basis": {
+                                  "type": "string",
+                                  "const": "relative"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "quarters_after": {
+                                          "type": "integer"
+                                        },
+                                        "anchor": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "quarters_after",
+                                        "anchor"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "months_after": {
+                                          "type": "integer"
+                                        },
+                                        "anchor": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "months_after",
+                                        "anchor"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "basis",
+                                "value"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "threshold": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "effective_from",
+                        "threshold"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "citation": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "section": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "section",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "testing_frequency": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "enum": [
+                  "annual",
+                  "continuous",
+                  "event_driven",
+                  "monthly",
+                  "quarterly",
+                  "semiannual",
+                  "weekly"
+                ]
+              },
+              "citation": {
+                "type": "object",
+                "properties": {
+                  "section": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "section",
+                  "quote"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          },
+          "springing_trigger": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "condition_type": {
+                        "type": "string",
+                        "enum": [
+                          "minimum_availability",
+                          "other",
+                          "revolver_utilization"
+                        ]
+                      },
+                      "threshold": {
+                        "type": "number"
+                      },
+                      "threshold_unit": {
+                        "type": "string",
+                        "enum": [
+                          "currency",
+                          "percent"
+                        ]
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "condition_type",
+                      "threshold",
+                      "threshold_unit",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "citation": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "section": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "section",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "citation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "covenant_type",
+          "initial_threshold",
+          "step_down_schedule",
+          "testing_frequency",
+          "springing_trigger"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "facilities",
+    "financial_covenants",
+    "notes"
+  ],
+  "additionalProperties": false
+}

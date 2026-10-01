@@ -11,6 +11,7 @@ from .edgar import MissingUserAgent
 from .screen import run_screen
 from .search import run_census
 from .coverage import run_coverage, write_results
+from .prompt import run_prompt
 from .score import run_agree, run_compare
 from .validate import SCHEMA_PATH, SchemaParseError, run_validate
 
@@ -69,9 +70,19 @@ def main(argv: list[str] | None = None) -> int:
     )
     agree.add_argument("--schema", type=Path, default=SCHEMA_PATH)
 
+    prompt = sub.add_parser(
+        "prompt", help="generate the extraction prompt and output schema from schema.md (check, or --write)"
+    )
+    prompt.add_argument("--write", action="store_true", help="replace the committed prompt and schema")
+    prompt.add_argument("--schema", type=Path, default=SCHEMA_PATH)
+
     args = parser.parse_args(argv)
 
     try:
+        if args.command == "prompt":
+            report = run_prompt(args.write, args.schema)
+            print(report)
+            return 0 if args.write or "DIFFERS" not in report else 1
         if args.command == "compare":
             print(run_compare(args.reference, args.candidate, args.schema,
                               symmetric=args.symmetric, values=args.values))
