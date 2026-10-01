@@ -197,7 +197,45 @@ So the rule has two phases:
   replaced, with the replacement and its reason recorded.
 
 **The corpus froze at tag `corpus-freeze`, before the first extraction run.**
-The tag names the freeze commit; the first extraction run comes after it.
+The tag names the freeze commit.
+
+#### After the freeze: two things, two tags
+
+The freeze at `corpus-freeze` conflated two things that need different rules,
+and this section separates them. It was written after the freeze, when the
+instruction that nothing would touch `data/labels/` "except through the
+schema's unfreeze procedure" turned out to point at a procedure this document
+did not contain — while its own [annotator-agreement
+protocol](#annotator-agreement) resolves disagreements by re-applying rules to
+the full set, which changes labels.
+
+- **The document set is frozen at `corpus-freeze`.** No document is added or
+  removed. The unlabelable-document exception above was written for documents
+  not yet read; every document in the set has been labeled, so it can no
+  longer fire.
+- **Label values change only through the blind relabel's resolution
+  procedure, and only before the first extraction run.** That procedure is the
+  one under [Annotator agreement](#annotator-agreement): a disagreement between
+  the blind pass and the original is resolved by tightening the rule here and
+  re-applying it to the full set, with every value change confirmed with the
+  labeler as [Changing a rule](#changing-a-rule) requires. No other path edits
+  a file in `data/labels/` after `corpus-freeze`.
+- **A second annotated tag, `label-freeze`, marks the point after which labels
+  are fixed.** It is made when the blind relabel is resolved, and the first
+  extraction run comes after it — not merely after `corpus-freeze`.
+- **After `label-freeze`, a label error is never silently corrected.** If a
+  gold value is found to be wrong — by any route, including a model's output
+  disagreeing with it — the label file is not edited. The correction is
+  recorded as an erratum outside `data/labels/`, and both scores are reported:
+  the one against the original gold and the one against the corrected value,
+  with how the error was found.
+
+The last rule is what keeps model output from shaping the gold set. Model
+output is the most efficient error-finder this project will have, and it finds
+errors only where the model disagreed with the gold, so correcting those in
+place would move the gold toward the model one disagreement at a time and
+inflate every later score. Reporting both scores keeps the correction visible
+without letting it pay for itself.
 
 > **This line was originally drawn at the start of labeling, and that was the
 > wrong place.** PureCycle showed it. The corpus had no empty covenant list —
@@ -1417,6 +1455,10 @@ cannot, but intra-annotator agreement is the honest available substitute and
 reporting it is strictly better than reporting nothing. Disagreements found
 this way are resolved by tightening the rule here, then re-applying it to the
 full set — not by quietly picking whichever label looks better.
+
+**This is the only path by which a label value changes after `corpus-freeze`,
+and it closes at `label-freeze`**, which comes before the first extraction run.
+See [After the freeze](#after-the-freeze-two-things-two-tags).
 
 ---
 

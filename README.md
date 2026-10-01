@@ -70,4 +70,4 @@ Raw filings are not committed — they are large and re-downloadable from EDGAR 
 
 ---
 
-*Status: corpus frozen at tag `corpus-freeze`; extraction not yet run.*
+*Status: document set frozen at tag `corpus-freeze`; label values open only to the blind relabel's resolution until a second tag, `label-freeze`; extraction not yet run.*

@@ -529,6 +529,12 @@ Rule changes go in `schema.md` as their own commit, with the document that
 forced them named in the message. Then re-apply to everything already
 labeled.
 
+**After `corpus-freeze`, a label file changes only through the blind relabel's
+resolution, and after `label-freeze` not at all.** A gold error found after
+`label-freeze` is recorded as an erratum outside `data/labels/` and reported
+with both scores; the label file is never edited. See schema.md, [After the
+freeze](schema.md#after-the-freeze-two-things-two-tags).
+
 **And update this file in that same commit.** This is the document labeling
 is actually done from, so a schema change that does not reach it keeps being
 applied in its old form — silently, and by construction, at every document
