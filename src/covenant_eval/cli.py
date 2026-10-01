@@ -7,6 +7,7 @@ import json
 import sys
 from pathlib import Path
 
+from .baseline import run_baseline
 from .edgar import MissingUserAgent
 from .extract import RUNS_DIR, CorpusLocked, Settings, score_run
 from .extract import run as run_extraction
@@ -89,6 +90,10 @@ def main(argv: list[str] | None = None) -> int:
     extract.add_argument("--max-tokens", type=int, default=Settings.max_tokens)
     extract.add_argument("--poll", type=float, default=60, help="seconds between batch status checks")
 
+    baseline = sub.add_parser("baseline", help="run the regex baseline (R1) over labeled documents, as a run")
+    baseline.add_argument("labels", type=Path, nargs="+", help="label-shaped files naming the documents")
+    baseline.add_argument("--run-id", required=True)
+
     score_run_p = sub.add_parser("score-run", help="compare a run's predictions with label files: counts, no values")
     score_run_p.add_argument("run_id")
     score_run_p.add_argument("--labels", type=Path, default=Path("data/dev"))
@@ -100,6 +105,9 @@ def main(argv: list[str] | None = None) -> int:
             settings = Settings(model=args.model, effort=args.effort, max_tokens=args.max_tokens)
             print(run_extraction(args.run_id, args.labels, submit_batch=args.submit, settings=settings,
                                  poll_seconds=args.poll))
+            return 0
+        if args.command == "baseline":
+            print(run_baseline(args.run_id, args.labels))
             return 0
         if args.command == "score-run":
             print(score_run(RUNS_DIR / args.run_id, args.labels))

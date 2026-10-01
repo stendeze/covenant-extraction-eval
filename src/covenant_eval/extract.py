@@ -102,7 +102,8 @@ def guard(documents: list[Document], labels_dir: Path = LABELS_DIR, repo: Path =
     if blocked and not label_freeze_exists(repo):
         raise CorpusLocked(
             f"{len(blocked)} of {len(documents)} document(s) are in the corpus, and the label-freeze tag "
-            f"does not exist. No model sees a corpus document before label-freeze."
+            f"does not exist. No extraction, by the model or the baseline, runs on a corpus document "
+            f"before label-freeze."
         )
 
 
