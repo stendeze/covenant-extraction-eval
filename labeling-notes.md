@@ -654,9 +654,9 @@ The artifact was right and the summary was stale.
 
 That is the third time in this project a claim reported from memory has
 diverged from the artifact it described; the other two are the `has_margin_grid`
-degeneracy claim and a facility-record count. All seven instances, and what they
+degeneracy claim and a facility-record count. All nine instances, and what they
 add up to, are consolidated at [The finding, across all
-seven](#the-finding-across-all-seven). All three were cheap
+nine](#the-finding-across-all-nine). All three were cheap
 because something checkable existed. The [blind
 relabel](schema.md#annotator-agreement) is where that stops being true —
 reporting from memory is the exact failure it is designed to detect, and there
@@ -1037,7 +1037,40 @@ the figure was generated from the labels rather than recalled, and the
 disagreement between the two was the signal. That is the fix working, at the
 point it is cheapest.
 
-#### The finding, across all seven
+#### An eighth and a ninth, both through instructions
+
+Both came from the project owner, in the instructions that closed out the
+corpus, and both were caught before reaching a file.
+
+**The eighth: "they're final."** The instruction was to drop "so far" from the
+README's screen figures — structure right 3 of 6, grid 3 of 6 — on the grounds
+that they were final. They were not. This file had recorded them as measured
+"over the first six documents read", and by then seventeen screened documents
+had been read. Recomputed over all seventeen, the figures were structure 9 of
+17, grid 11 of 17 and covenant counts exact 6 of 17 — and the covenant counts
+erred in both directions, 6 over and 5 under, which overturned the README's
+claim that counting questions over-report. Dropping two words as instructed
+would have turned a six-document measurement into a corpus-wide one, and kept
+a generalization the full data contradicts.
+
+**The ninth: "the schema's unfreeze procedure."** The instruction said nothing
+would touch `data/labels/` after the freeze except through it. schema.md had no
+such procedure. The only post-freeze change it named was replacing an
+unlabelable document — and its own annotator-agreement protocol, which resolves
+blind-relabel disagreements by "tightening the rule here, then re-applying it
+to the full set", implied label changes after the freeze that nothing governed.
+This one is a different shape from the other eight: not a wrong number but a
+reference to a source that did not exist, which is the most confident form the
+error can take, because it points at the place a reader would go to check. The
+freeze commit was written to describe only the freeze point, so it did not
+encode the conflict, and the procedure was then written as its own commit.
+
+Both are the fifth's lesson again: **an instruction is not a source**, and an
+instruction from the person who owns the project feels like verification and
+is not. In both, the artifact was right and the instruction was checked against
+it before anything was written.
+
+#### The finding, across all nine
 
 | # | Claim | Diverged from | Which was right | Recorded |
 |---|---|---|---|---|
@@ -1048,6 +1081,8 @@ point it is cheapest.
 | 5 | "Paya remains the sole source at 2 of 19" | the label files: 4 from 3 documents, of 22 | the files | [here](#a-wrong-claim-about-this-field-reached-the-repo-through-an-instruction) |
 | 6 | "three documents carry an override" | a recollection of Kontoor's and ANI's holidays | **the recollection** | [here](#a-sixth-and-the-first-caught-before-it-was-written-anywhere) |
 | 7 | Hertz's gridded Term B is "a second exception, after Peloton" | the label files: four of five Term B records carry grids | the files | [here](#a-seventh-computed-rather-than-recalled) |
+| 8 | the README's screen figures are "final" | this file: measured over the first six documents read; over all seventeen, 9, 11 and 6 of 17 | the files | [here](#an-eighth-and-a-ninth-both-through-instructions) |
+| 9 | "the schema's unfreeze procedure" | schema.md: no such procedure, and a relabel protocol that implied post-freeze label changes | the files | [here](#an-eighth-and-a-ninth-both-through-instructions) |
 
 The first five all resolved the same way, and the notes written about them drew
 the lesson that fits: check the claim against the artifact — "an instruction is
@@ -1063,7 +1098,9 @@ evidence, and let the recomputation decide. Neither side gets the benefit of
 the doubt in advance. The earlier notes were right about their cases and drew
 too narrow a conclusion from them. The seventh fits the rule rather than
 testing it — the files were right again — but it is the first where the second
-source was produced deliberately, by computing the figure before writing it.
+source was produced deliberately, by computing the figure before writing it. The
+eighth and ninth fit it too; like the fifth, both arrived as instructions, and
+in both the artifact was right.
 
 This is a stronger claim than the first five could support, and it explains
 something the narrower version could not: **why the blind relabel works.** The
