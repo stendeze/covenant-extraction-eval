@@ -89,3 +89,27 @@ protocol](schema.md#annotator-agreement) says — by tightening the rule and
 re-applying it to the full set, every value change confirmed with the labeler —
 and that is the only path by which a label changes before `label-freeze`. See
 [After the freeze](schema.md#after-the-freeze-two-things-two-tags).
+
+## Selection
+
+Drawn 2026-09-30 by running the code above, unchanged, under Python 3.13.5,
+after the method was committed in `090b7cc`. The draw, in the order the sample
+returned it:
+
+| Draw | Corpus row | Borrower | Accession | Exhibit | File |
+|---|---|---|---|---|---|
+| 1 | 12 | G-III Leather Fashions, Inc. | `0001558370-24-008935` | EX-10.1 | `giii-20240604xex10d1.htm` |
+| 2 | 1 | Paya Holdings III | `0001213900-21-034493` | EX-10.1 | `ea143383ex10-1_payaholdings.htm` |
+| 3 | 2 | Plains All American Pipeline, L.P. | `0001104659-21-109833` | EX-10.1 | `tm2125730d3_ex10-1.htm` |
+| 4 | 13 | Roper Technologies | `0001193125-22-199694` | EX-10.1 | `d291205dex101.htm` |
+| 5 | 6 | Extreme Networks | `0000950170-23-029645` | EX-10.1 | `extr-ex10_1.htm` |
+
+These five give the headline agreement rate, every scored field relabeled.
+
+Neither flagged document was drawn, so the two flagged items are relabeled on
+their own and reported separately:
+
+- Amentum Holdings, `0000950157-24-001363`, `ex10-1.htm` — `has_margin_grid`
+  for each facility.
+- Lamb Weston Holdings, `0001679273-24-000026`, `ex10_1conformed-lwxbofax.htm`
+  — `facility_type` for the European Term Loan.
