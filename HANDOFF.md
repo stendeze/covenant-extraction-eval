@@ -71,10 +71,10 @@ Two things can run in parallel; one must wait.
    `data/labels/`, in the label files' shape; `covenant-eval agree` pairs them
    with the originals by accession and `document_file`.
 2. **Code that can be written now**, all developed against `data/dev/` and
-   never run on a corpus document: the group B decisions below, then the
-   model-facing schema and the prompt generated from schema.md, the
-   extraction pipeline (Batch API), the regex baseline's spec and code, and
-   the fetch script.
+   never run on a corpus document, on the defaults in [Decisions before the
+   first corpus run](#decisions-before-the-first-corpus-run) until Daniel
+   reviews them: the prompt generator, the extraction pipeline, the regex
+   baseline, and the fetch script.
 3. **Must wait:** running extraction on any corpus document. That is the
    first extraction run, and it comes after `label-freeze`.
 
@@ -88,9 +88,8 @@ disagreements by rule → tag `label-freeze` → first extraction run.
   1M window; the largest, Hertz, is 432k–618k tokens. Haiku 4.5 is out.
   Before `label-freeze`, token counts are local estimates only — never
   `count_tokens` on a corpus document.
-- **The full-context arm stays.** Whether the truncation arm survives, and
-  whether to add one Sonnet run on the best configuration as a cost
-  comparison, are decided with group B.
+- **The full-context arm stays.** The truncation arm and a Sonnet cost
+  comparison are proposed below, D8 and D9.
 - **The prompt carries the adjudication rules**, generated from schema.md and
   frozen by commit before the first run. The labeler worked from the
   rulebook, so the model gets the same rulebook.
@@ -99,44 +98,246 @@ disagreements by rule → tag `label-freeze` → first extraction run.
 - **The errata format is deferred until the first erratum exists.** The
   post-freeze rule already guarantees that both scores are reported.
 
-## Open decisions
+## Decisions before the first corpus run
 
-- **Group B — scoring decisions schema.md has not made**, and the scorer core
-  deliberately leaves out:
-  - how per-field results become F1 — a wrong value on a paired record, and
-    pooling over records or averaging per document;
-  - how a correct decline is credited, since F1 cannot see one — the deferral
-    nulls and the empty covenant list;
-  - the conflict between README ("declining is only correct when the system
-    can point at the sentence") and schema.md (citations scored separately);
-  - whether a model's quote may differ in case or spacing;
-  - putting the naive baselines on the F1 scale.
-- **Not built:** the extraction pipeline, the regex baseline that
-  [results.md](results.md) describes (its spec comes first, developed only on
-  `data/dev/` and the candidate pool, with the screen's signals kept as they
-  are where they cover a field), and the fetch script that
-  [README.md](README.md) says will make the corpus reproducible from a clean
-  checkout. Each label records accession and `document_file`, and the
-  committed `data/search/candidates.jsonl` carries each filer's CIK, so the
-  fetch script has everything it needs.
-- **Waiting for Daniel** (raised 2026-09-30, while he was away):
-  1. *The facility identifying fields were landed as measured, not as he
-     approved them.* He chose the version where pairing on a value every
-     record shares does not count. The list proposed with it named only
-     `interest_rate_benchmark` and `has_margin_grid` as the shared facility
-     fields. Counting the gold showed `applicable_margin_bps` (10 of 12
-     within-document pairs) and `maturity_date` (8 of 12) are shared about as
-     often, so `3733eb5` makes only `facility_type` and
-     `aggregate_commitment` identifying. Reverting means one sentence in
-     schema.md and `IDENTIFYING_FIELDS` in score.py.
-  2. *Relabel.md's exposure list has to be transcribed to JSON* for
-     `covenant-eval agree` to print the headline (without tier 1). Mapping
-     "the term loan" to a record index means reading the original labels, so
-     the default is to transcribe after the relabel is done, checked against
-     relabel.md, committed with the agreement results.
-  3. *The two flagged items need a file shape.* They are single fields, not
-     whole records. Default: one `data/relabel/flagged.json` listing document,
-     facility, field, value and citation, compared and reported on its own.
+Every decision still open before the first extraction run, in one place, each
+with a proposed default. Daniel reviews them in one sitting and accepts or
+changes each. Until then the build proceeds on the defaults, against
+`data/dev/` only, so a changed default changes code, not a result.
+
+### The prompt and the model
+
+**D1. The prompt must not carry corpus answers.** schema.md's rules are
+interleaved with worked examples drawn from the corpus — Amentum's
+commitment, Hertz's seasonal levels, Boeing's percentage covenant. Some
+quote corpus filings without naming them (relabel.md, tier 1). A prompt that
+reproduced schema.md would give the model the gold value for any field an
+example covers, for any document it recognizes.
+*Default:* the generator takes schema.md's model-facing sections — the four
+corners rule, record shape, field summary, the eleven field sections,
+citations, normalization, out of scope, the worked example — and drops:
+- every blockquote — they are narrative asides, not rules;
+- every sentence naming a corpus or dev-set document;
+- every sentence carrying a corpus accession number;
+- every sentence whose quotation occurs verbatim in a corpus filing or in a
+  gold citation.
+
+Generation fails if any of those survive. The cost: the labeler had the
+examples, and the model gets the rules without them. That asymmetry is stated
+with the results. The alternative, the rulebook verbatim, would be measuring
+recognition.
+
+**D2. No few-shot examples.** Zero-shot, rulebook only. A few-shot example
+would have to come from outside the corpus. The only labeled documents
+outside it are the dev set, which is mechanics-only.
+
+**D3. Model settings.**
+- `claude-opus-5-5`, through the Batch API.
+- `effort: high`. Opus 5.5 defaults to `medium`, and the eval asks for the
+  ceiling.
+- Thinking left at its default: always on, adaptive, display omitted.
+- `max_tokens: 64000`, no stop sequences.
+- No fallback model. A refusal is a refusal: falling back would let a
+  different model answer, and the Batch API rejects the parameter anyway.
+- Sampling parameters are not accepted on this model, so runs are not
+  repeatable. See D10.
+
+**D4. The model-facing output schema** (generated, `prompts/output_schema.json`):
+- The same record shape as a label file — `facilities[]` and
+  `financial_covenants[]` — with every scored field as
+  `{value, citation}`. A model output can then be compared, validated and
+  quote-checked by the same code as a label.
+- **No `null_kind` and no `facility_name`.**
+- **Nullable:** `aggregate_commitment`, `applicable_margin_bps`,
+  `springing_trigger` — the three schema.md makes nullable — and
+  `step_down_schedule`. The last is because the rulebook tells a reader to
+  record a seasonal cycle as null. A null there scores as a miss unless the
+  gold is `unrepresentable`, so it is no escape hatch.
+- **Citation:** `{section, quote}`, required on every non-null value. On a
+  nullable field it may be null: the model, like the labeler, cites a
+  deferral and does not cite an absence.
+- **Alternative shapes** as `anyOf` branches with `const` discriminators:
+  - maturity, `stated` with a `date`-format string, or `relative` with
+    `{tenor_years, anchor}` or `{tenor_months, anchor}`;
+  - `effective_from`, `stated` with a string, or `relative` with
+    `{quarters_after, anchor}` or `{months_after, anchor}`;
+  - springing trigger, null or the object.
+- **Constraints the API does not support, checked after the response:**
+  `YYYY-MM` precision on `effective_from` (no `pattern` support), integer
+  ranges.
+- Enums are taken from schema.md, as the validator does.
+- One unscored `notes` array of strings, because the rulebook sends some
+  facts "to free text".
+
+**D5. The input is the whole filed exhibit, as `to_text` renders it** — the
+same text quotes are verified against — in one user message, document first.
+The system prompt carries the rulebook, cached across the batch.
+
+### Scoring (group B)
+
+**B1. F1 accounting, per field, pooled over every record in the corpus.**
+- *Aligned pair, right value:* one true positive.
+- *Aligned pair, wrong value:* a false positive and a false negative.
+- *A null on either side:* gold null with a predicted value is a false
+  positive; a predicted null against a gold value is a false negative; both
+  null counts for nothing in F1 (see B2).
+- *Spurious record:* each non-null field counts against precision.
+- *Missed record:* each non-null gold field counts against recall.
+- *Excluded fields* (`unrepresentable`, or the dev marker) count nowhere.
+
+Per-document averages are reported as a secondary view only.
+
+**B2. Correct declines get their own numbers, because F1 cannot see them.**
+- *Null detection*, for the three nullable fields: the share of gold-null
+  instances answered null, split by deferral shape (external fact,
+  unattached exhibit); and beside it, the share of gold-non-null instances
+  wrongly answered null.
+- *The empty covenant list:* the count of covenants invented on the
+  covenant-free document.
+
+The deferral shape is read from a small committed mapping, since the labels
+record it only in notes.
+
+**B3. The README and schema.md conflict over deferral citations; schema.md
+governs.** Field accuracy does not depend on the citation. README's sentence
+("declining is only correct when the system can point at the sentence") gets
+its own reported number. For gold deferral nulls answered null, it counts the
+share whose citation is verbatim in the document and overlaps the gold
+citation's span — the "derived programmatically from the quote by substring
+search" offsets schema.md already defines. README is reworded to name that
+number.
+
+**B4. Model quotes are checked as labels are.** Typography and whitespace
+are folded, and a whitespace-only difference passes, being an artifact of the
+HTML-to-text step. A case difference fails, since the rule says verbatim.
+
+**B5. Citation accuracy is reported separately:** the share of non-null
+predicted citations whose quote verifies, per field and overall.
+
+**B6. The naive baseline is put on the F1 scale by running it through the
+scorer.** It emits one facility and one covenant per document, each field at
+its corpus majority value from results.md's table. results.md's
+per-instance table stays as it is. The naive predictor reads nothing, so it
+cannot know how many records a document has. One of each is the reading-free
+guess.
+
+**B7. A failed document is scored as an empty prediction and listed.** That
+covers a refusal, `max_tokens`, unparseable output or an expired request:
+every gold record counts as missed, and the failure count is printed beside
+every table. Errored and expired requests are retried once. Refusals and
+`max_tokens` are not.
+
+### Arms and runs
+
+**D8. The truncation arm is dropped.** Every document fits Opus 5.5's window
+with room to spare: the largest is 62% of it at the high estimate. Truncating
+hard enough to lose the covenant section guarantees a large effect, which is
+what schema.md asked the ablation to show, but only by measuring that a model
+cannot extract what it is not shown. schema.md's ablation paragraph is
+amended to say so.
+
+**D9. One Sonnet 5.5 run on the final configuration, as a cost comparison.**
+Same prompt and schema, `effort: high`. By local estimate it is about $4–8
+cheaper per 16-document pass. It answers whether the ceiling model is needed,
+and is reported beside the primary result, never instead of it.
+
+**D10. The primary configuration runs three times.** Opus 5.5 takes no
+sampling parameters, so one run is one draw. Three passes cost about
+$23–49, from the per-pass estimate. Each field reports the mean, with the
+min–max beside it.
+
+**D11. Runs are committed.** `runs/<run-id>/` holds:
+- the manifest — model, settings, prompt and schema hashes, git commit, batch
+  id, document list, usage;
+- the raw batch results;
+- the parsed predictions.
+
+Document text is not stored, only its hash.
+
+**D12. The pipeline and the baseline refuse corpus documents until
+`label-freeze` exists.** This is checked in code against `data/labels/`, by
+accession and `document_file`. The dev set's Lamb Weston EX-10.2 shares an
+accession with corpus row 7, and passes only because it is matched on its
+file.
+
+### The regex baseline
+
+**R1. The spec, fixed before code.** A keyword extractor in the label
+shape, the cheap tool someone would build instead of a model.
+- Text from `to_text`.
+- Every citation is the matched span, so its quotes verify by construction;
+  it is reported, but its citation accuracy says nothing.
+- **Facilities:** one record per tranche keyword that screen.py's existing
+  `TRANCHES` patterns find. Revolver if `revolver` matches. A lettered Term A
+  or Term B gives that type. An unlettered term loan gives `term_loan_b`: a
+  keyword tool cannot read amortization, and ≤1% is the schema's default.
+- **`aggregate_commitment`:** the first dollar amount within 300 characters
+  after an "aggregate … Commitments" phrase for that tranche, USD unless a
+  currency sign or code says otherwise; null if none.
+- **`maturity_date`:** in the first "… Maturity Date" definition, a written
+  calendar date gives `stated`. Failing that, "N years after / Nth
+  anniversary of the X Date" gives `relative`. Otherwise null.
+- **`interest_rate_benchmark`:** the benchmark keyword with the most
+  occurrences, from screen.py's `BENCHMARKS`.
+- **`applicable_margin_bps`:** the first percentage in the "Applicable
+  Margin / Rate / Percentage" definition, converted to bps.
+- **`has_margin_grid`:** screen.py's `PRICING_GRID` hint, unchanged.
+- **Covenants:** one record per type that screen.py's `COVENANTS` patterns
+  find.
+  - `first_lien` gives `first_lien_net_leverage`.
+  - `leverage` gives `total_net_leverage` if "Net Leverage Ratio" appears,
+    otherwise `total_leverage_gross`.
+  - Interest coverage and fixed charge map to themselves.
+  - `initial_threshold`: the first "X.XX to 1.00" or "X.XX:1.00" within 400
+    characters after the ratio's name in a "shall not permit / shall
+    maintain" sentence.
+  - `testing_frequency`: `quarterly` if "fiscal quarter" is in that
+    sentence, else `annual`.
+  - `step_down_schedule`: always `[]`. A keyword tool does not read tables,
+    and saying so beats a schedule parser nobody would write.
+  - `springing_trigger`: if screen.py's `SPRINGING` hint fires, the first
+    "N%" near "Revolving" in that sentence, as `revolver_utilization` /
+    `percent`; otherwise null.
+
+**R2. How it is built.**
+- Developed on `data/dev/` only, and committed before any corpus run.
+- screen.py's patterns are reused unchanged where they cover a field. They
+  have already been measured against 14 corpus documents (structure 9/17,
+  grid 11/17, covenant counts 6/17 in labeling-notes.md). Changing them now
+  would be tuning against known corpus results.
+- The author knows the corpus traps labeling-notes.md documents. That is
+  disclosed with the results, not designed around.
+
+### Carried over
+
+**C1. The facility identifying fields were landed as measured, not as
+approved.** Daniel chose the version where pairing on a value every record
+shares does not count. The list proposed with it named only
+`interest_rate_benchmark` and `has_margin_grid` as the shared facility fields.
+Counting the gold showed `applicable_margin_bps` (10 of 12 within-document
+pairs) and `maturity_date` (8 of 12) are shared about as often, so `3733eb5`
+makes only `facility_type` and `aggregate_commitment` identifying.
+*Default:* keep. Reverting is one sentence in schema.md and
+`IDENTIFYING_FIELDS` in score.py.
+
+**C2. Relabel.md's exposure list must be transcribed to JSON** for
+`covenant-eval agree` to print the headline. *Default:* after the relabel is
+done, checked against relabel.md, committed with the agreement results.
+Mapping "the term loan" to a record index means reading the original labels.
+
+**C3. The two flagged items need a file shape.** *Default:* one
+`data/relabel/flagged.json`, listing document, facility, field, value and
+citation, compared and reported on its own.
+
+## Not built yet
+
+The fetch script that [README.md](README.md) says will make the corpus
+reproducible from a clean checkout. Each label records accession and
+`document_file`, and the committed `data/search/candidates.jsonl` carries
+each filer's CIK, so it has everything it needs.
+
+## Watch
+
 - **Watch one rule.** The seasonal-cycle rule for `initial_threshold`
   (most restrictive level) is recorded in schema.md as the closest of the
   Hertz rules to arbitration. If a second document ever splits on it, that is
