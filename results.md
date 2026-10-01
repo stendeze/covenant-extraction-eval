@@ -41,7 +41,7 @@ both methods are worse than a constant.
 
 The regex baseline is the more interesting of the two here because of what is
 already known about it. The same class of tool was used to help select this
-corpus, and **ten of ten of its selection rationales failed when checked
+corpus, and **eleven of eleven of its selection rationales failed when checked
 against their documents**. Its failure modes are documented from real
 agreements in
 [labeling-notes.md](labeling-notes.md#baseline-false-positive-mechanisms) — in
@@ -171,9 +171,11 @@ source. Already mechanically checkable and already run over the gold set —
 every committed label verifies.
 
 **The two deferral shapes, not pooled.** Deferral to an external *fact* (Plains,
-Advance Auto, Roper — a rating that exists in the world and not in the
-document) and deferral to an *unattached exhibit* (Peloton — a schedule the
-filer did not attach) are different capabilities. Reported apart.
+Advance Auto, Roper, Boeing, Mattel — a rating that exists in the world and not
+in the document) and deferral to an *unattached exhibit* (Peloton, Mattel — a
+schedule the filer did not attach) are different capabilities. Reported apart.
+Mattel is in both: its margin defers to a rating and its commitment to an
+unattached schedule.
 
 **The blind-relabel category**, per
 [schema.md](schema.md#one-category-of-disagreement-is-worth-more-than-the-rate):
@@ -182,21 +184,22 @@ intuition. Two are nominated in advance. A reversal there is a finding about
 the schema, not about a document, and is reported separately from the headline
 agreement rate.
 
-**Disagreement between sources as the check on the process.** Nine times during
-labeling, a claim stated from one source — memory, an instruction, a partial
-scan, a label's own summary — diverged from another that should have agreed
-with it. Eight times the artifact was right; once the recollection was, and the
-tool was wrong. The finding that survives all nine is that disagreement is the
+**Disagreement between sources as the check on the process.** Ten times, a
+claim stated from one source — memory, an instruction, a partial scan, a
+label's own summary — diverged from another that should have agreed with it:
+nine times during labeling, and once in the instructions for the work that
+followed. Nine times the artifact was right; once the recollection was, and the
+tool was wrong. The finding that survives all ten is that disagreement is the
 signal regardless of which side is correct, and the response is to recompute
 rather than to trust either. It is also why the blind relabel is expected to
 be informative: it manufactures a second source on purpose. See
-[labeling-notes.md](labeling-notes.md#the-finding-across-all-nine).
+[labeling-notes.md](labeling-notes.md#the-finding-across-all-ten).
 
-**The selection-rationale failure rate.** Ten of ten screen-derived rationales
-checked against their documents have failed. That is a measured property of the
-instrument this project used to help choose its own test set, and it belongs
-with the results rather than buried in
-[corpus.md](corpus.md#-the-selected-for-column-is-unverified-and-is-wrong-wherever-it-has-been-checked).
+**The selection-rationale failure rate.** Eleven of eleven screen-derived
+rationales checked against their documents have failed. That is a measured
+property of the instrument this project used to help choose its own test set,
+and it belongs with the results rather than buried in
+[corpus.md](corpus.md#the-selected-for-column-checked-against-every-document).
 
 ---
 

@@ -72,12 +72,6 @@ disagreements by rule → tag `label-freeze` → first extraction run.
   per-field comparison the scorer needs — each field's "Correct when" test and
   the [record alignment](schema.md#record-alignment) rules — so building the
   scorer's comparison first serves both.
-- **The validator still accepts legacy filename keys, and its comment is
-  stale.** [validate.py:286](src/covenant_eval/validate.py#L286) says the
-  filename key "was never fixed", but every label has used `document_file`
-  only since `4bc7610`. Two options were put to Daniel and not yet answered:
-  correct the comment, or tighten the validator to accept only
-  `document_file`. Either is its own commit. A label edit is not involved.
 - **The errata mechanism does not exist.** schema.md says post-`label-freeze`
   corrections are recorded outside `data/labels/` and reported with both
   scores; the format and location are undecided and should be fixed before
@@ -137,10 +131,10 @@ disagreements by rule → tag `label-freeze` → first extraction run.
 
 **Numbers.**
 
-- Compute every figure from the files before writing it. Nine times a claim
+- Compute every figure from the files before writing it. Ten times a claim
   stated from memory, an instruction, a partial scan or a summary diverged
   from the artifact; the finding is that disagreement between two sources is
-  the signal, whichever turns out right. See [labeling-notes.md](labeling-notes.md#the-finding-across-all-nine).
+  the signal, whichever turns out right. See [labeling-notes.md](labeling-notes.md#the-finding-across-all-ten).
 - The results tables are generated, not typed:
   `uv run covenant-eval coverage --write results.md`. Hand-written counts in
   prose go stale when a label changes; grep for them.
@@ -194,7 +188,7 @@ if you need to, pass `--out` to a scratch directory.
 | [schema.md](schema.md) | Governs. Fields, rules, freezing, alignment, annotator agreement. |
 | [corpus.md](corpus.md) | The frozen record of the sixteen documents and how each was chosen. |
 | [labeling-guide.md](labeling-guide.md) | What labeling is done from. Operational; schema.md wins. |
-| [labeling-notes.md](labeling-notes.md) | Findings: baseline traps, rule changes under contact, the nine instances. |
+| [labeling-notes.md](labeling-notes.md) | Findings: baseline traps, rule changes under contact, the ten instances. |
 | [results.md](results.md) | The reporting shape, fixed before any model run; generated tables. |
 | [relabel.md](relabel.md) | The blind relabel's method and selection. |
 | [README.md](README.md) | The project's argument, for an outside reader. |

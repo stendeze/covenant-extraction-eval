@@ -654,9 +654,9 @@ The artifact was right and the summary was stale.
 
 That is the third time in this project a claim reported from memory has
 diverged from the artifact it described; the other two are the `has_margin_grid`
-degeneracy claim and a facility-record count. All nine instances, and what they
+degeneracy claim and a facility-record count. All ten instances, and what they
 add up to, are consolidated at [The finding, across all
-nine](#the-finding-across-all-nine). All three were cheap
+ten](#the-finding-across-all-ten). All three were cheap
 because something checkable existed. The [blind
 relabel](schema.md#annotator-agreement) is where that stops being true —
 reporting from memory is the exact failure it is designed to detect, and there
@@ -1070,7 +1070,25 @@ instruction from the person who owns the project feels like verification and
 is not. In both, the artifact was right and the instruction was checked against
 it before anything was written.
 
-#### The finding, across all nine
+#### A tenth, in a claim about the other nine
+
+It came from the project owner, in the instructions that opened the first
+session after HANDOFF.md was written, and it was caught before reaching a
+file. The instructions warned that this file "has nine instances of what
+happens otherwise, most of them through instructions". The table below records
+three that arrived as instructions — the fifth, the eighth and the ninth. The
+other six came from a count over a subset, two first drafts of notes, a label's
+own summary, a scan scoped too narrowly and a report written from memory.
+
+**The line made the error it was describing.** It is the first instance whose
+subject is this table: a summary of the record of these errors, stated from
+memory, in instructions whose purpose was to prevent exactly that. It was
+caught the way the eighth and ninth were — the summary was checked against the
+table it summarized, on the first read and before anything was written. A
+record of errors is an artifact like any other, and a claim about it needs the
+same recomputation.
+
+#### The finding, across all ten
 
 | # | Claim | Diverged from | Which was right | Recorded |
 |---|---|---|---|---|
@@ -1083,6 +1101,7 @@ it before anything was written.
 | 7 | Hertz's gridded Term B is "a second exception, after Peloton" | the label files: four of five Term B records carry grids | the files | [here](#a-seventh-computed-rather-than-recalled) |
 | 8 | the README's screen figures are "final" | this file: measured over the first six documents read; over all seventeen, 9, 11 and 6 of 17 | the files | [here](#an-eighth-and-a-ninth-both-through-instructions) |
 | 9 | "the schema's unfreeze procedure" | schema.md: no such procedure, and a relabel protocol that implied post-freeze label changes | the files | [here](#an-eighth-and-a-ninth-both-through-instructions) |
+| 10 | the nine instances came "most of them through instructions" | this table: three of nine — the fifth, eighth and ninth | the file | [here](#a-tenth-in-a-claim-about-the-other-nine) |
 
 The first five all resolved the same way, and the notes written about them drew
 the lesson that fits: check the claim against the artifact — "an instruction is
@@ -1100,7 +1119,8 @@ too narrow a conclusion from them. The seventh fits the rule rather than
 testing it — the files were right again — but it is the first where the second
 source was produced deliberately, by computing the figure before writing it. The
 eighth and ninth fit it too; like the fifth, both arrived as instructions, and
-in both the artifact was right.
+in both the artifact was right. So did the tenth, which was a claim about this
+table.
 
 This is a stronger claim than the first five could support, and it explains
 something the narrower version could not: **why the blind relabel works.** The

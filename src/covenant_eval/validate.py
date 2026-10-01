@@ -283,10 +283,14 @@ class Report:
         return sum(1 for d in self.deviations if d.severity == "error")
 
 
-# A label may name its source document under any of these; different documents
-# were labeled at different times and the key was never fixed. Any of them
-# disambiguates an accession that holds more than one agreement.
-DOCUMENT_FILE_KEYS = ("document_file", "file_name", "exhibit_filename", "filename")
+# A label names its source document under `document_file` and nothing else. The
+# key varied while documents were labeled at different times, and was
+# standardised in 4bc7610. The old names are rejected rather than ignored: a
+# label carrying only a legacy key would otherwise read as naming no file, and
+# on a single-document accession it would still pass, checked against whatever
+# file happened to be there.
+DOCUMENT_FILE_KEY = "document_file"
+LEGACY_DOCUMENT_FILE_KEYS = ("file_name", "exhibit_filename", "filename")
 
 
 def find_raw(accession: str, raw_dir: Path, document_file: str | None = None) -> tuple[Path | None, str | None]:
@@ -299,8 +303,10 @@ def find_raw(accession: str, raw_dir: Path, document_file: str | None = None) ->
     meant something, which is worse than not checking: on two agreements drawn
     from the same template, boilerplate quotes pass against either.
 
-    So a filename, where the label gives one, must match exactly; and an
-    ambiguous accession with no filename is reported rather than guessed.
+    So the filename must match exactly; and an ambiguous accession with no
+    filename is reported rather than guessed. A missing filename is an error in
+    its own right — see validate_label — but the quotes are still checked
+    where the accession leaves no doubt.
     """
     matches = sorted(raw_dir.glob(f"{accession}_*"))
     if not matches:
@@ -319,8 +325,8 @@ def find_raw(accession: str, raw_dir: Path, document_file: str | None = None) ->
         return None, (
             f"{len(matches)} documents share accession {accession} "
             f"({', '.join(m.name.split('_', 1)[1] for m in matches)}); the label names no source "
-            f"file, so quotes cannot be checked against a known document. Add one of "
-            f"{list(DOCUMENT_FILE_KEYS)} to source."
+            f"file, so quotes cannot be checked against a known document. Add "
+            f"{DOCUMENT_FILE_KEY} to source."
         )
     return matches[0], None
 
@@ -671,7 +677,22 @@ def validate_label(label_path: Path, raw_dir: Path, sets: SchemaSets) -> Report:
     if not accession:
         report.add("source.accession_number", "missing_field", "no accession number; quotes cannot be checked")
     else:
-        named = next((source[k] for k in DOCUMENT_FILE_KEYS if source.get(k)), None)
+        legacy = [k for k in LEGACY_DOCUMENT_FILE_KEYS if k in source]
+        if legacy:
+            report.add(
+                "source",
+                "legacy_document_file_key",
+                f"{legacy} is no longer read; the source file is named by {DOCUMENT_FILE_KEY} only",
+            )
+        named = source.get(DOCUMENT_FILE_KEY)
+        if not named:
+            # An accession number does not identify a document: three accessions
+            # this corpus drew on hold more than one credit agreement.
+            report.add(
+                f"source.{DOCUMENT_FILE_KEY}",
+                "missing_field",
+                "no source file named; an accession number alone does not identify a document",
+            )
         raw, problem = find_raw(accession, raw_dir, named)
         if raw is not None:
             report.raw_path = raw
