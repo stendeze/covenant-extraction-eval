@@ -21,6 +21,15 @@ The blind relabel set has been drawn and is waiting to be relabeled. Labels
 are open to change only through that relabel's resolution, and close at a
 second tag, `label-freeze`, which does not exist yet.
 
+Fixed since, all before the relabel began:
+
+| Commit | What |
+|---|---|
+| `3733eb5` | The comparison rules: record alignment by agreement on identifying fields, tenor in months, anchor normalization, the springing unit, the per-step diagnostic, and how the relabel's agreement is computed |
+| `4f21be0` | The fields of the five drawn documents that the repository already answers, in relabel.md, so the headline agreement can exclude them |
+| `afa93aa` | `data/dev/`, the development set, and the validator's `excluded_from_scoring` marker for it |
+| `a1b6214` | The scorer core — per-field comparison, alignment, agreement — tested against `data/dev/` only |
+
 ## Tags and freeze points
 
 | Tag | Commit | Meaning |
@@ -52,37 +61,82 @@ Written in [schema.md](schema.md#after-the-freeze-two-things-two-tags), in
 
 Two things can run in parallel; one must wait.
 
-1. **The blind relabel** — by the labeler, Daniel. Method and selection are in
-   [relabel.md](relabel.md), committed method-first (`090b7cc`) and drawn after
-   (`b82b499`). Five documents for the headline agreement rate — G-III, Paya,
-   Plains, Roper, Extreme — plus two flagged items relabeled on their own and
-   reported separately: Amentum's `has_margin_grid` and Lamb Weston EX-10.1's
-   European Term Loan `facility_type`. Relabels go to `data/relabel/`, never
-   `data/labels/`. Do not show the relabeler the original labels.
-2. **Build the extraction pipeline and scorer.** Code can be written now.
+1. **The blind relabel** — by the labeler, Daniel, on his schedule; he is away
+   on applications. Method and selection are in [relabel.md](relabel.md),
+   committed method-first (`090b7cc`) and drawn after (`b82b499`). Five
+   documents for the headline agreement rate — G-III, Paya, Plains, Roper,
+   Extreme — plus two flagged items relabeled on their own and reported
+   separately: Amentum's `has_margin_grid` and Lamb Weston EX-10.1's European
+   Term Loan `facility_type`. Relabels go to `data/relabel/`, never
+   `data/labels/`, in the label files' shape; `covenant-eval agree` pairs them
+   with the originals by accession and `document_file`.
+2. **Code that can be written now**, all developed against `data/dev/` and
+   never run on a corpus document: the group B decisions below, then the
+   model-facing schema and the prompt generated from schema.md, the
+   extraction pipeline (Batch API), the regex baseline's spec and code, and
+   the fetch script.
 3. **Must wait:** running extraction on any corpus document. That is the
    first extraction run, and it comes after `label-freeze`.
 
 The order of events is therefore: relabel → compute agreement → resolve
 disagreements by rule → tag `label-freeze` → first extraction run.
 
+**Decided, 2026-09-30:**
+
+- **Model:** Claude Opus 5.5, run through the Batch API. It uses the tokenizer
+  introduced with Opus 4.7. By local estimate every corpus document fits its
+  1M window; the largest, Hertz, is 432k–618k tokens. Haiku 4.5 is out.
+  Before `label-freeze`, token counts are local estimates only — never
+  `count_tokens` on a corpus document.
+- **The full-context arm stays.** Whether the truncation arm survives, and
+  whether to add one Sonnet run on the best configuration as a cost
+  comparison, are decided with group B.
+- **The prompt carries the adjudication rules**, generated from schema.md and
+  frozen by commit before the first run. The labeler worked from the
+  rulebook, so the model gets the same rulebook.
+- **The dev set is for mechanics only** — does the pipeline run, parse and
+  score. Not tuning.
+- **The errata format is deferred until the first erratum exists.** The
+  post-freeze rule already guarantees that both scores are reported.
+
 ## Open decisions
 
-- **The relabel's agreement computation is not built.** It needs the same
-  per-field comparison the scorer needs — each field's "Correct when" test and
-  the [record alignment](schema.md#record-alignment) rules — so building the
-  scorer's comparison first serves both.
-- **The errata mechanism does not exist.** schema.md says post-`label-freeze`
-  corrections are recorded outside `data/labels/` and reported with both
-  scores; the format and location are undecided and should be fixed before
-  the first extraction run, so nothing about them is designed after seeing
-  results.
-- **Not built:** the extraction pipeline, the scorer, the regex baseline that
-  [results.md](results.md) describes, and the fetch script that
+- **Group B — scoring decisions schema.md has not made**, and the scorer core
+  deliberately leaves out:
+  - how per-field results become F1 — a wrong value on a paired record, and
+    pooling over records or averaging per document;
+  - how a correct decline is credited, since F1 cannot see one — the deferral
+    nulls and the empty covenant list;
+  - the conflict between README ("declining is only correct when the system
+    can point at the sentence") and schema.md (citations scored separately);
+  - whether a model's quote may differ in case or spacing;
+  - putting the naive baselines on the F1 scale.
+- **Not built:** the extraction pipeline, the regex baseline that
+  [results.md](results.md) describes (its spec comes first, developed only on
+  `data/dev/` and the candidate pool, with the screen's signals kept as they
+  are where they cover a field), and the fetch script that
   [README.md](README.md) says will make the corpus reproducible from a clean
   checkout. Each label records accession and `document_file`, and the
   committed `data/search/candidates.jsonl` carries each filer's CIK, so the
   fetch script has everything it needs.
+- **Waiting for Daniel** (raised 2026-09-30, while he was away):
+  1. *The facility identifying fields were landed as measured, not as he
+     approved them.* He chose the version where pairing on a value every
+     record shares does not count. The list proposed with it named only
+     `interest_rate_benchmark` and `has_margin_grid` as the shared facility
+     fields. Counting the gold showed `applicable_margin_bps` (10 of 12
+     within-document pairs) and `maturity_date` (8 of 12) are shared about as
+     often, so `3733eb5` makes only `facility_type` and
+     `aggregate_commitment` identifying. Reverting means one sentence in
+     schema.md and `IDENTIFYING_FIELDS` in score.py.
+  2. *Relabel.md's exposure list has to be transcribed to JSON* for
+     `covenant-eval agree` to print the headline (without tier 1). Mapping
+     "the term loan" to a record index means reading the original labels, so
+     the default is to transcribe after the relabel is done, checked against
+     relabel.md, committed with the agreement results.
+  3. *The two flagged items need a file shape.* They are single fields, not
+     whole records. Default: one `data/relabel/flagged.json` listing document,
+     facility, field, value and citation, compared and reported on its own.
 - **Watch one rule.** The seasonal-cycle rule for `initial_threshold`
   (most restrictive level) is recorded in schema.md as the closest of the
   Hertz rules to arbitration. If a second document ever splits on it, that is
@@ -116,6 +170,15 @@ disagreements by rule → tag `label-freeze` → first extraction run.
 - Few-shot examples come from outside the corpus too, and that is stated with
   the results.
 
+**The relabel's blindness.**
+
+- Never show the relabeler a value from `data/labels/` for the five drawn
+  documents or the two flagged items, including in a summary or a progress
+  note.
+- Until his relabel is done, Daniel does not open relabel.md, README.md,
+  results.md, corpus.md or labeling-notes.md. They state answers for several
+  of the drawn documents. Do not quote from them to him either.
+
 **Working rules the history depends on.**
 
 - Commits are authored as `stendeze`, with **no co-author or
@@ -136,6 +199,8 @@ disagreements by rule → tag `label-freeze` → first extraction run.
   stated from memory, an instruction, a partial scan or a summary diverged
   from the artifact; the finding is that disagreement between two sources is
   the signal, whichever turns out right. See [labeling-notes.md](labeling-notes.md#the-finding-across-all-ten).
+  The finding is made: when two sources disagree, recompute, and do not add
+  an eleventh entry to that table.
 - The results tables are generated, not typed:
   `uv run covenant-eval coverage --write results.md`. Hand-written counts in
   prose go stale when a label changes; grep for them.
@@ -177,8 +242,16 @@ disagreements by rule → tag `label-freeze` → first extraction run.
 
 ```sh
 uv run covenant-eval validate data/labels/*.json   # quotes, enums, shapes; 0 errors expected
+uv run covenant-eval validate data/dev/*.json      # 0 errors, 5 info (Lithia's redacted margins)
 uv run covenant-eval coverage --write results.md   # regenerate the generated tables
+uv run pytest                                      # the scorer's tests, against data/dev/ only
+uv run covenant-eval compare A.json B.json         # align two records of one agreement, field by field
+uv run covenant-eval agree                         # relabel agreement: data/relabel/ against data/labels/
 ```
+
+`compare` prints ok, MISS or excluded for each field and no values unless
+asked with `--values`. Do not run it on a drawn document's original label in
+front of the relabeler. `agree` prints rates and counts only.
 
 `covenant-eval search` and `covenant-eval screen` reproduce the recorded census
 and screen, and **by default they overwrite `data/search/` and `data/screen/`**
@@ -194,5 +267,7 @@ if you need to, pass `--out` to a scratch directory.
 | [labeling-guide.md](labeling-guide.md) | What labeling is done from. Operational; schema.md wins. |
 | [labeling-notes.md](labeling-notes.md) | Findings: baseline traps, rule changes under contact, the ten instances. |
 | [results.md](results.md) | The reporting shape, fixed before any model run; generated tables. |
-| [relabel.md](relabel.md) | The blind relabel's method and selection. |
+| [relabel.md](relabel.md) | The blind relabel's method and selection, and the fields the repository already answers. |
+| `data/dev/README.txt` | The development set: what each document is, and what it may not be used for. |
+| `src/covenant_eval/score.py` | The scorer core. schema.md's comparison rules, transcribed. |
 | [README.md](README.md) | The project's argument, for an outside reader. |
